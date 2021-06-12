@@ -633,55 +633,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue-router原理</title>
-    <url>/2020/08/27/vue-router%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h2 id="vue-router-原理"><a href="#vue-router-原理" class="headerlink" title="vue-router 原理"></a>vue-router 原理</h2><p>模拟实现一个<code>vue-router</code>,详见 <a href="https://github.com/alongithub/vue-router-source/blob/master/src/vuerouter/index.js">vuerouter/index.js</a></p>
-<p>借助vuecli 搭建一个vue-router项目，替换掉VueRouter部分为我们自定义的类，目前实现的功能</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> history 模式</li>
-<li><input checked="" disabled="" type="checkbox"> hash 模式</li>
-<li><input checked="" disabled="" type="checkbox"> router-view</li>
-<li><input checked="" disabled="" type="checkbox"> router-link</li>
-</ul>
-<h3 id="vue-router-结构"><a href="#vue-router-结构" class="headerlink" title="vue-router 结构"></a>vue-router 结构</h3><h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><table>
-<thead>
-<tr>
-<th>VueRouter</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>+ options <br/> + data <br/> + routeMap</td>
-</tr>
-<tr>
-<td>+ Constructor(Options):VueRouter <br/> _ install(Vue): void <br/> + init(): void <br/> + initEvent(): void <br/> + createRouteMap(): void <br/> + initComponents(Vue): void</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><code>options</code> 记录构造函数中的对象</p>
-</li>
-<li><p><code>data</code> 响应式对象</p>
-<ul>
-<li><code>current</code> 记录当前路由地址</li>
-</ul>
-</li>
-<li><p><code>routeMap</code> 记录路由和组件的对应关系 </p>
-</li>
-<li><p><code>install</code> 静态方法实现<code>vue</code>插件</p>
-</li>
-<li><p><code>initEvent</code> 监听浏览器地址变化</p>
-</li>
-<li><p><code>createRouteMap</code> 出事话<code>routeMap</code> 属性，把构造函数的路由规则转换成键值对存在routeMap中</p>
-</li>
-<li><p><code>initComponents</code> 创建<code>router-link</code>和<code>router-view</code>两个组件</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-        <tag>vue-router</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue3 响应式原理</title>
     <url>/2020/10/27/vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h3 id="辅助函数"><a href="#辅助函数" class="headerlink" title="辅助函数"></a>辅助函数</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> isObject = <span class="function"><span class="params">val</span> =&gt;</span> val !== <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> val === <span class="string">&#x27;object&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于判断目标是否是对象，是对象进行代理</span></span><br><span class="line"><span class="keyword">const</span> convert = <span class="function"><span class="params">target</span> =&gt;</span> isObject(target) ? reactive(target) : target;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断对象本身是否有目标属性</span></span><br><span class="line"><span class="keyword">const</span> hasOwnProperty = <span class="built_in">Object</span>.prototype.hasOwnProperty</span><br><span class="line"><span class="keyword">const</span> hasOwn = <span class="function">(<span class="params">target, key</span>) =&gt;</span> hasOwnProperty.call(target, key);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -742,111 +693,52 @@
       </tags>
   </entry>
   <entry>
-    <title>vue响应式原理</title>
-    <url>/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h2 id="VUE-响应式原理"><a href="#VUE-响应式原理" class="headerlink" title="VUE 响应式原理"></a>VUE 响应式原理</h2><h3 id="数据响应式原理"><a href="#数据响应式原理" class="headerlink" title="数据响应式原理"></a>数据响应式原理</h3><p>Vue 2.x</p>
-<blockquote>
-<p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。</p>
-</blockquote>
-<p>defineProperty 代码示例，详见 <a href="./test/defineproperty.html">defineProty示例</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据劫持</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(data, <span class="string">&#x27;msg&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// 可枚举</span></span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 可配置(可以使用delete删除)</span></span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">    get() &#123;</span><br><span class="line">        <span class="comment">// 需要用一个新的字段保存实际的msg值，因为在get中如果访问msg会导致重复触发getter</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get:&#x27;</span>, data._msg);</span><br><span class="line">        <span class="keyword">return</span> data._msg;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    set(newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set:&#x27;</span>, newValue);</span><br><span class="line">        <span class="keyword">if</span> (newValue === data._msg) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        data._msg = newValue;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = data._msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line">data.msg = <span class="string">&#x27;hello world&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.msg);</span><br></pre></td></tr></table></figure>
-
-<p>Vue 3.x</p>
-<p>Proxy 代码示例， 详见 <a href="./test/proxy.html">Proxy示例</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">    count: <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">    get (target, key) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get, key: &#x27;</span>, key, target[key]);</span><br><span class="line">        <span class="keyword">return</span> target[key];</span><br><span class="line">    &#125;,</span><br><span class="line">    set(target, key, newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set, key:&#x27;</span>, key, newValue);</span><br><span class="line">        <span class="keyword">if</span> (target[key] === newValue) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        target[key] = newValue;</span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = target[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line">vm.msg = <span class="string">&#x27;along&#x27;</span>;</span><br><span class="line"></span><br><span class="line">vm.count = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="发布订阅模式-与-观察者模式"><a href="#发布订阅模式-与-观察者模式" class="headerlink" title="发布订阅模式 与 观察者模式"></a>发布订阅模式 与 观察者模式</h3><p>发布订阅模式</p>
-<p>vue和node事件基于发布订阅模式</p>
-<p>vue 自定义事件示例,实现兄弟组件间的通讯</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eventBus.js 事件中心</span></span><br><span class="line"><span class="keyword">let</span> eventBus = <span class="keyword">new</span> Vue();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册两个事件，A、B 在created生命周期中注册两个订阅者，C 发布事件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A,vue </span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 1&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B.vue</span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 2&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// C.vue</span></span><br><span class="line"><span class="comment">// 触发事件，发布者</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    onDataChange() &#123;</span><br><span class="line">        eventBus.$emit(<span class="string">&#x27;datachange&#x27;</span>, &#123;<span class="attr">text</span>: <span class="string">&#x27;along&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>模拟实现 事件中心 详见 <a href="./test/eventemitter.html">eventemitter</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件触发器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $on(eventType, handler) &#123;</span><br><span class="line">        <span class="comment">// 如果没有注册过该事件，设置该事件为空数组</span></span><br><span class="line">        <span class="built_in">this</span>.subs[eventType] = <span class="built_in">this</span>.subs[eventType] || [];</span><br><span class="line">        <span class="built_in">this</span>.subs[eventType].push(handler);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    $emit(eventType) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.subs[eventType]) &#123;</span><br><span class="line">            <span class="built_in">this</span>.subs[eventType].forEach(<span class="function"><span class="params">handler</span> =&gt;</span> &#123;</span><br><span class="line">                handler(); </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="keyword">let</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 1&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 2&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">em.$emit(<span class="string">&#x27;click&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>观察者模式</p>
-<p>vue响应式机制使用了观察者模式</p>
-<p>观察者模式没有事件中心，只有发布者和订阅者，发布者需要知道订阅者的存在</p>
+    <title>vue-router原理</title>
+    <url>/2020/08/27/vue-router%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="vue-router-原理"><a href="#vue-router-原理" class="headerlink" title="vue-router 原理"></a>vue-router 原理</h2><p>模拟实现一个<code>vue-router</code>,详见 <a href="https://github.com/alongithub/vue-router-source/blob/master/src/vuerouter/index.js">vuerouter/index.js</a></p>
+<p>借助vuecli 搭建一个vue-router项目，替换掉VueRouter部分为我们自定义的类，目前实现的功能</p>
 <ul>
-<li>观察者模式中，订阅者称为观察者，Watcher<ul>
-<li>update(), 观察者需要实现update方法，定义事件发生时具体要做的事情</li>
+<li><input checked="" disabled="" type="checkbox"> history 模式</li>
+<li><input checked="" disabled="" type="checkbox"> hash 模式</li>
+<li><input checked="" disabled="" type="checkbox"> router-view</li>
+<li><input checked="" disabled="" type="checkbox"> router-link</li>
+</ul>
+<h3 id="vue-router-结构"><a href="#vue-router-结构" class="headerlink" title="vue-router 结构"></a>vue-router 结构</h3><h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><table>
+<thead>
+<tr>
+<th>VueRouter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+ options <br/> + data <br/> + routeMap</td>
+</tr>
+<tr>
+<td>+ Constructor(Options):VueRouter <br/> _ install(Vue): void <br/> + init(): void <br/> + initEvent(): void <br/> + createRouteMap(): void <br/> + initComponents(Vue): void</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>options</code> 记录构造函数中的对象</p>
+</li>
+<li><p><code>data</code> 响应式对象</p>
+<ul>
+<li><code>current</code> 记录当前路由地址</li>
 </ul>
 </li>
-<li>发布者，Dep<ul>
-<li>subs: 存储观察者的数组</li>
-<li>addSub(): 注册添加观察者</li>
-<li>notify(): 事件发生时，通知所有的观察者update()方法</li>
-</ul>
+<li><p><code>routeMap</code> 记录路由和组件的对应关系 </p>
 </li>
-</ul>
-<p>观察者模式代码示例，详见<a href="./test/depwatcher.html"></a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 发布者</span><br><span class="line">class Dep &#123;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        &#x2F;&#x2F; 记录所有的订阅者</span><br><span class="line">        this.subs &#x3D; [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    addSub(sub) &#123;</span><br><span class="line">        if (sub &amp;&amp; sub.update) &#123;</span><br><span class="line">            this.subs.push(sub);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify() &#123;</span><br><span class="line">        this.subs.forEach(sub &#x3D;&gt; &#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 订阅者</span><br><span class="line">class Watcher &#123;</span><br><span class="line">    update() &#123;</span><br><span class="line">        console.log(&#39;update&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; test</span><br><span class="line">let dep &#x3D; new Dep();</span><br><span class="line">let watcher &#x3D; new Watcher();</span><br><span class="line"></span><br><span class="line">dep.addSub(watcher);</span><br><span class="line"></span><br><span class="line">dep.notify();</span><br></pre></td></tr></table></figure>
-
-<p>观察者模式和发布订阅模式的区别</p>
-<ul>
-<li>观察者模式由具体目标调度，当时间触发，Dep就会调用观察者的方法，观察者和发布者之间存在依赖关系</li>
-<li>发布/订阅模式由事件中心调度，发布者和订阅者不需要知道对方的存在</li>
-</ul>
-<p><img src="./readmeimg/diffofwatcher.png"></p>
-<h3 id="vue-响应式原理总览"><a href="#vue-响应式原理总览" class="headerlink" title="vue 响应式原理总览"></a>vue 响应式原理总览</h3><p><img src="./readmeimg/vue.png"></p>
-<h4 id="VUE"><a href="#VUE" class="headerlink" title="VUE"></a>VUE</h4><ul>
-<li>负责接收初始化参数</li>
-<li>负责把data中的属性注入到Vue中，转换为getter/setter</li>
-<li>负责调用Observer监听data中属性的变换</li>
-<li>负责调用Compiler解析指令/差值表达式</li>
-</ul>
-<p>类图<br>|  VUE   |<br>|  —-  |<br>| + $options <br/> + $el <br/> + $data|<br>| - _proxyDate() | </p>
-<h4 id="Observer-数据劫持"><a href="#Observer-数据劫持" class="headerlink" title="Observer 数据劫持"></a>Observer 数据劫持</h4><ul>
-<li>负责把data中的数据转换成响应式数据</li>
-<li>data中的某个属性是对象时，把该对象属性也转换成响应式数据</li>
-<li>数据变化时发送通知</li>
-</ul>
-<p>类图<br>|  Observer   |<br>|  —-  |<br>| + walk() <br/> + defineReactive|</p>
-<h4 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h4><ul>
-<li>编译模板，解析指令差值表达式</li>
-<li>负责页面的首次渲染</li>
-<li>数据变化时更新视图</li>
-</ul>
-<p>类图<br>|  Compiler   |<br>|  —-  |<br>| + el <br/> + vm|<br>| + compile(el) <br/> + compilerElement(node) <br/> + compileText(node) <br/> + isDirective(attrName) <br> + isTextNode(node) <br/> + isElementNode(node) |</p>
-<ul>
-<li>compile(el) 解析节点，如果是文本节点，解析差值表达式，如果是元素节点解析指令</li>
-<li>compileElement(node) 解析元素节点</li>
-<li>compileText(node) 解析文本节点</li>
-<li>isDirective(attrName) 判断属性是否是指令</li>
-</ul>
-<h4 id="Dep-Dependency"><a href="#Dep-Dependency" class="headerlink" title="Dep(Dependency)"></a>Dep(Dependency)</h4><ul>
-<li>收集依赖，添加观察者</li>
-<li>通知所有观察者更新数据</li>
-</ul>
-<p>类图<br>|  Dep   |<br>|  —-  |<br>| + subs |<br>| + addSub(sub) <br/> + notify() | </p>
-<h4 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h4><ul>
-<li>数据变化时dep通知所有watcher 更新视图</li>
-<li>自身实例化时 注册到dep 对象中</li>
-</ul>
-<p>类图<br>|  Watcher   |<br>|  —-  |<br>| + vm <br/> + key <br/> + cb <br/> + oldValue |<br>| + update() | </p>
-<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><p>了解了响应式原理的几个部分，本项目简易实现一个响应式vue</p>
-<p>目前实现的功能</p>
-<ul>
-<li><input disabled="" type="checkbox"> 差值表达式 <ul>
-<li><input checked="" disabled="" type="checkbox"> 绑定值 <code>&#123;&#123;data&#125;&#125;</code></li>
-<li><input disabled="" type="checkbox"> 表达式 <code>&#123;&#123;data + 1&#125;&#125;</code></li>
-<li><input disabled="" type="checkbox"> …</li>
-</ul>
+<li><p><code>install</code> 静态方法实现<code>vue</code>插件</p>
 </li>
-<li><input disabled="" type="checkbox"> 模板指令<ul>
-<li><input checked="" disabled="" type="checkbox"> <code>v-text</code></li>
-<li><input checked="" disabled="" type="checkbox"> <code>v-html</code></li>
-<li><input checked="" disabled="" type="checkbox"> <code>v-model</code> 双向绑定</li>
-<li><input disabled="" type="checkbox"> <code>v-on</code><ul>
-<li><input checked="" disabled="" type="checkbox"> 绑定<code>vue</code>中的<code>methods</code> </li>
-<li><input disabled="" type="checkbox"> …</li>
-</ul>
+<li><p><code>initEvent</code> 监听浏览器地址变化</p>
 </li>
-</ul>
+<li><p><code>createRouteMap</code> 出事话<code>routeMap</code> 属性，把构造函数的路由规则转换成键值对存在routeMap中</p>
+</li>
+<li><p><code>initComponents</code> 创建<code>router-link</code>和<code>router-view</code>两个组件</p>
 </li>
 </ul>
 ]]></content>
       <tags>
         <tag>vue</tag>
+        <tag>vue-router</tag>
       </tags>
   </entry>
   <entry>
@@ -976,6 +868,114 @@
 <h2 id="界面布局"><a href="#界面布局" class="headerlink" title="界面布局"></a>界面布局</h2>]]></content>
       <tags>
         <tag>vue项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue响应式原理</title>
+    <url>/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="VUE-响应式原理"><a href="#VUE-响应式原理" class="headerlink" title="VUE 响应式原理"></a>VUE 响应式原理</h2><h3 id="数据响应式原理"><a href="#数据响应式原理" class="headerlink" title="数据响应式原理"></a>数据响应式原理</h3><p>Vue 2.x</p>
+<blockquote>
+<p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。</p>
+</blockquote>
+<p>defineProperty 代码示例，详见 <a href="./test/defineproperty.html">defineProty示例</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据劫持</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(data, <span class="string">&#x27;msg&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// 可枚举</span></span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 可配置(可以使用delete删除)</span></span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">    get() &#123;</span><br><span class="line">        <span class="comment">// 需要用一个新的字段保存实际的msg值，因为在get中如果访问msg会导致重复触发getter</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get:&#x27;</span>, data._msg);</span><br><span class="line">        <span class="keyword">return</span> data._msg;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    set(newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set:&#x27;</span>, newValue);</span><br><span class="line">        <span class="keyword">if</span> (newValue === data._msg) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        data._msg = newValue;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = data._msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line">data.msg = <span class="string">&#x27;hello world&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.msg);</span><br></pre></td></tr></table></figure>
+
+<p>Vue 3.x</p>
+<p>Proxy 代码示例， 详见 <a href="./test/proxy.html">Proxy示例</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">    count: <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">    get (target, key) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get, key: &#x27;</span>, key, target[key]);</span><br><span class="line">        <span class="keyword">return</span> target[key];</span><br><span class="line">    &#125;,</span><br><span class="line">    set(target, key, newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set, key:&#x27;</span>, key, newValue);</span><br><span class="line">        <span class="keyword">if</span> (target[key] === newValue) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        target[key] = newValue;</span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = target[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line">vm.msg = <span class="string">&#x27;along&#x27;</span>;</span><br><span class="line"></span><br><span class="line">vm.count = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="发布订阅模式-与-观察者模式"><a href="#发布订阅模式-与-观察者模式" class="headerlink" title="发布订阅模式 与 观察者模式"></a>发布订阅模式 与 观察者模式</h3><p>发布订阅模式</p>
+<p>vue和node事件基于发布订阅模式</p>
+<p>vue 自定义事件示例,实现兄弟组件间的通讯</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eventBus.js 事件中心</span></span><br><span class="line"><span class="keyword">let</span> eventBus = <span class="keyword">new</span> Vue();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册两个事件，A、B 在created生命周期中注册两个订阅者，C 发布事件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A,vue </span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 1&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B.vue</span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 2&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// C.vue</span></span><br><span class="line"><span class="comment">// 触发事件，发布者</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    onDataChange() &#123;</span><br><span class="line">        eventBus.$emit(<span class="string">&#x27;datachange&#x27;</span>, &#123;<span class="attr">text</span>: <span class="string">&#x27;along&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模拟实现 事件中心 详见 <a href="./test/eventemitter.html">eventemitter</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件触发器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $on(eventType, handler) &#123;</span><br><span class="line">        <span class="comment">// 如果没有注册过该事件，设置该事件为空数组</span></span><br><span class="line">        <span class="built_in">this</span>.subs[eventType] = <span class="built_in">this</span>.subs[eventType] || [];</span><br><span class="line">        <span class="built_in">this</span>.subs[eventType].push(handler);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    $emit(eventType) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.subs[eventType]) &#123;</span><br><span class="line">            <span class="built_in">this</span>.subs[eventType].forEach(<span class="function"><span class="params">handler</span> =&gt;</span> &#123;</span><br><span class="line">                handler(); </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="keyword">let</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 1&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 2&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">em.$emit(<span class="string">&#x27;click&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>观察者模式</p>
+<p>vue响应式机制使用了观察者模式</p>
+<p>观察者模式没有事件中心，只有发布者和订阅者，发布者需要知道订阅者的存在</p>
+<ul>
+<li>观察者模式中，订阅者称为观察者，Watcher<ul>
+<li>update(), 观察者需要实现update方法，定义事件发生时具体要做的事情</li>
+</ul>
+</li>
+<li>发布者，Dep<ul>
+<li>subs: 存储观察者的数组</li>
+<li>addSub(): 注册添加观察者</li>
+<li>notify(): 事件发生时，通知所有的观察者update()方法</li>
+</ul>
+</li>
+</ul>
+<p>观察者模式代码示例，详见<a href="./test/depwatcher.html"></a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 发布者</span><br><span class="line">class Dep &#123;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        &#x2F;&#x2F; 记录所有的订阅者</span><br><span class="line">        this.subs &#x3D; [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    addSub(sub) &#123;</span><br><span class="line">        if (sub &amp;&amp; sub.update) &#123;</span><br><span class="line">            this.subs.push(sub);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify() &#123;</span><br><span class="line">        this.subs.forEach(sub &#x3D;&gt; &#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 订阅者</span><br><span class="line">class Watcher &#123;</span><br><span class="line">    update() &#123;</span><br><span class="line">        console.log(&#39;update&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; test</span><br><span class="line">let dep &#x3D; new Dep();</span><br><span class="line">let watcher &#x3D; new Watcher();</span><br><span class="line"></span><br><span class="line">dep.addSub(watcher);</span><br><span class="line"></span><br><span class="line">dep.notify();</span><br></pre></td></tr></table></figure>
+
+<p>观察者模式和发布订阅模式的区别</p>
+<ul>
+<li>观察者模式由具体目标调度，当时间触发，Dep就会调用观察者的方法，观察者和发布者之间存在依赖关系</li>
+<li>发布/订阅模式由事件中心调度，发布者和订阅者不需要知道对方的存在</li>
+</ul>
+<p><img src="./readmeimg/diffofwatcher.png"></p>
+<h3 id="vue-响应式原理总览"><a href="#vue-响应式原理总览" class="headerlink" title="vue 响应式原理总览"></a>vue 响应式原理总览</h3><p><img src="./readmeimg/vue.png"></p>
+<h4 id="VUE"><a href="#VUE" class="headerlink" title="VUE"></a>VUE</h4><ul>
+<li>负责接收初始化参数</li>
+<li>负责把data中的属性注入到Vue中，转换为getter/setter</li>
+<li>负责调用Observer监听data中属性的变换</li>
+<li>负责调用Compiler解析指令/差值表达式</li>
+</ul>
+<p>类图<br>|  VUE   |<br>|  —-  |<br>| + $options <br/> + $el <br/> + $data|<br>| - _proxyDate() | </p>
+<h4 id="Observer-数据劫持"><a href="#Observer-数据劫持" class="headerlink" title="Observer 数据劫持"></a>Observer 数据劫持</h4><ul>
+<li>负责把data中的数据转换成响应式数据</li>
+<li>data中的某个属性是对象时，把该对象属性也转换成响应式数据</li>
+<li>数据变化时发送通知</li>
+</ul>
+<p>类图<br>|  Observer   |<br>|  —-  |<br>| + walk() <br/> + defineReactive|</p>
+<h4 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h4><ul>
+<li>编译模板，解析指令差值表达式</li>
+<li>负责页面的首次渲染</li>
+<li>数据变化时更新视图</li>
+</ul>
+<p>类图<br>|  Compiler   |<br>|  —-  |<br>| + el <br/> + vm|<br>| + compile(el) <br/> + compilerElement(node) <br/> + compileText(node) <br/> + isDirective(attrName) <br> + isTextNode(node) <br/> + isElementNode(node) |</p>
+<ul>
+<li>compile(el) 解析节点，如果是文本节点，解析差值表达式，如果是元素节点解析指令</li>
+<li>compileElement(node) 解析元素节点</li>
+<li>compileText(node) 解析文本节点</li>
+<li>isDirective(attrName) 判断属性是否是指令</li>
+</ul>
+<h4 id="Dep-Dependency"><a href="#Dep-Dependency" class="headerlink" title="Dep(Dependency)"></a>Dep(Dependency)</h4><ul>
+<li>收集依赖，添加观察者</li>
+<li>通知所有观察者更新数据</li>
+</ul>
+<p>类图<br>|  Dep   |<br>|  —-  |<br>| + subs |<br>| + addSub(sub) <br/> + notify() | </p>
+<h4 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h4><ul>
+<li>数据变化时dep通知所有watcher 更新视图</li>
+<li>自身实例化时 注册到dep 对象中</li>
+</ul>
+<p>类图<br>|  Watcher   |<br>|  —-  |<br>| + vm <br/> + key <br/> + cb <br/> + oldValue |<br>| + update() | </p>
+<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><p>了解了响应式原理的几个部分，本项目简易实现一个响应式vue</p>
+<p>目前实现的功能</p>
+<ul>
+<li><input disabled="" type="checkbox"> 差值表达式 <ul>
+<li><input checked="" disabled="" type="checkbox"> 绑定值 <code>&#123;&#123;data&#125;&#125;</code></li>
+<li><input disabled="" type="checkbox"> 表达式 <code>&#123;&#123;data + 1&#125;&#125;</code></li>
+<li><input disabled="" type="checkbox"> …</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 模板指令<ul>
+<li><input checked="" disabled="" type="checkbox"> <code>v-text</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>v-html</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>v-model</code> 双向绑定</li>
+<li><input disabled="" type="checkbox"> <code>v-on</code><ul>
+<li><input checked="" disabled="" type="checkbox"> 绑定<code>vue</code>中的<code>methods</code> </li>
+<li><input disabled="" type="checkbox"> …</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1216,6 +1216,44 @@
       </tags>
   </entry>
   <entry>
+    <title>微信开发者工具</title>
+    <url>/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<p>微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码</p>
+<h4 id="在开发工具控制台，使用命令"><a href="#在开发工具控制台，使用命令" class="headerlink" title="在开发工具控制台，使用命令"></a>在开发工具控制台，使用命令</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openInspect()</span><br></pre></td></tr></table></figure>
+
+<p>打开chromw devtool</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/devtools.png" class="">
+
+<p>点击Apps -&gt; inspect</p>
+<p>此时就打开了隐藏的调试工具，切换到控制台的Elements,可以看到微信开发工具中的每一个部分的web代码</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/tool.png" class="">
+
+<p>通过 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)</span><br></pre></td></tr></table></figure>
+<p>可以看到小程序的几个webview</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/webview.png" class="">
+
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)[0].showDevTools(true, null)</span><br></pre></td></tr></table></figure>
+<p>打开小程序的渲染层</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/renderview.png" class="">
+
+
+
+
+
+]]></content>
+  </entry>
+  <entry>
+    <title>手写Promise</title>
+    <url>/2020/09/23/%E6%89%8B%E5%86%99promise/</url>
+    <content><![CDATA[<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> PENDING = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">&#x27;fulfilled&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">&#x27;rejected&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保存实例状态</span></span><br><span class="line">    status = PENDING;</span><br><span class="line">    value = <span class="literal">undefined</span>; <span class="comment">// 成功时的返回值</span></span><br><span class="line">    reason = <span class="literal">undefined</span>; <span class="comment">// 失败时的返回值</span></span><br><span class="line">    successCallback = []; <span class="comment">// 异步成功回调</span></span><br><span class="line">    failCallback = []; <span class="comment">// 异步失败回调</span></span><br><span class="line">    <span class="comment">// executor 执行器，promise创建实例时传入的回调函数</span></span><br><span class="line">    <span class="keyword">constructor</span>(executor) &#123;</span><br><span class="line">        <span class="comment">// 捕获执行器中的错误</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            executor(<span class="built_in">this</span>.resolve, <span class="built_in">this</span>.reject); <span class="comment">// 执行器立即执行</span></span><br><span class="line">        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">            <span class="built_in">this</span>.reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolve = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = FULFILLED;</span><br><span class="line">        <span class="comment">// 保存成功后的值，方便then方法中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">        <span class="comment">// 判断successCallback 成功回调是否存在，存在说明 resolve是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.successCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.successCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reject = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = REJECTED;</span><br><span class="line">        <span class="comment">// 保存失败的原因，方便then中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.reason = reason;</span><br><span class="line">        <span class="comment">// failCallback 失败回调是否存在，存在说明 reject是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.failCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.failCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    then(successCallback, failCallback) &#123;</span><br><span class="line">        <span class="comment">// then方法可以不传递回调函数，自动将promise返回结构向之后的then函数传递</span></span><br><span class="line">        successCallback = successCallback ? successCallback : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        failCallback = failCallback ? failCallback : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// then 链式调用返回新的实例</span></span><br><span class="line">        <span class="keyword">let</span> thenPromise = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 判断状态</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.status === FULFILLED) &#123;</span><br><span class="line">                <span class="comment">// 因为同步执行时resolvePromise拿不到thenPromise，</span></span><br><span class="line">                <span class="comment">// 所以让这段代码在return thenPromise后执行</span></span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.status === REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果执行器中的rosolve或reject是异步执行的</span></span><br><span class="line">                <span class="comment">// then会立即执行，此时，将then中的两个参数保存到实例中</span></span><br><span class="line">                <span class="built_in">this</span>.successCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">this</span>.failCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> thenPromise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> (callback) &#123;</span><br><span class="line">        <span class="comment">// 无论promise状态是成功还是失败，都会调用finally的callback,并把promise返回结果继续向下传递</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 如果finaly方法返回了promise, 之后的then方法会等待该promise执行结束</span></span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> value)</span><br><span class="line">        &#125;, <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;) </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catch</span>(failCallback) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="literal">undefined</span>, failCallback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态方法</span></span><br><span class="line">    <span class="keyword">static</span> all (array) &#123;</span><br><span class="line">        <span class="keyword">let</span> result = [];</span><br><span class="line">        <span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">addData</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">                result[key] = value;</span><br><span class="line">                index ++;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (index === array.length) &#123;</span><br><span class="line">                    resolve(result);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// MyPromise.all([&#x27;a&#x27;, &#x27;b&#x27;, new MyPromise(r =&gt; &#123;r(&#x27;p1&#x27;)&#125;)])</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">                <span class="keyword">let</span> current = array[i];</span><br><span class="line">                <span class="keyword">if</span> (current <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    <span class="comment">// promise对象, 如果成功添加到结果中，如果失败直接reject</span></span><br><span class="line">                    current.then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                        addData(i, value)</span><br><span class="line">                    &#125;, reject)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 普通值, 直接放入返回结果中</span></span><br><span class="line">                    addData(i, array[i])</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            resolve(value);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">thenPromise, x, resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果then的回调返回了then函数返回的promise对象，报错</span></span><br><span class="line">    <span class="comment">// let p = promise.then(v =&gt; &#123;return p&#125;)</span></span><br><span class="line">    <span class="keyword">if</span> (thenPromise === x) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Chaining cycle detected for promise #&lt;MyPromise&gt;&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// promise.then(v =&gt; &#123;return x&#125;);</span></span><br><span class="line">    <span class="comment">// 判断x的值是普通值还是promise对象</span></span><br><span class="line">    <span class="comment">// 如果是普通值，直接调用resolve</span></span><br><span class="line">    <span class="comment">// 如果是promise对象，查看promise对象的返回的结果</span></span><br><span class="line">    <span class="comment">// 再根据promise对象返回的结果决定用resolve 还是调用reject</span></span><br><span class="line">    <span class="keyword">if</span>(x <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">        <span class="comment">// promise对象 , 调用then查看回调状态</span></span><br><span class="line">        <span class="comment">// x.then(value =&gt; resolve(value), reason =&gt; reject(reason))</span></span><br><span class="line">        x.then(resolve, reject);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyPromise;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Promise</tag>
+        <tag>Promise源码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>备忘</title>
     <url>/2020/09/04/%E5%A4%87%E5%BF%98/</url>
     <content><![CDATA[<h3 id="eslint-关闭校验"><a href="#eslint-关闭校验" class="headerlink" title="eslint 关闭校验"></a>eslint 关闭校验</h3><h4 id="关闭段落校验"><a href="#关闭段落校验" class="headerlink" title="关闭段落校验"></a>关闭段落校验</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br><span class="line">    代码块</span><br><span class="line">&#x2F;* eslint-enable *&#x2F;</span><br></pre></td></tr></table></figure>
@@ -1261,44 +1299,6 @@
 <h4 id="查看端口占用情况"><a href="#查看端口占用情况" class="headerlink" title="查看端口占用情况"></a>查看端口占用情况</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netstat -tunlp|grep 端口号</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>备忘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微信开发者工具</title>
-    <url>/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<p>微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码</p>
-<h4 id="在开发工具控制台，使用命令"><a href="#在开发工具控制台，使用命令" class="headerlink" title="在开发工具控制台，使用命令"></a>在开发工具控制台，使用命令</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openInspect()</span><br></pre></td></tr></table></figure>
-
-<p>打开chromw devtool</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/devtools.png" class="">
-
-<p>点击Apps -&gt; inspect</p>
-<p>此时就打开了隐藏的调试工具，切换到控制台的Elements,可以看到微信开发工具中的每一个部分的web代码</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/tool.png" class="">
-
-<p>通过 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)</span><br></pre></td></tr></table></figure>
-<p>可以看到小程序的几个webview</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/webview.png" class="">
-
-<p>通过</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)[0].showDevTools(true, null)</span><br></pre></td></tr></table></figure>
-<p>打开小程序的渲染层</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/renderview.png" class="">
-
-
-
-
-
-]]></content>
-  </entry>
-  <entry>
-    <title>手写Promise</title>
-    <url>/2020/09/23/%E6%89%8B%E5%86%99promise/</url>
-    <content><![CDATA[<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> PENDING = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">&#x27;fulfilled&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">&#x27;rejected&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保存实例状态</span></span><br><span class="line">    status = PENDING;</span><br><span class="line">    value = <span class="literal">undefined</span>; <span class="comment">// 成功时的返回值</span></span><br><span class="line">    reason = <span class="literal">undefined</span>; <span class="comment">// 失败时的返回值</span></span><br><span class="line">    successCallback = []; <span class="comment">// 异步成功回调</span></span><br><span class="line">    failCallback = []; <span class="comment">// 异步失败回调</span></span><br><span class="line">    <span class="comment">// executor 执行器，promise创建实例时传入的回调函数</span></span><br><span class="line">    <span class="keyword">constructor</span>(executor) &#123;</span><br><span class="line">        <span class="comment">// 捕获执行器中的错误</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            executor(<span class="built_in">this</span>.resolve, <span class="built_in">this</span>.reject); <span class="comment">// 执行器立即执行</span></span><br><span class="line">        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">            <span class="built_in">this</span>.reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolve = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = FULFILLED;</span><br><span class="line">        <span class="comment">// 保存成功后的值，方便then方法中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">        <span class="comment">// 判断successCallback 成功回调是否存在，存在说明 resolve是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.successCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.successCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reject = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = REJECTED;</span><br><span class="line">        <span class="comment">// 保存失败的原因，方便then中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.reason = reason;</span><br><span class="line">        <span class="comment">// failCallback 失败回调是否存在，存在说明 reject是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.failCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.failCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    then(successCallback, failCallback) &#123;</span><br><span class="line">        <span class="comment">// then方法可以不传递回调函数，自动将promise返回结构向之后的then函数传递</span></span><br><span class="line">        successCallback = successCallback ? successCallback : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        failCallback = failCallback ? failCallback : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// then 链式调用返回新的实例</span></span><br><span class="line">        <span class="keyword">let</span> thenPromise = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 判断状态</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.status === FULFILLED) &#123;</span><br><span class="line">                <span class="comment">// 因为同步执行时resolvePromise拿不到thenPromise，</span></span><br><span class="line">                <span class="comment">// 所以让这段代码在return thenPromise后执行</span></span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.status === REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果执行器中的rosolve或reject是异步执行的</span></span><br><span class="line">                <span class="comment">// then会立即执行，此时，将then中的两个参数保存到实例中</span></span><br><span class="line">                <span class="built_in">this</span>.successCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">this</span>.failCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> thenPromise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> (callback) &#123;</span><br><span class="line">        <span class="comment">// 无论promise状态是成功还是失败，都会调用finally的callback,并把promise返回结果继续向下传递</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 如果finaly方法返回了promise, 之后的then方法会等待该promise执行结束</span></span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> value)</span><br><span class="line">        &#125;, <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;) </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catch</span>(failCallback) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="literal">undefined</span>, failCallback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态方法</span></span><br><span class="line">    <span class="keyword">static</span> all (array) &#123;</span><br><span class="line">        <span class="keyword">let</span> result = [];</span><br><span class="line">        <span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">addData</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">                result[key] = value;</span><br><span class="line">                index ++;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (index === array.length) &#123;</span><br><span class="line">                    resolve(result);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// MyPromise.all([&#x27;a&#x27;, &#x27;b&#x27;, new MyPromise(r =&gt; &#123;r(&#x27;p1&#x27;)&#125;)])</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">                <span class="keyword">let</span> current = array[i];</span><br><span class="line">                <span class="keyword">if</span> (current <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    <span class="comment">// promise对象, 如果成功添加到结果中，如果失败直接reject</span></span><br><span class="line">                    current.then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                        addData(i, value)</span><br><span class="line">                    &#125;, reject)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 普通值, 直接放入返回结果中</span></span><br><span class="line">                    addData(i, array[i])</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            resolve(value);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">thenPromise, x, resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果then的回调返回了then函数返回的promise对象，报错</span></span><br><span class="line">    <span class="comment">// let p = promise.then(v =&gt; &#123;return p&#125;)</span></span><br><span class="line">    <span class="keyword">if</span> (thenPromise === x) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Chaining cycle detected for promise #&lt;MyPromise&gt;&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// promise.then(v =&gt; &#123;return x&#125;);</span></span><br><span class="line">    <span class="comment">// 判断x的值是普通值还是promise对象</span></span><br><span class="line">    <span class="comment">// 如果是普通值，直接调用resolve</span></span><br><span class="line">    <span class="comment">// 如果是promise对象，查看promise对象的返回的结果</span></span><br><span class="line">    <span class="comment">// 再根据promise对象返回的结果决定用resolve 还是调用reject</span></span><br><span class="line">    <span class="keyword">if</span>(x <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">        <span class="comment">// promise对象 , 调用then查看回调状态</span></span><br><span class="line">        <span class="comment">// x.then(value =&gt; resolve(value), reason =&gt; reject(reason))</span></span><br><span class="line">        x.then(resolve, reject);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyPromise;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Promise</tag>
-        <tag>Promise源码</tag>
       </tags>
   </entry>
   <entry>
