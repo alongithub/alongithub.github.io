@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="vue3的语法介绍，结合组合API使用JSX"/>
+
+
+
+
+  <meta name="keywords" content="vue3.0,composition Api,JSX," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2021/06/12/vue3-0语法/"/>
+
+
+<meta name="description" content="vue3的语法介绍，结合组合API使用JSX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3语法">
+<meta property="og:url" content="https://github.com/alongithub/2021/06/12/vue3-0%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="vue3的语法介绍，结合组合API使用JSX">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-12T03:08:21.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:18:29.241Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="vue3.0">
+<meta property="article:tag" content="composition Api">
+<meta property="article:tag" content="JSX">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> vue3语法 - ALONG </title>
+  <meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A7%BD"><span class="toc-text">插槽</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%A4%87%E5%86%85%E5%AE%B9"><span class="toc-text">后备内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD"><span class="toc-text">具名插槽</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD"><span class="toc-text">作用域插槽</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E6%8F%92%E6%A7%BDprop"><span class="toc-text">结构插槽prop</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B-%E6%B3%A8%E5%85%A5"><span class="toc-text">提供&#x2F;注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6"><span class="toc-text">动态组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#keep-alive"><span class="toc-text">keep-alive</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E6%9B%B4%E6%96%B0"><span class="toc-text">强制更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%BB%84%E4%BB%B6-v-once"><span class="toc-text">静态组件 v-once</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mixin-%E6%B7%B7%E5%85%A5"><span class="toc-text">Mixin 混入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%B7%B7%E5%85%A5"><span class="toc-text">全局混入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4"><span class="toc-text">自定义指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#teleport"><span class="toc-text">teleport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#render%E5%87%BD%E6%95%B0"><span class="toc-text">render函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSX"><span class="toc-text">JSX</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#function"><span class="toc-text">function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#render"><span class="toc-text">render</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setup"><span class="toc-text">setup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fragment"><span class="toc-text">fragment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Attributes-props"><span class="toc-text">Attributes&#x2F;props</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-show"><span class="toc-text">v-show</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-model"><span class="toc-text">v-model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-models"><span class="toc-text">v-models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#slot"><span class="toc-text">slot</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#composition-Api"><span class="toc-text">composition Api</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ref-reactive"><span class="toc-text">ref&#x2F;reactive</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%91%E5%90%ACwatch"><span class="toc-text">监听watch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toRefs"><span class="toc-text">toRefs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#computed"><span class="toc-text">computed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B-%E6%B3%A8%E5%85%A5-1"><span class="toc-text">提供&#x2F;注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8JSX"><span class="toc-text">使用JSX</span></a></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vue3语法
+        
+      </h1>
+
+      <time class="post-time">
+          6月 12 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h3><h4 id="后备内容"><a href="#后备内容" class="headerlink" title="后备内容"></a>后备内容</h4><h4 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h4><h4 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h4><h4 id="结构插槽prop"><a href="#结构插槽prop" class="headerlink" title="结构插槽prop"></a>结构插槽prop</h4><h3 id="提供-注入"><a href="#提供-注入" class="headerlink" title="提供/注入"></a>提供/注入</h3><h3 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h3><h4 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h4><h3 id="强制更新"><a href="#强制更新" class="headerlink" title="强制更新"></a>强制更新</h3><h3 id="静态组件-v-once"><a href="#静态组件-v-once" class="headerlink" title="静态组件 v-once"></a>静态组件 v-once</h3><h3 id="Mixin-混入"><a href="#Mixin-混入" class="headerlink" title="Mixin 混入"></a>Mixin 混入</h3><h4 id="全局混入"><a href="#全局混入" class="headerlink" title="全局混入"></a>全局混入</h4><h3 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h3><h3 id="teleport"><a href="#teleport" class="headerlink" title="teleport"></a>teleport</h3><h3 id="render函数"><a href="#render函数" class="headerlink" title="render函数"></a>render函数</h3><h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><h4 id="function"><a href="#function" class="headerlink" title="function"></a>function</h4><h4 id="render"><a href="#render" class="headerlink" title="render"></a>render</h4><h4 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h4><h4 id="fragment"><a href="#fragment" class="headerlink" title="fragment"></a>fragment</h4><h4 id="Attributes-props"><a href="#Attributes-props" class="headerlink" title="Attributes/props"></a>Attributes/props</h4><h4 id="v-show"><a href="#v-show" class="headerlink" title="v-show"></a>v-show</h4><h4 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h4><h4 id="v-models"><a href="#v-models" class="headerlink" title="v-models"></a>v-models</h4><h4 id="slot"><a href="#slot" class="headerlink" title="slot"></a>slot</h4><h3 id="composition-Api"><a href="#composition-Api" class="headerlink" title="composition Api"></a>composition Api</h3><h4 id="ref-reactive"><a href="#ref-reactive" class="headerlink" title="ref/reactive"></a>ref/reactive</h4><h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><h4 id="监听watch"><a href="#监听watch" class="headerlink" title="监听watch"></a>监听watch</h4><h4 id="toRefs"><a href="#toRefs" class="headerlink" title="toRefs"></a>toRefs</h4><h4 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h4><h4 id="提供-注入-1"><a href="#提供-注入-1" class="headerlink" title="提供/注入"></a>提供/注入</h4><h4 id="使用JSX"><a href="#使用JSX" class="headerlink" title="使用JSX"></a>使用JSX</h4>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/vue3-0/">vue3.0</a>
+		  
+			<a href="/tags/composition-Api/">composition Api</a>
+		  
+			<a href="/tags/JSX/">JSX</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2021/01/20/react-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+        <span class="next-text nav-default">react 性能优化</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
