@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="js,es6面试题整理"/>
+
+
+
+
+  <meta name="keywords" content="javascript,面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/08/27/javascript面试题/"/>
+
+
+<meta name="description" content="js,es6面试题整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript面试题">
+<meta property="og:url" content="https://github.com/alongithub/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="js,es6面试题整理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-27T06:51:18.000Z">
+<meta property="article:modified_time" content="2021-12-14T06:48:55.497Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="面试题">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> javascript面试题 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript"><span class="toc-text">javascript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#this-%E6%8C%87%E5%90%91"><span class="toc-text">this 指向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E9%A1%BA%E5%BA%8F%E5%86%99%E5%87%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%9C"><span class="toc-text">按顺序写出控制台打印结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-text">ES6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proxy"><span class="toc-text">Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Ees6%E7%9A%84proxy%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%8B%A6%E6%88%AA%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="toc-text">基于es6的proxy方法设计一个属性拦截读取操作</span></a></li></ol></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          javascript面试题
+        
+      </h1>
+
+      <time class="post-time">
+          8月 27 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h2><h3 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h3><h4 id="按顺序写出控制台打印结果"><a href="#按顺序写出控制台打印结果" class="headerlink" title="按顺序写出控制台打印结果"></a>按顺序写出控制台打印结果</h4><p>（2020 碧桂园）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> User = &#123;</span><br><span class="line">    count:<span class="number">1</span>,</span><br><span class="line">    action:&#123;</span><br><span class="line">        getCount:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.count</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getCount = User.action.getCount;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;result 1&quot;</span>,User.action.getCount())</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;result 2&quot;</span>,getCount())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// result 2, undefined</span></span><br><span class="line"><span class="comment">// result 1, undefined</span></span><br></pre></td></tr></table></figure>
+<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="基于es6的proxy方法设计一个属性拦截读取操作"><a href="#基于es6的proxy方法设计一个属性拦截读取操作" class="headerlink" title="基于es6的proxy方法设计一个属性拦截读取操作"></a>基于es6的proxy方法设计一个属性拦截读取操作</h4><p>要求实现去访问目标对象example中不存在的属性时，抛出错误：Property “$(property)” does not exist （2018 今日头条）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 案例代码</span></span><br><span class="line"><span class="keyword">const</span> man = &#123;</span><br><span class="line">    name:<span class="string">&#x27;jscoder&#x27;</span>,</span><br><span class="line">    age:<span class="number">22</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//补全代码</span></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(...)</span><br><span class="line">proxy.name   <span class="comment">// &quot;jscoder&quot;</span></span><br><span class="line">proxy.age     <span class="comment">// 22</span></span><br><span class="line">proxy.location   <span class="comment">// Property &quot;$(property)&quot; does not exist</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 答案</span></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(man, &#123;</span><br><span class="line">    get(target, property) &#123;</span><br><span class="line">        <span class="keyword">return</span> property <span class="keyword">in</span> target ? target[property] : <span class="built_in">console</span>.error(<span class="string">`Property &quot;<span class="subst">$&#123;property&#125;</span>&quot; does not exist`</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/javascript/">javascript</a>
+		  
+			<a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/12/14/gitlab%E6%90%AD%E5%BB%BA/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">gitlab搭建</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/">
+        <span class="next-text nav-default">JS异步编程</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

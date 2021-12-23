@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="gitlab搭建"/>
+
+
+
+
+  <meta name="keywords" content="centos,gitlab," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2021/12/14/gitlab搭建/"/>
+
+
+<meta name="description" content="gitlab代码仓库搭建环境安装 安装ssh 1sudo yum install -y curl policycoreutils-pythonopenssh-server  将SSH服务设置成开机自启动   1sudo systemctl enable sshd   启动SSH服务 1sudo systemctl start sshd  安装开启防火墙,如果已经安装了防火墙并且已经在运行状态跳过此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab搭建">
+<meta property="og:url" content="https://github.com/alongithub/2021/12/14/gitlab%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="gitlab代码仓库搭建环境安装 安装ssh 1sudo yum install -y curl policycoreutils-pythonopenssh-server  将SSH服务设置成开机自启动   1sudo systemctl enable sshd   启动SSH服务 1sudo systemctl start sshd  安装开启防火墙,如果已经安装了防火墙并且已经在运行状态跳过此">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-14T07:01:25.000Z">
+<meta property="article:modified_time" content="2021-12-15T03:10:43.170Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="gitlab">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> gitlab搭建 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#gitlab%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA"><span class="toc-text">gitlab代码仓库搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-text">环境安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85gitlab"><span class="toc-text">安装gitlab</span></a></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          gitlab搭建
+        
+      </h1>
+
+      <time class="post-time">
+          12月 14 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="gitlab代码仓库搭建"><a href="#gitlab代码仓库搭建" class="headerlink" title="gitlab代码仓库搭建"></a>gitlab代码仓库搭建</h2><h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><ol>
+<li><p>安装ssh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y curl policycoreutils-pythonopenssh-server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将SSH服务设置成开机自启动</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable sshd</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>启动SSH服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start sshd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装开启防火墙,如果已经安装了防火墙并且已经在运行状态跳过此步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install firewalld systemd -y</span><br><span class="line"></span><br><span class="line">service firewalld  start</span><br><span class="line">&#x2F;&#x2F; 或者</span><br><span class="line">systemctl start firewalld</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加http服务到firewalld,pemmanent表示永久生效，若不加–permanent系统下次启动后就会失效。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo firewall-cmd --permanent --add-service&#x3D;http</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><p>重启防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload firewalld</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装Postfix以发送通知邮件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install postfix</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将postfix服务设置成开机自启动</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable postfix</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>启动postfix</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start postfix</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li><p>wget 用于从外网上下载插件  <code>wget -V</code> 查看版本，已安装掠过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装vim编辑器, 系统一般会安装，可略过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install vim</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h3><ol>
+<li><p>添加gitlab镜像<br>镜像需要跟自己的centos版本对应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; centos 7</span><br><span class="line">wget https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;gitlab-ce&#x2F;yum&#x2F;el7&#x2F;gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm</span><br><span class="line">&#x2F;&#x2F; centos 8</span><br><span class="line">wget https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;gitlab-ce&#x2F;yum&#x2F;el8&#x2F;gitlab-ce-12.10.1-ce.0.el8.x86_64.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装gitlab</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; centos 7</span><br><span class="line">rpm -i gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm</span><br><span class="line">&#x2F;&#x2F; centos 8</span><br><span class="line">rpm -i gitlab-ce-12.10.1-ce.0.el8.x86_64.rpm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如提示缺少相应的python依赖，手动安装即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install policycoreutils-python</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改gitlab配置文件指定服务器ip和自定义端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi  &#x2F;etc&#x2F;gitlab&#x2F;gitlab.rb</span><br></pre></td></tr></table></figure>
+<p>修改 GitLab Url 模块下的 external_url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">external_url &#39;http:&#x2F;&#x2F;ip:prot&#39;</span><br></pre></td></tr></table></figure>
+<p>注意 port 端口不能被占用, 如果netstat 未安装 <code>yum -y install net-tools</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat  -anp|grep   端口号</span><br></pre></td></tr></table></figure>
+<p>防火墙添加开放端口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;public --add-port&#x3D;端口号&#x2F;tcp --permanent</span><br><span class="line">&#x2F;&#x2F; success</span><br></pre></td></tr></table></figure>
+<p>重新载入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br><span class="line">&#x2F;&#x2F;success</span><br></pre></td></tr></table></figure>
+<p>查看防火墙端口状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;public --query-port&#x3D;9999&#x2F;tcp</span><br><span class="line">&#x2F;&#x2F;yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启动gitlab<br>首次等待时间会较长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ctl reconfigure</span><br></pre></td></tr></table></figure>
+<p>重启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ctl restart</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+<blockquote>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://blog.csdn.net/ainixiya/article/details/103782511">https://blog.csdn.net/ainixiya/article/details/103782511</a></p>
+</blockquote>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/centos/">centos</a>
+		  
+			<a href="/tags/gitlab/">gitlab</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/12/14/centos%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">centos虚拟机安装</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/">
+        <span class="next-text nav-default">javascript面试题</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
