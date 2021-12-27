@@ -609,12 +609,38 @@
 <p>选择 Install suggested plugins 安装默认插件</p>
 <p>等待安装完成后，创建管理员账户</p>
 <p>ok!</p>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p><a href="https://www.cnblogs.com/niuben/p/12938501.html">nodejs安装</a></p>
+<h3 id="构建gitlab自动部署"><a href="#构建gitlab自动部署" class="headerlink" title="构建gitlab自动部署"></a>构建gitlab自动部署</h3><p><a href="https://www.cnblogs.com/niuben/p/12938501.html">nodejs安装</a></p>
 <p>参照node 方式安装yarn 并设置全局依赖和缓存目录，并设置yarn 的软连接</p>
-<p>全局安装hexo</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn global add hexo-cli</span><br></pre></td></tr></table></figure>
+<p>安装git</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
 
-<p>进入到全局yarn 地址 ，设置hexo 软链</p>
+<p>安装gitlab 相关插件 <code>gitlab hook plugin</code> , <code>gitlab plugin</code><br>创建jenkins 任务</p>
+<p>选择构建一个自由风格的软件项目</p>
+<ol>
+<li>源码培训hi git 地址和密钥</li>
+<li>构建触发器 选择  Build when a change is pushed to GitLab…<ul>
+<li>勾选push event</li>
+</ul>
+</li>
+<li>构建 中比那些shell 脚本</li>
+<li>保存</li>
+</ol>
+<p>jenkins<br>系统配置 -&gt; GitHub -&gt; Github 服务器 -&gt; 高级 -&gt; 为 Github 指定另外一个 Hook URL -&gt; 保存</p>
+<p>gitlab 配置 webhooks</p>
+<ol>
+<li>settings -&gt; integrations 或者 settings -&gt; webhooks</li>
+<li>填写 jenkins 的hooks url</li>
+<li>勾选 push events</li>
+<li>添加</li>
+<li>测试</li>
+</ol>
+<p>如果 gitlab hooks 测试出现 403 问题</p>
+<ol>
+<li>Configure Global Security -&gt; 授权策略 -&gt; Logged-in users can do anything （登录用户可以做任何事情） 点选 -&gt; 匿名用户具有可读权限 点选</li>
+<li>去掉跨站点请求伪造 点选 放开<br>Manage Jenkins- &gt;Configure Global Security -&gt; CSRF Protection（跨站请求伪造保护）</li>
+<li>去掉Gitlab enable authentication 点选 放开<br>系统管理 -&gt; 系统设置 -&gt; Enable authentication for ‘/project’ end-point<br>参考<a href="https://www.cnblogs.com/chenglc/p/11174530.html">Hook executed successfully but returned HTTP 403</a></li>
+</ol>
+<h3 id="彻底卸载Jenkins"><a href="#彻底卸载Jenkins" class="headerlink" title="彻底卸载Jenkins"></a>彻底卸载Jenkins</h3><p>如果Jenkins 安装失败需要重新安装，参考<a href="https://blog.csdn.net/weixin_37194108/article/details/106055992">彻底卸载Jenkins</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -1504,6 +1530,35 @@
       </tags>
   </entry>
   <entry>
+    <title>微信开发者工具</title>
+    <url>/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<p>微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码</p>
+<h4 id="在开发工具控制台，使用命令"><a href="#在开发工具控制台，使用命令" class="headerlink" title="在开发工具控制台，使用命令"></a>在开发工具控制台，使用命令</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openInspect()</span><br></pre></td></tr></table></figure>
+
+<p>打开chromw devtool</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/devtools.png" class="">
+
+<p>点击Apps -&gt; inspect</p>
+<p>此时就打开了隐藏的调试工具，切换到控制台的Elements,可以看到微信开发工具中的每一个部分的web代码</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/tool.png" class="">
+
+<p>通过 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)</span><br></pre></td></tr></table></figure>
+<p>可以看到小程序的几个webview</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/webview.png" class="">
+
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)[0].showDevTools(true, null)</span><br></pre></td></tr></table></figure>
+<p>打开小程序的渲染层</p>
+<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/renderview.png" class="">
+
+
+
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>备忘</title>
     <url>/2020/09/04/%E5%A4%87%E5%BF%98/</url>
     <content><![CDATA[<h3 id="eslint-关闭校验"><a href="#eslint-关闭校验" class="headerlink" title="eslint 关闭校验"></a>eslint 关闭校验</h3><h4 id="关闭段落校验"><a href="#关闭段落校验" class="headerlink" title="关闭段落校验"></a>关闭段落校验</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br><span class="line">    代码块</span><br><span class="line">&#x2F;* eslint-enable *&#x2F;</span><br></pre></td></tr></table></figure>
@@ -1552,128 +1607,12 @@
       </tags>
   </entry>
   <entry>
-    <title>微信开发者工具</title>
-    <url>/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<p>微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码</p>
-<h4 id="在开发工具控制台，使用命令"><a href="#在开发工具控制台，使用命令" class="headerlink" title="在开发工具控制台，使用命令"></a>在开发工具控制台，使用命令</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openInspect()</span><br></pre></td></tr></table></figure>
-
-<p>打开chromw devtool</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/devtools.png" class="">
-
-<p>点击Apps -&gt; inspect</p>
-<p>此时就打开了隐藏的调试工具，切换到控制台的Elements,可以看到微信开发工具中的每一个部分的web代码</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/tool.png" class="">
-
-<p>通过 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)</span><br></pre></td></tr></table></figure>
-<p>可以看到小程序的几个webview</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/webview.png" class="">
-
-<p>通过</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementsByTagName(&#39;webview&#39;)[0].showDevTools(true, null)</span><br></pre></td></tr></table></figure>
-<p>打开小程序的渲染层</p>
-<img src="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/renderview.png" class="">
-
-
-
-
-
-]]></content>
-  </entry>
-  <entry>
     <title>手写Promise</title>
     <url>/2020/09/23/%E6%89%8B%E5%86%99promise/</url>
     <content><![CDATA[<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> PENDING = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> FULFILLED = <span class="string">&#x27;fulfilled&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> REJECTED = <span class="string">&#x27;rejected&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保存实例状态</span></span><br><span class="line">    status = PENDING;</span><br><span class="line">    value = <span class="literal">undefined</span>; <span class="comment">// 成功时的返回值</span></span><br><span class="line">    reason = <span class="literal">undefined</span>; <span class="comment">// 失败时的返回值</span></span><br><span class="line">    successCallback = []; <span class="comment">// 异步成功回调</span></span><br><span class="line">    failCallback = []; <span class="comment">// 异步失败回调</span></span><br><span class="line">    <span class="comment">// executor 执行器，promise创建实例时传入的回调函数</span></span><br><span class="line">    <span class="keyword">constructor</span>(executor) &#123;</span><br><span class="line">        <span class="comment">// 捕获执行器中的错误</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            executor(<span class="built_in">this</span>.resolve, <span class="built_in">this</span>.reject); <span class="comment">// 执行器立即执行</span></span><br><span class="line">        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">            <span class="built_in">this</span>.reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolve = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = FULFILLED;</span><br><span class="line">        <span class="comment">// 保存成功后的值，方便then方法中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">        <span class="comment">// 判断successCallback 成功回调是否存在，存在说明 resolve是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.successCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.successCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reject = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 状态更改后无法再次更改</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.status !== PENDING) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">this</span>.status = REJECTED;</span><br><span class="line">        <span class="comment">// 保存失败的原因，方便then中拿到</span></span><br><span class="line">        <span class="built_in">this</span>.reason = reason;</span><br><span class="line">        <span class="comment">// failCallback 失败回调是否存在，存在说明 reject是异步任务执行后被调用的</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">this</span>.failCallback.length) &#123;</span><br><span class="line">            <span class="built_in">this</span>.failCallback.shift()(); <span class="comment">// 弹出数组首部函数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    then(successCallback, failCallback) &#123;</span><br><span class="line">        <span class="comment">// then方法可以不传递回调函数，自动将promise返回结构向之后的then函数传递</span></span><br><span class="line">        successCallback = successCallback ? successCallback : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        failCallback = failCallback ? failCallback : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// then 链式调用返回新的实例</span></span><br><span class="line">        <span class="keyword">let</span> thenPromise = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 判断状态</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.status === FULFILLED) &#123;</span><br><span class="line">                <span class="comment">// 因为同步执行时resolvePromise拿不到thenPromise，</span></span><br><span class="line">                <span class="comment">// 所以让这段代码在return thenPromise后执行</span></span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.status === REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                        resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                        reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果执行器中的rosolve或reject是异步执行的</span></span><br><span class="line">                <span class="comment">// then会立即执行，此时，将then中的两个参数保存到实例中</span></span><br><span class="line">                <span class="built_in">this</span>.successCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = successCallback(<span class="built_in">this</span>.value);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">this</span>.failCallback.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="comment">// 捕获then中成功回调的错误</span></span><br><span class="line">                        <span class="keyword">try</span>&#123;</span><br><span class="line">                            <span class="keyword">let</span> x = failCallback(<span class="built_in">this</span>.reason);</span><br><span class="line">                            resolvePromise(thenPromise, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">                            reject(err); <span class="comment">// 把错误信息传递给下一个then方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;, <span class="number">0</span>)</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> thenPromise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> (callback) &#123;</span><br><span class="line">        <span class="comment">// 无论promise状态是成功还是失败，都会调用finally的callback,并把promise返回结果继续向下传递</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 如果finaly方法返回了promise, 之后的then方法会等待该promise执行结束</span></span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> value)</span><br><span class="line">        &#125;, <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> MyPromise.resolve( callback() ).then(<span class="function">() =&gt;</span> &#123;<span class="keyword">throw</span> reason&#125;) </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catch</span>(failCallback) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="literal">undefined</span>, failCallback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态方法</span></span><br><span class="line">    <span class="keyword">static</span> all (array) &#123;</span><br><span class="line">        <span class="keyword">let</span> result = [];</span><br><span class="line">        <span class="keyword">let</span> index = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">addData</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">                result[key] = value;</span><br><span class="line">                index ++;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (index === array.length) &#123;</span><br><span class="line">                    resolve(result);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// MyPromise.all([&#x27;a&#x27;, &#x27;b&#x27;, new MyPromise(r =&gt; &#123;r(&#x27;p1&#x27;)&#125;)])</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">                <span class="keyword">let</span> current = array[i];</span><br><span class="line">                <span class="keyword">if</span> (current <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">                    <span class="comment">// promise对象, 如果成功添加到结果中，如果失败直接reject</span></span><br><span class="line">                    current.then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                        addData(i, value)</span><br><span class="line">                    &#125;, reject)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 普通值, 直接放入返回结果中</span></span><br><span class="line">                    addData(i, array[i])</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> resolve(value) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value <span class="keyword">instanceof</span> MyPromise) <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            resolve(value);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">thenPromise, x, resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果then的回调返回了then函数返回的promise对象，报错</span></span><br><span class="line">    <span class="comment">// let p = promise.then(v =&gt; &#123;return p&#125;)</span></span><br><span class="line">    <span class="keyword">if</span> (thenPromise === x) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Chaining cycle detected for promise #&lt;MyPromise&gt;&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// promise.then(v =&gt; &#123;return x&#125;);</span></span><br><span class="line">    <span class="comment">// 判断x的值是普通值还是promise对象</span></span><br><span class="line">    <span class="comment">// 如果是普通值，直接调用resolve</span></span><br><span class="line">    <span class="comment">// 如果是promise对象，查看promise对象的返回的结果</span></span><br><span class="line">    <span class="comment">// 再根据promise对象返回的结果决定用resolve 还是调用reject</span></span><br><span class="line">    <span class="keyword">if</span>(x <span class="keyword">instanceof</span> MyPromise) &#123;</span><br><span class="line">        <span class="comment">// promise对象 , 调用then查看回调状态</span></span><br><span class="line">        <span class="comment">// x.then(value =&gt; resolve(value), reason =&gt; reject(reason))</span></span><br><span class="line">        x.then(resolve, reject);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyPromise;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Promise</tag>
         <tag>Promise源码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>模块化</title>
-    <url>/2020/08/27/%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
-    <content><![CDATA[<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="模块化的发展阶段"><a href="#模块化的发展阶段" class="headerlink" title="模块化的发展阶段"></a>模块化的发展阶段</h3><h4 id="stage1"><a href="#stage1" class="headerlink" title="stage1"></a>stage1</h4><p>最初的模块化依赖文件划分的约定来实现，这种方式存在一些问题</p>
-<ul>
-<li>污染全局作用域</li>
-<li>命名冲突</li>
-<li>无法管理模块依赖关系</li>
-</ul>
-<h4 id="stage2"><a href="#stage2" class="headerlink" title="stage2"></a>stage2</h4><p>命名空间方式，将第一阶段的每个模块包裹在一个全局对象里</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var moduleA &#x3D; &#123;</span><br><span class="line">    name: &#39;along&#39;,</span><br><span class="line">    method1: function() &#123;</span><br><span class="line">        console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="stage3"><a href="#stage3" class="headerlink" title="stage3"></a>stage3</h4><p>IIFE  立即执行函数提供私有空间</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">(function($) &#123;</span><br><span class="line">    var name &#x3D; &quot;along&quot;;</span><br><span class="line"></span><br><span class="line">    function method1() &#123;</span><br><span class="line">        console.log(name + &#39;method1&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function method2() &#123;</span><br><span class="line">        console.log(name + &#39;method2&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 对于要暴露给外部的成员变量或方法，通过挂载到window上来实现</span><br><span class="line">    window.moduleB &#x3D; &#123;</span><br><span class="line">        method1,</span><br><span class="line">        method2,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(JQuery) &#x2F;&#x2F; 通过传入参数作为模块的依赖声明</span><br></pre></td></tr></table></figure>
-
-<h4 id="state4"><a href="#state4" class="headerlink" title="state4"></a>state4</h4><p>模块化规范出现，node 的 CommonJS 规范</p>
-<ul>
-<li>一个文件是一个模块</li>
-<li>每个模块有单独的作用域</li>
-<li>通过<code>module.exports</code> 导出成员</li>
-<li>通过<code>require</code>函数载入模块</li>
-</ul>
-<p>CommonJS 是以同步方式加载模块，不适合浏览器端 ，浏览器早期使用<code>AMD(Asynchronous Module Definition)</code> 规范（异步模块定义规范）, 比如 <code>require.js</code> 库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; requirejs 定义模块</span><br><span class="line">&#x2F;&#x2F; 第一个参数是模块名称，第二个参数数组是依赖模块，第三个函数体的参数依次是依赖模块的导出成员</span><br><span class="line">define(&#39;module&#39;, [&#39;jquery&#39;, &#39;.&#x2F;module2&#39;], function($, module2) &#123;</span><br><span class="line">    &#x2F;&#x2F; 通过return 导出成员</span><br><span class="line">    return &#123;</span><br><span class="line">        start: function() &#123;</span><br><span class="line">            $(&#39;body&#39;).animate(&#123;margin: &#39;200px&#39;&#125;);</span><br><span class="line">            module2();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果一个模块不需要定义模块（不需要导出成员，可以只加载其他模块）</span><br><span class="line">require([&#39;.&#x2F;module1&#39;], function() &#123;</span><br><span class="line">    module1.start();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>AMD</code> 使用复杂（需要写稍多的代码）</li>
-<li>模块js文件请求频繁 </li>
-</ul>
-<p>于 <code>AMD</code> 同期，淘宝出现 <code>CMD(Commen Module Definition)</code>(通用模块定义规范) 规范的 <code>sea.js</code></p>
-<p><code>CMD</code>规范希望写出的代码能与<code>CommenJS</code>类似，从而减轻开发成本，不过后气<code>CMD</code>规范的方式被 <code>require.js</code>兼容了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; CMD 规范 类似CommonJS 规范</span><br><span class="line">define(function(require, exports, module) &#123;</span><br><span class="line">    var $ &#x3D; require(&#39;jquery&#39;);</span><br><span class="line"></span><br><span class="line">    module.exports &#x3D; function() &#123;</span><br><span class="line">        $(&#39;body&#39;).append(&#39;&lt;p&gt;module&lt;&#x2F;p&gt;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="stage5"><a href="#stage5" class="headerlink" title="stage5"></a>stage5</h4><p>模块化标准出现</p>
-<ul>
-<li>浏览器端 <code>ES Modules</code>  (ES6特性，因为存在兼容问题，)</li>
-<li>node <code>CommonJS</code>  </li>
-</ul>
-<h3 id="ES-Modules"><a href="#ES-Modules" class="headerlink" title="ES Modules"></a>ES Modules</h3><p>特性</p>
-<p>通过给<code>script</code>添加<code>type=&quot;module&quot;</code> 属性，就可以以ES Module 标准执行其中的JS代码</p>
-<ul>
-<li><code>ES Modules</code> 会自动采用严格模式， 忽略<code>&#39;use strice&#39;</code>   严格模式下this不能指向<code>window</code>  </li>
-<li><code>ES Modules</code>运行在单独的私有作用域中</li>
-<li><code>ES Modules</code>通过<code>CORS</code>方式请求外部JS模块 ，服务端必须支持<code>CORS</code>,不能以文件形式访问，只能用http server</li>
-<li><code>ES Modules</code>的<code>script</code>标签会延迟执行脚本， 相当于给 添加了 <code>defer</code> 属性 <script defer src=""></script></li>
-</ul>
-<h4 id="ES-Modules-导入导出"><a href="#ES-Modules-导入导出" class="headerlink" title="ES Modules 导入导出"></a>ES Modules 导入导出</h4><p>直接导出</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">export var name &#x3D; &#39;along&#39;;</span><br><span class="line">export functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;name, hello&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
-
-<p>底部统一导出</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const foo &#x3D; &#39;along&#39;;</span><br><span class="line">functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line">export &#123;foo, hello&#125;; &#x2F;&#x2F; 底部统一导出</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;foo&#125; from &#39;.&#x2F;module.js&#39;</span><br><span class="line">console.log(foo)</span><br></pre></td></tr></table></figure>
-
-<p>底部统一导出时可以重命名， 并且在引入时也可以定义一个新的名字</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const name &#x3D; &#39;along&#39;;</span><br><span class="line"></span><br><span class="line">export &#123;</span><br><span class="line">    name as alongname,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;alongname&#125; from &#39;.&#x2F;module.js&#39;; &#x2F;&#x2F; 需要使用别名导入</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; import &#123;alongname as newname&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
-
-<p>特殊用法，默认导出</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">var name &#x3D; &#39;along&#39;;</span><br><span class="line">export default name;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import a from &#39;.&#x2F;module.js&#39;;  &#x2F;&#x2F; 导入时可以根据需要重新定义引入变量名称</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="ES-Modules-导入导出误区"><a href="#ES-Modules-导入导出误区" class="headerlink" title="ES Modules 导入导出误区"></a>ES Modules 导入导出误区</h4><ul>
-<li><code>ES Modules</code>导入导出的时候要注意，在底部统一导出时(如 <code>export &#123;name, age&#125;</code>), 导出的并不是一个对象，这里的花括号只是一种 export 单独使用时的固定语</li>
-<li>在引入时(如<code>import &#123;name, age&#125; from &#39;./module.js&#39;</code>), 并不是对象的结构。</li>
-<li>如果需要导出对象，需要使用 <code>export default &#123;name, age&#125;</code>的方式</li>
-<li><code>ES Modules</code> 导出的对象成员导出的是引用地址</li>
-<li>通过 <code>ES Modules</code> 引入的成员是只读成员，不能重新赋值</li>
-</ul>
-<h4 id="ES-Modults-导入误区"><a href="#ES-Modults-导入误区" class="headerlink" title="ES Modults 导入误区"></a>ES Modults 导入误区</h4><ul>
-<li><code>import &#123;name&#125; from &#39;./module.js&#39;</code> <code>from</code> 后的模块路径不能省略后缀名</li>
-<li><code>import</code> 后的模块路径不能默认导入<code>index.js</code></li>
-<li>可以通过绝对路径或者全路径引入 比如 <code>&#39;/lib/tool.js&#39;</code>  或者 <code>&#39;http://localhost:3000/lib/tool.js&#39;</code></li>
-<li>不需要提取成员只需要执行模块时，可以导入空<code>import &#123;&#125; from &#39;./module.js&#39;</code>  或者写成 <code>import &#39;./module.js&#39;</code></li>
-<li>提取成员较多可以将所有导出成员通过<code>as</code>放入一个对象中<code>import * as mod from &#39;./module.js&#39;</code></li>
-<li><code>import</code>关键字只能出现在最顶层，不能将路径存放在变量中导入，如果想通过动态导入模块，可以使用<code>import(&#39;./module.js&#39;).then(function(module) &#123;&#125;)</code>方式</li>
-<li>同时提取默认成员和命名成员 <code>import title, &#123;name, age&#125; from &#39;./module.js&#39;</code> 或者 <code>import &#123;name, age, default as title&#125; from &#39;./module.js&#39;</code></li>
-</ul>
-<h4 id="ES-Modules-导出"><a href="#ES-Modules-导出" class="headerlink" title="ES Modules 导出"></a>ES Modules 导出</h4><ul>
-<li>导入时直接导出<code>export &#123;name, age&#125; from &#39;./module.js&#39;</code></li>
-</ul>
-<h4 id="ES-Modules-浏览器-Polyfill"><a href="#ES-Modules-浏览器-Polyfill" class="headerlink" title="ES Modules 浏览器 Polyfill"></a>ES Modules 浏览器 Polyfill</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// promise polyfill</span><br><span class="line">// nomodule 属性只会在不支持es module 的浏览器工作，如果不添加，es module 会分别被 es module polyfill 和 浏览器执行，导致在支持es module 的浏览器中， 下方的 foo 被打印两次</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/promise-polyfill@8.1.3/dist/polyfill.min.js&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="comment">// es module polyfill</span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/babel-browser-build.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/browser-es-module-loader.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">&#x27;./module.js&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(foo);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="ES-Module-Node-环境支持情况"><a href="#ES-Module-Node-环境支持情况" class="headerlink" title="ES Module Node 环境支持情况"></a>ES Module Node 环境支持情况</h4><p>node 版本大于 8.5</p>
-<p>目前仍处在实验阶段，node不建议在生产环境中使用</p>
-<h4 id="ES-Module-Node-Babel"><a href="#ES-Module-Node-Babel" class="headerlink" title="ES Module Node Babel"></a>ES Module Node Babel</h4>]]></content>
-      <tags>
-        <tag>模块化</tag>
       </tags>
   </entry>
   <entry>
@@ -1870,6 +1809,93 @@ Done in 7.45s.
 ]]></content>
       <tags>
         <tag>脚手架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模块化</title>
+    <url>/2020/08/27/%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="模块化的发展阶段"><a href="#模块化的发展阶段" class="headerlink" title="模块化的发展阶段"></a>模块化的发展阶段</h3><h4 id="stage1"><a href="#stage1" class="headerlink" title="stage1"></a>stage1</h4><p>最初的模块化依赖文件划分的约定来实现，这种方式存在一些问题</p>
+<ul>
+<li>污染全局作用域</li>
+<li>命名冲突</li>
+<li>无法管理模块依赖关系</li>
+</ul>
+<h4 id="stage2"><a href="#stage2" class="headerlink" title="stage2"></a>stage2</h4><p>命名空间方式，将第一阶段的每个模块包裹在一个全局对象里</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var moduleA &#x3D; &#123;</span><br><span class="line">    name: &#39;along&#39;,</span><br><span class="line">    method1: function() &#123;</span><br><span class="line">        console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="stage3"><a href="#stage3" class="headerlink" title="stage3"></a>stage3</h4><p>IIFE  立即执行函数提供私有空间</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">(function($) &#123;</span><br><span class="line">    var name &#x3D; &quot;along&quot;;</span><br><span class="line"></span><br><span class="line">    function method1() &#123;</span><br><span class="line">        console.log(name + &#39;method1&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function method2() &#123;</span><br><span class="line">        console.log(name + &#39;method2&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 对于要暴露给外部的成员变量或方法，通过挂载到window上来实现</span><br><span class="line">    window.moduleB &#x3D; &#123;</span><br><span class="line">        method1,</span><br><span class="line">        method2,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(JQuery) &#x2F;&#x2F; 通过传入参数作为模块的依赖声明</span><br></pre></td></tr></table></figure>
+
+<h4 id="state4"><a href="#state4" class="headerlink" title="state4"></a>state4</h4><p>模块化规范出现，node 的 CommonJS 规范</p>
+<ul>
+<li>一个文件是一个模块</li>
+<li>每个模块有单独的作用域</li>
+<li>通过<code>module.exports</code> 导出成员</li>
+<li>通过<code>require</code>函数载入模块</li>
+</ul>
+<p>CommonJS 是以同步方式加载模块，不适合浏览器端 ，浏览器早期使用<code>AMD(Asynchronous Module Definition)</code> 规范（异步模块定义规范）, 比如 <code>require.js</code> 库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; requirejs 定义模块</span><br><span class="line">&#x2F;&#x2F; 第一个参数是模块名称，第二个参数数组是依赖模块，第三个函数体的参数依次是依赖模块的导出成员</span><br><span class="line">define(&#39;module&#39;, [&#39;jquery&#39;, &#39;.&#x2F;module2&#39;], function($, module2) &#123;</span><br><span class="line">    &#x2F;&#x2F; 通过return 导出成员</span><br><span class="line">    return &#123;</span><br><span class="line">        start: function() &#123;</span><br><span class="line">            $(&#39;body&#39;).animate(&#123;margin: &#39;200px&#39;&#125;);</span><br><span class="line">            module2();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果一个模块不需要定义模块（不需要导出成员，可以只加载其他模块）</span><br><span class="line">require([&#39;.&#x2F;module1&#39;], function() &#123;</span><br><span class="line">    module1.start();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>AMD</code> 使用复杂（需要写稍多的代码）</li>
+<li>模块js文件请求频繁 </li>
+</ul>
+<p>于 <code>AMD</code> 同期，淘宝出现 <code>CMD(Commen Module Definition)</code>(通用模块定义规范) 规范的 <code>sea.js</code></p>
+<p><code>CMD</code>规范希望写出的代码能与<code>CommenJS</code>类似，从而减轻开发成本，不过后气<code>CMD</code>规范的方式被 <code>require.js</code>兼容了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; CMD 规范 类似CommonJS 规范</span><br><span class="line">define(function(require, exports, module) &#123;</span><br><span class="line">    var $ &#x3D; require(&#39;jquery&#39;);</span><br><span class="line"></span><br><span class="line">    module.exports &#x3D; function() &#123;</span><br><span class="line">        $(&#39;body&#39;).append(&#39;&lt;p&gt;module&lt;&#x2F;p&gt;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="stage5"><a href="#stage5" class="headerlink" title="stage5"></a>stage5</h4><p>模块化标准出现</p>
+<ul>
+<li>浏览器端 <code>ES Modules</code>  (ES6特性，因为存在兼容问题，)</li>
+<li>node <code>CommonJS</code>  </li>
+</ul>
+<h3 id="ES-Modules"><a href="#ES-Modules" class="headerlink" title="ES Modules"></a>ES Modules</h3><p>特性</p>
+<p>通过给<code>script</code>添加<code>type=&quot;module&quot;</code> 属性，就可以以ES Module 标准执行其中的JS代码</p>
+<ul>
+<li><code>ES Modules</code> 会自动采用严格模式， 忽略<code>&#39;use strice&#39;</code>   严格模式下this不能指向<code>window</code>  </li>
+<li><code>ES Modules</code>运行在单独的私有作用域中</li>
+<li><code>ES Modules</code>通过<code>CORS</code>方式请求外部JS模块 ，服务端必须支持<code>CORS</code>,不能以文件形式访问，只能用http server</li>
+<li><code>ES Modules</code>的<code>script</code>标签会延迟执行脚本， 相当于给 添加了 <code>defer</code> 属性 <script defer src=""></script></li>
+</ul>
+<h4 id="ES-Modules-导入导出"><a href="#ES-Modules-导入导出" class="headerlink" title="ES Modules 导入导出"></a>ES Modules 导入导出</h4><p>直接导出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">export var name &#x3D; &#39;along&#39;;</span><br><span class="line">export functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;name, hello&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>底部统一导出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const foo &#x3D; &#39;along&#39;;</span><br><span class="line">functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line">export &#123;foo, hello&#125;; &#x2F;&#x2F; 底部统一导出</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;foo&#125; from &#39;.&#x2F;module.js&#39;</span><br><span class="line">console.log(foo)</span><br></pre></td></tr></table></figure>
+
+<p>底部统一导出时可以重命名， 并且在引入时也可以定义一个新的名字</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const name &#x3D; &#39;along&#39;;</span><br><span class="line"></span><br><span class="line">export &#123;</span><br><span class="line">    name as alongname,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;alongname&#125; from &#39;.&#x2F;module.js&#39;; &#x2F;&#x2F; 需要使用别名导入</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; import &#123;alongname as newname&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>特殊用法，默认导出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">var name &#x3D; &#39;along&#39;;</span><br><span class="line">export default name;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import a from &#39;.&#x2F;module.js&#39;;  &#x2F;&#x2F; 导入时可以根据需要重新定义引入变量名称</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="ES-Modules-导入导出误区"><a href="#ES-Modules-导入导出误区" class="headerlink" title="ES Modules 导入导出误区"></a>ES Modules 导入导出误区</h4><ul>
+<li><code>ES Modules</code>导入导出的时候要注意，在底部统一导出时(如 <code>export &#123;name, age&#125;</code>), 导出的并不是一个对象，这里的花括号只是一种 export 单独使用时的固定语</li>
+<li>在引入时(如<code>import &#123;name, age&#125; from &#39;./module.js&#39;</code>), 并不是对象的结构。</li>
+<li>如果需要导出对象，需要使用 <code>export default &#123;name, age&#125;</code>的方式</li>
+<li><code>ES Modules</code> 导出的对象成员导出的是引用地址</li>
+<li>通过 <code>ES Modules</code> 引入的成员是只读成员，不能重新赋值</li>
+</ul>
+<h4 id="ES-Modults-导入误区"><a href="#ES-Modults-导入误区" class="headerlink" title="ES Modults 导入误区"></a>ES Modults 导入误区</h4><ul>
+<li><code>import &#123;name&#125; from &#39;./module.js&#39;</code> <code>from</code> 后的模块路径不能省略后缀名</li>
+<li><code>import</code> 后的模块路径不能默认导入<code>index.js</code></li>
+<li>可以通过绝对路径或者全路径引入 比如 <code>&#39;/lib/tool.js&#39;</code>  或者 <code>&#39;http://localhost:3000/lib/tool.js&#39;</code></li>
+<li>不需要提取成员只需要执行模块时，可以导入空<code>import &#123;&#125; from &#39;./module.js&#39;</code>  或者写成 <code>import &#39;./module.js&#39;</code></li>
+<li>提取成员较多可以将所有导出成员通过<code>as</code>放入一个对象中<code>import * as mod from &#39;./module.js&#39;</code></li>
+<li><code>import</code>关键字只能出现在最顶层，不能将路径存放在变量中导入，如果想通过动态导入模块，可以使用<code>import(&#39;./module.js&#39;).then(function(module) &#123;&#125;)</code>方式</li>
+<li>同时提取默认成员和命名成员 <code>import title, &#123;name, age&#125; from &#39;./module.js&#39;</code> 或者 <code>import &#123;name, age, default as title&#125; from &#39;./module.js&#39;</code></li>
+</ul>
+<h4 id="ES-Modules-导出"><a href="#ES-Modules-导出" class="headerlink" title="ES Modules 导出"></a>ES Modules 导出</h4><ul>
+<li>导入时直接导出<code>export &#123;name, age&#125; from &#39;./module.js&#39;</code></li>
+</ul>
+<h4 id="ES-Modules-浏览器-Polyfill"><a href="#ES-Modules-浏览器-Polyfill" class="headerlink" title="ES Modules 浏览器 Polyfill"></a>ES Modules 浏览器 Polyfill</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// promise polyfill</span><br><span class="line">// nomodule 属性只会在不支持es module 的浏览器工作，如果不添加，es module 会分别被 es module polyfill 和 浏览器执行，导致在支持es module 的浏览器中， 下方的 foo 被打印两次</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/promise-polyfill@8.1.3/dist/polyfill.min.js&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="comment">// es module polyfill</span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/babel-browser-build.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/browser-es-module-loader.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">&#x27;./module.js&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(foo);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="ES-Module-Node-环境支持情况"><a href="#ES-Module-Node-环境支持情况" class="headerlink" title="ES Module Node 环境支持情况"></a>ES Module Node 环境支持情况</h4><p>node 版本大于 8.5</p>
+<p>目前仍处在实验阶段，node不建议在生产环境中使用</p>
+<h4 id="ES-Module-Node-Babel"><a href="#ES-Module-Node-Babel" class="headerlink" title="ES Module Node Babel"></a>ES Module Node Babel</h4>]]></content>
+      <tags>
+        <tag>模块化</tag>
       </tags>
   </entry>
   <entry>
@@ -2707,6 +2733,230 @@ Done in 7.45s.
       </tags>
   </entry>
   <entry>
+    <title>自动化构建</title>
+    <url>/2020/08/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA/</url>
+    <content><![CDATA[<h2 id="前端自动化"><a href="#前端自动化" class="headerlink" title="前端自动化"></a>前端自动化</h2><p>前端自动化构建工具</p>
+<ul>
+<li>grunt 基于临时文件，构建速度较慢</li>
+<li>gulp 基于内存，同时处理多个任务</li>
+<li>FIS 百度，大而全，适合初学者</li>
+</ul>
+<h3 id="grunt"><a href="#grunt" class="headerlink" title="grunt"></a>grunt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add grunt</span><br></pre></td></tr></table></figure>
+
+<p>根目录创建<code>gruntfile.js</code>文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.registerTask(&#39;hello&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;hello world&#39;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>命令行执行 <code>yarn grunt hello</code><br>可以看到命令行打印hello world</p>
+<p>可以通过注册函数 第二个参数为字符串，来为任务添加描述，这个描述会通过<code>yarn grun --help</code>时显示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;des&#39;, &#39;任务描述&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;des task&#39;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<pre style="background: #000; color: #ccc;">
+PS C:\Users\admin\Desktop\grunt-test> yarn grunt --help 
+
+...
+
+Available tasks
+         hello  Custom task.
+           des  任务描述
+</pre>
+
+
+<p>异步任务,异步任务需要借助 grunt 的 async 函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> grunt.registerTask(&#39;async-task&#39;, function() &#123;</span><br><span class="line">    &#x2F;&#x2F; 异步任务必须在执行之前调用this.async 并拿到返回结果</span><br><span class="line">    const done &#x3D; this.async();</span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        console.log(&#39;异步任务执行了&#39;)</span><br><span class="line">        done()</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>默认任务，在命令行直接执行 <code>yarn grunt</code>时，会查看是否注册名为<code>default</code>的任务，有的话会执行<code>default</code>任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;default&#39;, &#39;默认任务&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;模拟默认任务&#39;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>串行任务，可以为注册任务指定一个任务数组，再执行该任务时会一次执行任务数组中的任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;default&#39;, &#39;默认任务&#39;, [&#39;hello&#39;, &#39;des&#39;, &#39;async-task&#39;])</span><br></pre></td></tr></table></figure>
+
+<p>任务标记失败</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 任务中返回false 代表任务失败，在串行任务中，失败的任务之后的任务不再执行</span><br><span class="line">&#x2F;&#x2F; 如果想要穿行任务失败之后的任务强制执行，可以指定 --force 的参数 </span><br><span class="line">grunt.registerTask(&#39;error-task&#39;, &#39;模拟执行失败的任务&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;模拟执行失败的任务&#39;);</span><br><span class="line">    return false;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>异步任务标记失败</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 异步任务标记失败</span><br><span class="line">   grunt.registerTask(&#39;async-error-task&#39;, &#39;模拟执行失败的异步任务&#39;, function() &#123;</span><br><span class="line">       const done &#x3D; this.async();</span><br><span class="line">       setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">           console.log(&#39;模拟执行失败的异步任务&#39;);</span><br><span class="line">           done(false);</span><br><span class="line">       &#125;, 1000)</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>配置方法initConfig</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    name: <span class="string">&#x27;along&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">grunt.registerTask(<span class="string">&#x27;getName&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(grunt.config(<span class="string">&#x27;name&#x27;</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="多目标任务"><a href="#多目标任务" class="headerlink" title="多目标任务"></a>多目标任务</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 多目标任务</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    &#x2F;&#x2F; 任务名与注册的任务名相同</span><br><span class="line">    build: &#123;</span><br><span class="line">        &#x2F;&#x2F; options 会作为任务选项出现</span><br><span class="line">        options: &#123;</span><br><span class="line">            global: &#39;dev&#39;,</span><br><span class="line">            path: &#39;&#x2F;src&#39;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x2F;&#x2F; 除了options 其他的属性都会称为任务的一个目标任务</span><br><span class="line">        css: &#39;css任务&#39;,</span><br><span class="line">        js: &#39;js任务&#39;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 为某个目标任务指定 options时，会替换掉全局的options中相同的属性</span><br><span class="line">        static: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                path: &#39;&#x2F;public&#39;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">grunt.registerMultiTask(&#39;build&#39;, &#39;多目标任务&#39;, function() &#123;</span><br><span class="line">    console.log(this.options())</span><br><span class="line">    console.log(&#96;build task - target: $&#123;this.target&#125; data: $&#123;this.data&#125;&#96;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>执行这个任务</p>
+<pre style="background: #000; color: #fff;">
+PS C:\Users\admin\Desktop\grunt-test> yarn grunt build
+yarn run v1.22.4
+$ C:\Users\admin\Desktop\grunt-test\node_modules\.bin\grunt build
+Running "build:css" (build) task
+{ global: 'dev', path: '/src' }
+build task - target: css data: css任务
+
+Running "build:js" (build) task
+{ global: 'dev', path: '/src' }
+build task - target: js data: js任务
+
+Running "build:static" (build) task
+{ global: 'dev', path: '/public' }
+build task - target: static data: [object Object]
+</pre>
+
+
+<h3 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h3><p>安装清除文件插件<br><code>yarn add grunt-contrib-clean</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    &#x2F;&#x2F; 需要对应的配置</span><br><span class="line">    clean: &#123;</span><br><span class="line">        &#x2F;&#x2F; dist: &#39;dist&#x2F;index.html&#39;,</span><br><span class="line">        &#x2F;&#x2F; dist: &#39;dist&#x2F;*.txt&#39;,</span><br><span class="line">        dist: &#39;dist&#x2F;**&#39;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 加载插件</span><br><span class="line">grunt.loadNpmTasks(&#39;grunt-contrib-clean&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>sass插件</p>
+<p><code>yarn add grunt-sass sass</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const sass &#x3D; require(&#39;sass&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        sass: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                implementation: sass,</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;css&#x2F;main.css&#39;: &#39;src&#x2F;scss&#x2F;main.scss&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(&#39;grunt-sass&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>babel</p>
+<p><code>yarn add grunt-babel @babel/core @babel/preset-env</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    babel: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;,</span><br><span class="line">        main: &#123;</span><br><span class="line">            files: &#123;</span><br><span class="line">                &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    grunt.loadNpmTasks(&#39;grunt-babel&#39;);</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>自动加载模块</p>
+<p><code>yarn add load-grunt-tasks --dev</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const loadGruntTasks &#x3D; require(&#39;load-grunt-tasks&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        babel: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    loadGruntTasks(grunt); &#x2F;&#x2F; 自动加载插件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>监听文件自动编译</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add grunt-contrib-watch --dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const sass &#x3D; require(&#39;sass&#39;);</span><br><span class="line">const loadGruntTasks &#x3D; require(&#39;load-grunt-tasks&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        watch: &#123;</span><br><span class="line">            js: &#123;</span><br><span class="line">                files: [&#39;src&#x2F;js&#x2F;*.js&#39;], &#x2F;&#x2F; 坚挺的文件数组</span><br><span class="line">                tasks: [&#39;babel&#39;], &#x2F;&#x2F; 当文件变化时要执行的任务</span><br><span class="line">            &#125;,</span><br><span class="line">            css: &#123;</span><br><span class="line">                files: [&#39;src&#x2F;scss&#x2F;*.scss&#39;],</span><br><span class="line">                tasks: [&#39;sass&#39;],</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        babel: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        sass: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                implementation: sass,</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;css&#x2F;main.css&#39;: &#39;src&#x2F;scss&#x2F;main.scss&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    loadGruntTasks(grunt); &#x2F;&#x2F; 自动加载插件</span><br><span class="line">    </span><br><span class="line">    grunt.registerTask(&#39;default&#39;, [&#39;sass&#39;, &#39;babel&#39;, &#39;watch&#39;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之后被监听文件修改会自动编译</p>
+<h3 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h3><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp --dev</span><br></pre></td></tr></table></figure>
+
+<p>创建入口文件<code>gulpfile.js</code></p>
+<p>注册任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.foo &#x3D;  done &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;foo&#39;)</span><br><span class="line">    done();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>yarn gulp foo</code></p>
+<p>注册默认任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.default &#x3D;  done &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;defalt&#39;)</span><br><span class="line">    done();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>组合任务<br>组合任务可以注册串行任务和并行任务</p>
+<ul>
+<li>串行任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;series, parallel&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const task1 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task1 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const task2 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task2 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const task3 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task3 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; gulp 组合任务</span><br><span class="line">exports.default &#x3D; series(task1, task2, task3);</span><br></pre></td></tr></table></figure>
+
+<pre style="background: #000;color: #ccc">
+PS C:\Users\admin\Desktop\gulp-demo> yarn gulp
+$ C:\Users\admin\Desktop\gulp-demo\node_modules\.bin\gulp
+[00:53:37] Using gulpfile ~\Desktop\gulp-demo\gulpfile.js
+[00:53:37] Starting 'default'...
+[00:53:37] Starting 'task1'...
+task1 running~
+[00:53:39] Finished 'task1' after 2.03 s
+[00:53:39] Starting 'task2'...
+task2 running~
+[00:53:41] Finished 'task2' after 2.01 s
+[00:53:41] Starting 'task3'...
+task3 running~
+[00:53:43] Finished 'task3' after 2.01 s
+[00:53:43] Finished 'default' after 6.08 s
+Done in 7.36s.
+</pre>
+
+<ul>
+<li>并行任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 注册上面代码三个任务的并行任务</span><br><span class="line">exports.default &#x3D; parallel(task1, task2, task3);</span><br></pre></td></tr></table></figure>
+
+<pre style="background: #000; color: #ccc">
+PS C:\Users\admin\Desktop\gulp-demo> yarn gulp
+yarn run v1.22.4
+$ C:\Users\admin\Desktop\gulp-demo\node_modules\.bin\gulp
+[00:57:27] Using gulpfile ~\Desktop\gulp-demo\gulpfile.js
+[00:57:27] Starting 'default'...
+[00:57:27] Starting 'task1'...
+[00:57:27] Starting 'task2'...
+[00:57:27] Starting 'task3'...
+task1 running~
+[00:57:29] Finished 'task1' after 2.01 s
+task2 running~
+[00:57:29] Finished 'task2' after 2.04 s
+task3 running~
+[00:57:29] Finished 'task3' after 2.05 s
+[00:57:29] Finished 'default' after 2.1 s
+Done in 3.64s.
+</pre>
+
+<p>gulp异步任务</p>
+<ul>
+<li>promise异步任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; gulp 异步任务</span><br><span class="line">&#x2F;&#x2F; promise 返回成功时会忽略 promise 的返回值</span><br><span class="line">exports.promise &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;promise task~&#39;);</span><br><span class="line">    return Promise.resolve();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.promise_error &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;promise error task~&#39;);</span><br><span class="line">    return Promise.reject(new Error(&#39;task failed~&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>async 异步任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; async 异步任务</span><br><span class="line">const timeout &#x3D; time &#x3D;&gt; &#123;</span><br><span class="line">    return new Promise(resolve &#x3D;&gt; &#123;</span><br><span class="line">        setTimeout(resolve, time);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.async &#x3D; async () &#x3D;&gt; &#123;</span><br><span class="line">    await timeout(1000);</span><br><span class="line">    console.log(&#39;async task &#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stream 文件流</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.stream &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    const readStream &#x3D; fs.createReadStream(&#39;package.json&#39;);</span><br><span class="line">    const writeStream &#x3D; fs.createWriteStream(&#39;temp.txt&#39;);</span><br><span class="line">    readStream.pipe(writeStream);</span><br><span class="line">    return readStream;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="gulp-构建过程核心原理"><a href="#gulp-构建过程核心原理" class="headerlink" title="gulp 构建过程核心原理"></a>gulp 构建过程核心原理</h4><p>gulp是基于流的构建</p>
+<p>读取流 =&gt; 转换流 =&gt; 写入流</p>
+<p>创建文件<code>css/style.css</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;* 样式文件 *&#x2F;</span><br><span class="line"></span><br><span class="line">body &#123;</span><br><span class="line">    color: #333;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 样式结束 *&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>先手动创建一个输出文件夹<code>dist/css/style.css</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line">&#x2F;&#x2F; 借助stream的转换流读取做css的转换</span><br><span class="line">const &#123;Transform&#125; &#x3D; require(&#39;stream&#39;);</span><br><span class="line">exports.css &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; 读取文件</span><br><span class="line">    const read &#x3D; fs.createReadStream(&#39;css&#x2F;style.css&#39;);</span><br><span class="line">    &#x2F;&#x2F; 文件写入流</span><br><span class="line">    const write &#x3D; fs.createWriteStream(&#39;dist&#x2F;css&#x2F;style.min.css&#39;);</span><br><span class="line">    &#x2F;&#x2F; 文件转换流</span><br><span class="line">    const transform &#x3D; new Transform(&#123;</span><br><span class="line">        transform: (chunk, encoding, callback) &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; check &#x3D;&gt; 读取流的文件内容（Buffer）</span><br><span class="line">            const input &#x3D; chunk.toString();</span><br><span class="line">            &#x2F;&#x2F; 替换掉 空格和注释</span><br><span class="line">            const output &#x3D; input.replace(&#x2F;\s+&#x2F;g, &#39;&#39;).replace(&#x2F;\&#x2F;\*.+?\*\&#x2F;&#x2F;g, &#39;&#39;);</span><br><span class="line">            </span><br><span class="line">            callback(null, output);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    read</span><br><span class="line">        .pipe(transform)</span><br><span class="line">        .pipe(write);</span><br><span class="line"></span><br><span class="line">    return read;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下执行<code>yarn gulp css</code>,可以看到<code>dist/css</code>下输出的文件<code>style.min.css</code>, 其中内容是处理压缩之后的<br>body{color:#333;}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="gulp-提供了自己的文件API"><a href="#gulp-提供了自己的文件API" class="headerlink" title="gulp 提供了自己的文件API"></a>gulp 提供了自己的文件API</h4><p>通过gulp自己的api实现文件写入读取流</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.fs &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;style.css&#39;) &#x2F;&#x2F; &#39;*.css&#39;</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fs-与-css-压缩"><a href="#fs-与-css-压缩" class="headerlink" title="fs 与 css 压缩"></a>fs 与 css 压缩</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-clean-css --dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 引入css压缩插件</span><br><span class="line">const cleanCss &#x3D; require(&#39;gulp-clean-css&#39;);</span><br><span class="line"></span><br><span class="line">exports.fscss &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;*.css&#39;)</span><br><span class="line">        .pipe(cleanCss())</span><br><span class="line">        .pipe(dest(&#39;dest&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输出的css压缩文件在dest目录下</p>
+<h4 id="重命名插件"><a href="#重命名插件" class="headerlink" title="重命名插件"></a>重命名插件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-rename --dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 修改拓展名</span><br><span class="line">const cleanCss &#x3D; require(&#39;gulp-clean-css&#39;);</span><br><span class="line"></span><br><span class="line">const rename &#x3D; require(&#39;gulp-rename&#39;);</span><br><span class="line"></span><br><span class="line">exports.fscss &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;*.css&#39;)</span><br><span class="line">        .pipe(cleanCss())</span><br><span class="line">        .pipe(rename(&#123; extname: &#39;.min.css&#39; &#125;))</span><br><span class="line">        .pipe(dest(&#39;dest&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="sass-文件编译"><a href="#sass-文件编译" class="headerlink" title="sass 文件编译"></a>sass 文件编译</h4><p>安装 <code>grunt-sass</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line">const sass &#x3D; require(&#39;gulp-sass&#39;);</span><br><span class="line"></span><br><span class="line">const style &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; base src 保留转换前的基础路径</span><br><span class="line">        .pipe(sass(&#123;</span><br><span class="line">            outputStyle: &#39;expanded&#39;, &#x2F;&#x2F; 代表编译后大括号完全展开</span><br><span class="line">        &#125;)) &#x2F;&#x2F; 下户线开头的css 文件默认不会被转换</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    style</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="脚本文件编译"><a href="#脚本文件编译" class="headerlink" title="脚本文件编译"></a>脚本文件编译</h4><p>安装<code>gulp-babel @babel/core @babel/preset-env</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const babel &#x3D; require(&#39;gulp-babel&#39;);</span><br><span class="line">const script &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, &#123;</span><br><span class="line">        base: &#39;src&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    script,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="模板文件编译"><a href="#模板文件编译" class="headerlink" title="模板文件编译"></a>模板文件编译</h4><p>可以借助<code>gulp-swig</code></p>
+<p>swig 语法这里不过多描述</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const page &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; src 下任意子目录下的任意html文件</span><br><span class="line">        .pipe(swig(&#123;data: &#123;title: &#39;along&#39;&#125;&#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="图片字体文件"><a href="#图片字体文件" class="headerlink" title="图片字体文件"></a>图片字体文件</h4><p>安装<code>gulp-imagemin</code>,图片可以无损压缩</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const iamgemin &#x3D; require(&#39;gulp-imagemin&#39;);</span><br><span class="line">const image &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;, &#123;base: &#39;sec&#39;&#125;)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 字体文件不需要特殊处理，只是里边的svg同样可以借助imagemin 来压缩</span><br><span class="line">const font &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;fonts&#x2F;**&#39;, &#123;base: &#39;sec&#39;&#125;)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="清除文件"><a href="#清除文件" class="headerlink" title="清除文件"></a>清除文件</h4><p>安装<code>del</code> del 模块不是gulp模块不过可以在gulp中使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add del --dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const del &#x3D; require(&#39;del&#39;);</span><br><span class="line">&#x2F;&#x2F; 清除文件</span><br><span class="line">const clean &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return del([&#39;dist&#39;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="自动加载插件"><a href="#自动加载插件" class="headerlink" title="自动加载插件"></a>自动加载插件</h4><p>安装<code> gulp-load-plugins</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const loadPlugins &#x3D; require(&#39;gulp-load-plugins&#39;);</span><br><span class="line">const plugins &#x3D; loadPlugins();</span><br><span class="line">&#x2F;&#x2F; 之后可以通过plguns[plugin name] 来使用自动加载的插件</span><br><span class="line">const image &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;, &#123;base: &#39;src&#39;&#125;)</span><br><span class="line">        .pipe(plugins.imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果插件名称gulp后有多个横线，会自动你转为驼峰的方式</p>
+<h4 id="gulp-开发服务器"><a href="#gulp-开发服务器" class="headerlink" title="gulp 开发服务器"></a>gulp 开发服务器</h4><p>安装 <code>browser-sync</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest, series, parallel, watch&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const browserSync &#x3D; require(&#39;browser-sync&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个开发服务器</span><br><span class="line">const bs &#x3D; browserSync.create();</span><br><span class="line"></span><br><span class="line">const serve &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; 监听源代码自动编译</span><br><span class="line">    watch(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, style);</span><br><span class="line">    watch(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, script);</span><br><span class="line">    watch(&#39;src&#x2F;*.html&#39;, page);</span><br><span class="line">    watch([</span><br><span class="line">        &#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;,</span><br><span class="line">        &#39;src&#x2F;assets&#x2F;fonts&#x2F;**&#39;,</span><br><span class="line">        &#39;public&#x2F;**&#39;</span><br><span class="line">    ], bs.reload);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    bs.init(&#123;</span><br><span class="line">        notify: false, &#x2F;&#x2F; 打开浏览器后，右上角不再显示连接成功的提示</span><br><span class="line">        port: 2080,</span><br><span class="line">        open: true,</span><br><span class="line">        files: &#39;dist&#x2F;**&#39;, &#x2F;&#x2F; 监听dist下的文件变化</span><br><span class="line">        server: &#123;</span><br><span class="line">            &#x2F;&#x2F; baseDir: &#39;dist&#39;,</span><br><span class="line">            baseDir: [&#39;dist&#39;, &#39;src&#39;, &#39;public&#39;], &#x2F;&#x2F; 指定为数组 时开发环境会一次从数组中的目录寻找文件，这种方式可以避免在开发环境打包静态资源，从而提升开发构建速度</span><br><span class="line">            routes: &#123;</span><br><span class="line">                &#39;&#x2F;node_modules&#39;: &#39;node_modules&#39; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>bs.init 也可以不通过files字段监听dist目录，可以通过流的方式进行编译文件向浏览器的推送 通过<code>.pipe(bs.reload(&#123;stream: true&#125;)) </code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const page &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; src 下任意子目录下的任意html文件</span><br><span class="line">        .pipe(swig(&#123;data: pagedata&#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const style &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; base src 保留转换前的基础路径</span><br><span class="line">        .pipe(sass(&#123;</span><br><span class="line">            outputStyle: &#39;expanded&#39;, &#x2F;&#x2F; 代表编译后大括号完全展开</span><br><span class="line">        &#125;)) &#x2F;&#x2F; 下户线开头的css 文件默认不会被转换</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) &#x2F;&#x2F; 以流的方式像浏览器推送变化</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const script &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, &#123;</span><br><span class="line">        base: &#39;src&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件压缩"><a href="#文件压缩" class="headerlink" title="文件压缩"></a>文件压缩</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-htmlmin gulp-uglify gulp-clean-css --dev</span><br></pre></td></tr></table></figure>
+
+<p>额外安装一个判断文件类型的操作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-if --dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const useref &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;temp&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;temp&#39;&#125;)</span><br><span class="line">        .pipe(plugins.useref(&#123;searchPath: [&#39;temp&#39;, &#39;.&#39;]&#125;))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.js$&#x2F;, plugins.uglify()))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.css$&#x2F;, plugins.cleanCss()))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.html$&#x2F;, plugins.htmlmin(&#123;</span><br><span class="line">            collapseWhitespace: true, &#x2F;&#x2F; 压缩html</span><br><span class="line">            minifyCSS: true, &#x2F;&#x2F; 压缩行内css</span><br><span class="line">            minifyJS: true, &#x2F;&#x2F; 压缩行内js</span><br><span class="line">        &#125;)))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>自动化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>搭建Vue SSR</title>
     <url>/2020/09/27/%E6%90%AD%E5%BB%BAVue-SSR/</url>
     <content><![CDATA[<h2 id="搭建VUE-SSR"><a href="#搭建VUE-SSR" class="headerlink" title="搭建VUE SSR"></a>搭建VUE SSR</h2><h3 id="环境依赖安装"><a href="#环境依赖安装" class="headerlink" title="环境依赖安装"></a>环境依赖安装</h3><p>初始化项目<code>npm init</code></p>
@@ -2933,230 +3183,6 @@ Done in 7.45s.
 ]]></content>
       <tags>
         <tag>Vue ssr</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动化构建</title>
-    <url>/2020/08/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="前端自动化"><a href="#前端自动化" class="headerlink" title="前端自动化"></a>前端自动化</h2><p>前端自动化构建工具</p>
-<ul>
-<li>grunt 基于临时文件，构建速度较慢</li>
-<li>gulp 基于内存，同时处理多个任务</li>
-<li>FIS 百度，大而全，适合初学者</li>
-</ul>
-<h3 id="grunt"><a href="#grunt" class="headerlink" title="grunt"></a>grunt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add grunt</span><br></pre></td></tr></table></figure>
-
-<p>根目录创建<code>gruntfile.js</code>文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.registerTask(&#39;hello&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;hello world&#39;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>命令行执行 <code>yarn grunt hello</code><br>可以看到命令行打印hello world</p>
-<p>可以通过注册函数 第二个参数为字符串，来为任务添加描述，这个描述会通过<code>yarn grun --help</code>时显示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;des&#39;, &#39;任务描述&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;des task&#39;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<pre style="background: #000; color: #ccc;">
-PS C:\Users\admin\Desktop\grunt-test> yarn grunt --help 
-
-...
-
-Available tasks
-         hello  Custom task.
-           des  任务描述
-</pre>
-
-
-<p>异步任务,异步任务需要借助 grunt 的 async 函数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> grunt.registerTask(&#39;async-task&#39;, function() &#123;</span><br><span class="line">    &#x2F;&#x2F; 异步任务必须在执行之前调用this.async 并拿到返回结果</span><br><span class="line">    const done &#x3D; this.async();</span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        console.log(&#39;异步任务执行了&#39;)</span><br><span class="line">        done()</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>默认任务，在命令行直接执行 <code>yarn grunt</code>时，会查看是否注册名为<code>default</code>的任务，有的话会执行<code>default</code>任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;default&#39;, &#39;默认任务&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;模拟默认任务&#39;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>串行任务，可以为注册任务指定一个任务数组，再执行该任务时会一次执行任务数组中的任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.registerTask(&#39;default&#39;, &#39;默认任务&#39;, [&#39;hello&#39;, &#39;des&#39;, &#39;async-task&#39;])</span><br></pre></td></tr></table></figure>
-
-<p>任务标记失败</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 任务中返回false 代表任务失败，在串行任务中，失败的任务之后的任务不再执行</span><br><span class="line">&#x2F;&#x2F; 如果想要穿行任务失败之后的任务强制执行，可以指定 --force 的参数 </span><br><span class="line">grunt.registerTask(&#39;error-task&#39;, &#39;模拟执行失败的任务&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;模拟执行失败的任务&#39;);</span><br><span class="line">    return false;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>异步任务标记失败</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 异步任务标记失败</span><br><span class="line">   grunt.registerTask(&#39;async-error-task&#39;, &#39;模拟执行失败的异步任务&#39;, function() &#123;</span><br><span class="line">       const done &#x3D; this.async();</span><br><span class="line">       setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">           console.log(&#39;模拟执行失败的异步任务&#39;);</span><br><span class="line">           done(false);</span><br><span class="line">       &#125;, 1000)</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>配置方法initConfig</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    name: <span class="string">&#x27;along&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">grunt.registerTask(<span class="string">&#x27;getName&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(grunt.config(<span class="string">&#x27;name&#x27;</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="多目标任务"><a href="#多目标任务" class="headerlink" title="多目标任务"></a>多目标任务</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 多目标任务</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    &#x2F;&#x2F; 任务名与注册的任务名相同</span><br><span class="line">    build: &#123;</span><br><span class="line">        &#x2F;&#x2F; options 会作为任务选项出现</span><br><span class="line">        options: &#123;</span><br><span class="line">            global: &#39;dev&#39;,</span><br><span class="line">            path: &#39;&#x2F;src&#39;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x2F;&#x2F; 除了options 其他的属性都会称为任务的一个目标任务</span><br><span class="line">        css: &#39;css任务&#39;,</span><br><span class="line">        js: &#39;js任务&#39;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 为某个目标任务指定 options时，会替换掉全局的options中相同的属性</span><br><span class="line">        static: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                path: &#39;&#x2F;public&#39;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">grunt.registerMultiTask(&#39;build&#39;, &#39;多目标任务&#39;, function() &#123;</span><br><span class="line">    console.log(this.options())</span><br><span class="line">    console.log(&#96;build task - target: $&#123;this.target&#125; data: $&#123;this.data&#125;&#96;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>执行这个任务</p>
-<pre style="background: #000; color: #fff;">
-PS C:\Users\admin\Desktop\grunt-test> yarn grunt build
-yarn run v1.22.4
-$ C:\Users\admin\Desktop\grunt-test\node_modules\.bin\grunt build
-Running "build:css" (build) task
-{ global: 'dev', path: '/src' }
-build task - target: css data: css任务
-
-Running "build:js" (build) task
-{ global: 'dev', path: '/src' }
-build task - target: js data: js任务
-
-Running "build:static" (build) task
-{ global: 'dev', path: '/public' }
-build task - target: static data: [object Object]
-</pre>
-
-
-<h3 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h3><p>安装清除文件插件<br><code>yarn add grunt-contrib-clean</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    &#x2F;&#x2F; 需要对应的配置</span><br><span class="line">    clean: &#123;</span><br><span class="line">        &#x2F;&#x2F; dist: &#39;dist&#x2F;index.html&#39;,</span><br><span class="line">        &#x2F;&#x2F; dist: &#39;dist&#x2F;*.txt&#39;,</span><br><span class="line">        dist: &#39;dist&#x2F;**&#39;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 加载插件</span><br><span class="line">grunt.loadNpmTasks(&#39;grunt-contrib-clean&#39;);</span><br></pre></td></tr></table></figure>
-
-<p>sass插件</p>
-<p><code>yarn add grunt-sass sass</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const sass &#x3D; require(&#39;sass&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        sass: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                implementation: sass,</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;css&#x2F;main.css&#39;: &#39;src&#x2F;scss&#x2F;main.scss&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(&#39;grunt-sass&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>babel</p>
-<p><code>yarn add grunt-babel @babel/core @babel/preset-env</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    babel: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;,</span><br><span class="line">        main: &#123;</span><br><span class="line">            files: &#123;</span><br><span class="line">                &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    grunt.loadNpmTasks(&#39;grunt-babel&#39;);</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>自动加载模块</p>
-<p><code>yarn add load-grunt-tasks --dev</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const loadGruntTasks &#x3D; require(&#39;load-grunt-tasks&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        babel: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    loadGruntTasks(grunt); &#x2F;&#x2F; 自动加载插件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>监听文件自动编译</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add grunt-contrib-watch --dev</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const sass &#x3D; require(&#39;sass&#39;);</span><br><span class="line">const loadGruntTasks &#x3D; require(&#39;load-grunt-tasks&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; grunt &#x3D;&gt; &#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        watch: &#123;</span><br><span class="line">            js: &#123;</span><br><span class="line">                files: [&#39;src&#x2F;js&#x2F;*.js&#39;], &#x2F;&#x2F; 坚挺的文件数组</span><br><span class="line">                tasks: [&#39;babel&#39;], &#x2F;&#x2F; 当文件变化时要执行的任务</span><br><span class="line">            &#125;,</span><br><span class="line">            css: &#123;</span><br><span class="line">                files: [&#39;src&#x2F;scss&#x2F;*.scss&#39;],</span><br><span class="line">                tasks: [&#39;sass&#39;],</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        babel: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;js&#x2F;app.js&#39;: &#39;src&#x2F;js&#x2F;app.js&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        sass: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                sourceMap: true,</span><br><span class="line">                implementation: sass,</span><br><span class="line">            &#125;,</span><br><span class="line">            main: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                    &#39;dist&#x2F;css&#x2F;main.css&#39;: &#39;src&#x2F;scss&#x2F;main.scss&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    loadGruntTasks(grunt); &#x2F;&#x2F; 自动加载插件</span><br><span class="line">    </span><br><span class="line">    grunt.registerTask(&#39;default&#39;, [&#39;sass&#39;, &#39;babel&#39;, &#39;watch&#39;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>之后被监听文件修改会自动编译</p>
-<h3 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h3><p>安装</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp --dev</span><br></pre></td></tr></table></figure>
-
-<p>创建入口文件<code>gulpfile.js</code></p>
-<p>注册任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.foo &#x3D;  done &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;foo&#39;)</span><br><span class="line">    done();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行<code>yarn gulp foo</code></p>
-<p>注册默认任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.default &#x3D;  done &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;defalt&#39;)</span><br><span class="line">    done();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>组合任务<br>组合任务可以注册串行任务和并行任务</p>
-<ul>
-<li>串行任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;series, parallel&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const task1 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task1 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const task2 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task2 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const task3 &#x3D; done &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;task3 running~&#39;);</span><br><span class="line">        done();</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; gulp 组合任务</span><br><span class="line">exports.default &#x3D; series(task1, task2, task3);</span><br></pre></td></tr></table></figure>
-
-<pre style="background: #000;color: #ccc">
-PS C:\Users\admin\Desktop\gulp-demo> yarn gulp
-$ C:\Users\admin\Desktop\gulp-demo\node_modules\.bin\gulp
-[00:53:37] Using gulpfile ~\Desktop\gulp-demo\gulpfile.js
-[00:53:37] Starting 'default'...
-[00:53:37] Starting 'task1'...
-task1 running~
-[00:53:39] Finished 'task1' after 2.03 s
-[00:53:39] Starting 'task2'...
-task2 running~
-[00:53:41] Finished 'task2' after 2.01 s
-[00:53:41] Starting 'task3'...
-task3 running~
-[00:53:43] Finished 'task3' after 2.01 s
-[00:53:43] Finished 'default' after 6.08 s
-Done in 7.36s.
-</pre>
-
-<ul>
-<li>并行任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 注册上面代码三个任务的并行任务</span><br><span class="line">exports.default &#x3D; parallel(task1, task2, task3);</span><br></pre></td></tr></table></figure>
-
-<pre style="background: #000; color: #ccc">
-PS C:\Users\admin\Desktop\gulp-demo> yarn gulp
-yarn run v1.22.4
-$ C:\Users\admin\Desktop\gulp-demo\node_modules\.bin\gulp
-[00:57:27] Using gulpfile ~\Desktop\gulp-demo\gulpfile.js
-[00:57:27] Starting 'default'...
-[00:57:27] Starting 'task1'...
-[00:57:27] Starting 'task2'...
-[00:57:27] Starting 'task3'...
-task1 running~
-[00:57:29] Finished 'task1' after 2.01 s
-task2 running~
-[00:57:29] Finished 'task2' after 2.04 s
-task3 running~
-[00:57:29] Finished 'task3' after 2.05 s
-[00:57:29] Finished 'default' after 2.1 s
-Done in 3.64s.
-</pre>
-
-<p>gulp异步任务</p>
-<ul>
-<li>promise异步任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; gulp 异步任务</span><br><span class="line">&#x2F;&#x2F; promise 返回成功时会忽略 promise 的返回值</span><br><span class="line">exports.promise &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;promise task~&#39;);</span><br><span class="line">    return Promise.resolve();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.promise_error &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;promise error task~&#39;);</span><br><span class="line">    return Promise.reject(new Error(&#39;task failed~&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>async 异步任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; async 异步任务</span><br><span class="line">const timeout &#x3D; time &#x3D;&gt; &#123;</span><br><span class="line">    return new Promise(resolve &#x3D;&gt; &#123;</span><br><span class="line">        setTimeout(resolve, time);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.async &#x3D; async () &#x3D;&gt; &#123;</span><br><span class="line">    await timeout(1000);</span><br><span class="line">    console.log(&#39;async task &#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>stream 文件流</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.stream &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    const readStream &#x3D; fs.createReadStream(&#39;package.json&#39;);</span><br><span class="line">    const writeStream &#x3D; fs.createWriteStream(&#39;temp.txt&#39;);</span><br><span class="line">    readStream.pipe(writeStream);</span><br><span class="line">    return readStream;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="gulp-构建过程核心原理"><a href="#gulp-构建过程核心原理" class="headerlink" title="gulp 构建过程核心原理"></a>gulp 构建过程核心原理</h4><p>gulp是基于流的构建</p>
-<p>读取流 =&gt; 转换流 =&gt; 写入流</p>
-<p>创建文件<code>css/style.css</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;* 样式文件 *&#x2F;</span><br><span class="line"></span><br><span class="line">body &#123;</span><br><span class="line">    color: #333;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 样式结束 *&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>先手动创建一个输出文件夹<code>dist/css/style.css</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line">&#x2F;&#x2F; 借助stream的转换流读取做css的转换</span><br><span class="line">const &#123;Transform&#125; &#x3D; require(&#39;stream&#39;);</span><br><span class="line">exports.css &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; 读取文件</span><br><span class="line">    const read &#x3D; fs.createReadStream(&#39;css&#x2F;style.css&#39;);</span><br><span class="line">    &#x2F;&#x2F; 文件写入流</span><br><span class="line">    const write &#x3D; fs.createWriteStream(&#39;dist&#x2F;css&#x2F;style.min.css&#39;);</span><br><span class="line">    &#x2F;&#x2F; 文件转换流</span><br><span class="line">    const transform &#x3D; new Transform(&#123;</span><br><span class="line">        transform: (chunk, encoding, callback) &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; check &#x3D;&gt; 读取流的文件内容（Buffer）</span><br><span class="line">            const input &#x3D; chunk.toString();</span><br><span class="line">            &#x2F;&#x2F; 替换掉 空格和注释</span><br><span class="line">            const output &#x3D; input.replace(&#x2F;\s+&#x2F;g, &#39;&#39;).replace(&#x2F;\&#x2F;\*.+?\*\&#x2F;&#x2F;g, &#39;&#39;);</span><br><span class="line">            </span><br><span class="line">            callback(null, output);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    read</span><br><span class="line">        .pipe(transform)</span><br><span class="line">        .pipe(write);</span><br><span class="line"></span><br><span class="line">    return read;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接下执行<code>yarn gulp css</code>,可以看到<code>dist/css</code>下输出的文件<code>style.min.css</code>, 其中内容是处理压缩之后的<br>body{color:#333;}</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="gulp-提供了自己的文件API"><a href="#gulp-提供了自己的文件API" class="headerlink" title="gulp 提供了自己的文件API"></a>gulp 提供了自己的文件API</h4><p>通过gulp自己的api实现文件写入读取流</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">exports.fs &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;style.css&#39;) &#x2F;&#x2F; &#39;*.css&#39;</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="fs-与-css-压缩"><a href="#fs-与-css-压缩" class="headerlink" title="fs 与 css 压缩"></a>fs 与 css 压缩</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-clean-css --dev</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 引入css压缩插件</span><br><span class="line">const cleanCss &#x3D; require(&#39;gulp-clean-css&#39;);</span><br><span class="line"></span><br><span class="line">exports.fscss &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;*.css&#39;)</span><br><span class="line">        .pipe(cleanCss())</span><br><span class="line">        .pipe(dest(&#39;dest&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到输出的css压缩文件在dest目录下</p>
-<h4 id="重命名插件"><a href="#重命名插件" class="headerlink" title="重命名插件"></a>重命名插件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-rename --dev</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 修改拓展名</span><br><span class="line">const cleanCss &#x3D; require(&#39;gulp-clean-css&#39;);</span><br><span class="line"></span><br><span class="line">const rename &#x3D; require(&#39;gulp-rename&#39;);</span><br><span class="line"></span><br><span class="line">exports.fscss &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;css&#x2F;*.css&#39;)</span><br><span class="line">        .pipe(cleanCss())</span><br><span class="line">        .pipe(rename(&#123; extname: &#39;.min.css&#39; &#125;))</span><br><span class="line">        .pipe(dest(&#39;dest&#39;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="sass-文件编译"><a href="#sass-文件编译" class="headerlink" title="sass 文件编译"></a>sass 文件编译</h4><p>安装 <code>grunt-sass</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line">const sass &#x3D; require(&#39;gulp-sass&#39;);</span><br><span class="line"></span><br><span class="line">const style &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; base src 保留转换前的基础路径</span><br><span class="line">        .pipe(sass(&#123;</span><br><span class="line">            outputStyle: &#39;expanded&#39;, &#x2F;&#x2F; 代表编译后大括号完全展开</span><br><span class="line">        &#125;)) &#x2F;&#x2F; 下户线开头的css 文件默认不会被转换</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    style</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="脚本文件编译"><a href="#脚本文件编译" class="headerlink" title="脚本文件编译"></a>脚本文件编译</h4><p>安装<code>gulp-babel @babel/core @babel/preset-env</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const babel &#x3D; require(&#39;gulp-babel&#39;);</span><br><span class="line">const script &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, &#123;</span><br><span class="line">        base: &#39;src&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;));</span><br><span class="line">&#125;</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    script,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="模板文件编译"><a href="#模板文件编译" class="headerlink" title="模板文件编译"></a>模板文件编译</h4><p>可以借助<code>gulp-swig</code></p>
-<p>swig 语法这里不过多描述</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const page &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; src 下任意子目录下的任意html文件</span><br><span class="line">        .pipe(swig(&#123;data: &#123;title: &#39;along&#39;&#125;&#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="图片字体文件"><a href="#图片字体文件" class="headerlink" title="图片字体文件"></a>图片字体文件</h4><p>安装<code>gulp-imagemin</code>,图片可以无损压缩</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const iamgemin &#x3D; require(&#39;gulp-imagemin&#39;);</span><br><span class="line">const image &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;, &#123;base: &#39;sec&#39;&#125;)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 字体文件不需要特殊处理，只是里边的svg同样可以借助imagemin 来压缩</span><br><span class="line">const font &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;fonts&#x2F;**&#39;, &#123;base: &#39;sec&#39;&#125;)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="清除文件"><a href="#清除文件" class="headerlink" title="清除文件"></a>清除文件</h4><p>安装<code>del</code> del 模块不是gulp模块不过可以在gulp中使用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add del --dev</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const del &#x3D; require(&#39;del&#39;);</span><br><span class="line">&#x2F;&#x2F; 清除文件</span><br><span class="line">const clean &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return del([&#39;dist&#39;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="自动加载插件"><a href="#自动加载插件" class="headerlink" title="自动加载插件"></a>自动加载插件</h4><p>安装<code> gulp-load-plugins</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const loadPlugins &#x3D; require(&#39;gulp-load-plugins&#39;);</span><br><span class="line">const plugins &#x3D; loadPlugins();</span><br><span class="line">&#x2F;&#x2F; 之后可以通过plguns[plugin name] 来使用自动加载的插件</span><br><span class="line">const image &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;, &#123;base: &#39;src&#39;&#125;)</span><br><span class="line">        .pipe(plugins.imagemin())</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果插件名称gulp后有多个横线，会自动你转为驼峰的方式</p>
-<h4 id="gulp-开发服务器"><a href="#gulp-开发服务器" class="headerlink" title="gulp 开发服务器"></a>gulp 开发服务器</h4><p>安装 <code>browser-sync</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;src, dest, series, parallel, watch&#125; &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">const browserSync &#x3D; require(&#39;browser-sync&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个开发服务器</span><br><span class="line">const bs &#x3D; browserSync.create();</span><br><span class="line"></span><br><span class="line">const serve &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; 监听源代码自动编译</span><br><span class="line">    watch(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, style);</span><br><span class="line">    watch(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, script);</span><br><span class="line">    watch(&#39;src&#x2F;*.html&#39;, page);</span><br><span class="line">    watch([</span><br><span class="line">        &#39;src&#x2F;assets&#x2F;images&#x2F;**&#39;,</span><br><span class="line">        &#39;src&#x2F;assets&#x2F;fonts&#x2F;**&#39;,</span><br><span class="line">        &#39;public&#x2F;**&#39;</span><br><span class="line">    ], bs.reload);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    bs.init(&#123;</span><br><span class="line">        notify: false, &#x2F;&#x2F; 打开浏览器后，右上角不再显示连接成功的提示</span><br><span class="line">        port: 2080,</span><br><span class="line">        open: true,</span><br><span class="line">        files: &#39;dist&#x2F;**&#39;, &#x2F;&#x2F; 监听dist下的文件变化</span><br><span class="line">        server: &#123;</span><br><span class="line">            &#x2F;&#x2F; baseDir: &#39;dist&#39;,</span><br><span class="line">            baseDir: [&#39;dist&#39;, &#39;src&#39;, &#39;public&#39;], &#x2F;&#x2F; 指定为数组 时开发环境会一次从数组中的目录寻找文件，这种方式可以避免在开发环境打包静态资源，从而提升开发构建速度</span><br><span class="line">            routes: &#123;</span><br><span class="line">                &#39;&#x2F;node_modules&#39;: &#39;node_modules&#39; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>bs.init 也可以不通过files字段监听dist目录，可以通过流的方式进行编译文件向浏览器的推送 通过<code>.pipe(bs.reload(&#123;stream: true&#125;)) </code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const page &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; src 下任意子目录下的任意html文件</span><br><span class="line">        .pipe(swig(&#123;data: pagedata&#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const style &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;styles&#x2F;*.scss&#39;, &#123;base: &#39;src&#39;&#125;) &#x2F;&#x2F; base src 保留转换前的基础路径</span><br><span class="line">        .pipe(sass(&#123;</span><br><span class="line">            outputStyle: &#39;expanded&#39;, &#x2F;&#x2F; 代表编译后大括号完全展开</span><br><span class="line">        &#125;)) &#x2F;&#x2F; 下户线开头的css 文件默认不会被转换</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) &#x2F;&#x2F; 以流的方式像浏览器推送变化</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const script &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;src&#x2F;assets&#x2F;scripts&#x2F;*.js&#39;, &#123;</span><br><span class="line">        base: &#39;src&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">        .pipe(bs.reload(&#123;stream: true&#125;)) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="文件压缩"><a href="#文件压缩" class="headerlink" title="文件压缩"></a>文件压缩</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-htmlmin gulp-uglify gulp-clean-css --dev</span><br></pre></td></tr></table></figure>
-
-<p>额外安装一个判断文件类型的操作</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add gulp-if --dev</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const useref &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    return src(&#39;temp&#x2F;**&#x2F;*.html&#39;, &#123;base: &#39;temp&#39;&#125;)</span><br><span class="line">        .pipe(plugins.useref(&#123;searchPath: [&#39;temp&#39;, &#39;.&#39;]&#125;))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.js$&#x2F;, plugins.uglify()))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.css$&#x2F;, plugins.cleanCss()))</span><br><span class="line">        .pipe(plugins.if(&#x2F;\.html$&#x2F;, plugins.htmlmin(&#123;</span><br><span class="line">            collapseWhitespace: true, &#x2F;&#x2F; 压缩html</span><br><span class="line">            minifyCSS: true, &#x2F;&#x2F; 压缩行内css</span><br><span class="line">            minifyJS: true, &#x2F;&#x2F; 压缩行内js</span><br><span class="line">        &#125;)))</span><br><span class="line">        .pipe(dest(&#39;dist&#39;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>自动化</tag>
       </tags>
   </entry>
   <entry>
