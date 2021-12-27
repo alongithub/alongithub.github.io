@@ -1,67 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JS异步编程</title>
-    <url>/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<p>javascript最初设计为了实现页面的交互操作，为了避免不同线程同时处理dom导致无法判断以那个结果为准，所以不得不采用单线程模式工作，</p>
-<ul>
-<li>同步模式与异步模式</li>
-<li>事件循环与消息队列</li>
-<li>异步编程方式</li>
-<li>Promise异步方案、宏任务/微任务</li>
-<li>Generator异步方案、Async/Await语法糖</li>
-</ul>
-<h3 id="同步模式，排队执行"><a href="#同步模式，排队执行" class="headerlink" title="同步模式，排队执行"></a>同步模式，排队执行</h3><p>js通过调用栈执行函数语句，正在执行的操作会入栈，操作完成后出栈<br>耗时操作会阻塞后边函数的执行</p>
-<h3 id="异步模式"><a href="#异步模式" class="headerlink" title="异步模式"></a>异步模式</h3><p>开始执行后，js现成遇到异步操作会将异步操作放入异步调用线程（web APIs），之后立即开始下一个任务。<br>异步调用线程会在异步执行完成后，将回调函数压入消息队列中<br>在js主线程的函数栈操作完毕后，Event Loop 会循环将回调函数取出回调函数交给主线程执行</p>
-<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/yibu.png" class="">
-<p>运行环境提供的API是以同步或者异步模式的方式工作的，比如console.log()会在主线程同步执行，当执行setTimeout时会交给异步线程去处理。</p>
-<h3 id="回调函数-异步编程方案的根基"><a href="#回调函数-异步编程方案的根基" class="headerlink" title="回调函数-异步编程方案的根基"></a>回调函数-异步编程方案的根基</h3><p>回调函数<br>事件机制<br>发布订阅</p>
-<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>三种状态<br>Pending、Fulfilled、Rejected。<br>Promise执行完成后的状态不可被改变</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// resolve 和 reject 函数只能执行一个</span></span><br><span class="line">    resolve(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reject(new Error(&#x27;promise rejected&#x27;));</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h4 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h4><p>Promise then方法会返回一个新的Promise对象</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">123</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promise2 = promise.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(promise === promise2); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<p>前面then方法回调函数的返回值会作为后面then 方法回调的参数<br>后面的then方法实际上是为上一个then方法返回的promise注册回调</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// 123</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="string">&#x27;上个then中返回的Promse结果&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// 上个then中返回的Promse结果  // 如果上个then函数返回了新的Promise， 相当于执行返回的Promise的then（）函数</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>如果promise执行中遇到了抛出异常，就会执行 onRejectd 函数</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Error: 手动抛出异常</span></span><br></pre></td></tr></table></figure>
-
-<p>上面的方式可以写成在最后添加catch方法的方式，在promise中异常会通过他很方法向后传递，因此在最后添加catch（）方法可以捕获整个链式过程中抛出的异常，相当于为整个Promise链条注册的失败回调</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于 </span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;).then(<span class="literal">undefined</span>, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>当然也可以在全局为出现异常的Promise 添加异常处理，不过这种方式不推荐，因改为每一个promise添加特定的异常处理<br>浏览器环境</p>
-<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/2.png" class="">
-
-<p>node环境</p>
-<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/3.png" class="">
-
-<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><p>Promise.resolve()        快速地把一个值转化为Promise对象</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// Promise &#123; true &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果接受一个Promise对象，则会返回该Promise对象</span></span><br><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.resolve(promise) === promise</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现 thenable 接口</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve(&#123;</span><br><span class="line">    then: <span class="function"><span class="keyword">function</span>(<span class="params">onResolve, onReject</span>) </span>&#123;</span><br><span class="line">        onResolve(<span class="string">&#x27;thenable&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>Promise.reject()     返回一个失败地Promise对象</p>
-<h4 id="Promise-并行执行"><a href="#Promise-并行执行" class="headerlink" title="Promise 并行执行"></a>Promise 并行执行</h4><ul>
-<li>Promise.all()<br>多个Promise 合并为一个Promise，会在下个then方法传递给回调函数 结果数组，需要注意all方法中地任意一个Promise执行了reject（）方法或者抛出异常，会导致触发整个Promise.all返回的Promise对象执行onReject回调</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">1000</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">5000</span>)</span><br><span class="line">            &#125;, <span class="number">5000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1, p2]).then(<span class="function"><span class="params">values</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(values);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// [ 1000, 5000 ]   // 5 s 后</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Promise.race();<br>Promise.race()方法同样会合并多个Promise，与all()不同的是，race方法会等待第一个完成的任务，并向后传递第一个执行完成的任务的结果</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">1000</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">5000</span>)</span><br><span class="line">    &#125;, <span class="number">5000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([p1, p2]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1000   // 1 s 后</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="微任务，promise执行顺序"><a href="#微任务，promise执行顺序" class="headerlink" title="微任务，promise执行顺序"></a>微任务，promise执行顺序</h4><p>promise（除此之外还有MutationObserver对象，node中的process.nextTick）的回调会作为微任务执行，微任务会在当前任务执行结束后立即执行，不会在消息队列的队尾排队<br>类似setTimeout 等大部分异步调用都会作为宏任务 执行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;code start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve(<span class="string">&#x27;Promise&#x27;</span>).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;code end&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// code start</span></span><br><span class="line"><span class="comment">// code end</span></span><br><span class="line"><span class="comment">// Promise</span></span><br><span class="line"><span class="comment">// setTimeout</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Generator异步方案"><a href="#Generator异步方案" class="headerlink" title="Generator异步方案"></a>Generator异步方案</h3><p>生成器函数的调用会返回生成器对象而不是立即执行函数内容，只有调用生成器对象的next()方法函数才会开始执行</p>
-]]></content>
-      <tags>
-        <tag>notes</tag>
-        <tag>javascript</tag>
-        <tag>异步编程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>静态网页生成[gridsome]</title>
     <url>/2020/09/29/Gridsome-%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E7%94%9F%E6%88%90/</url>
     <content><![CDATA[<h2 id="静态网站"><a href="#静态网站" class="headerlink" title="静态网站"></a>静态网站</h2><h3 id="什么是静态网站"><a href="#什么是静态网站" class="headerlink" title="什么是静态网站"></a>什么是静态网站</h3><ul>
@@ -227,6 +166,89 @@
 ]]></content>
       <tags>
         <tag>Gridsome</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JS异步编程</title>
+    <url>/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p>javascript最初设计为了实现页面的交互操作，为了避免不同线程同时处理dom导致无法判断以那个结果为准，所以不得不采用单线程模式工作，</p>
+<ul>
+<li>同步模式与异步模式</li>
+<li>事件循环与消息队列</li>
+<li>异步编程方式</li>
+<li>Promise异步方案、宏任务/微任务</li>
+<li>Generator异步方案、Async/Await语法糖</li>
+</ul>
+<h3 id="同步模式，排队执行"><a href="#同步模式，排队执行" class="headerlink" title="同步模式，排队执行"></a>同步模式，排队执行</h3><p>js通过调用栈执行函数语句，正在执行的操作会入栈，操作完成后出栈<br>耗时操作会阻塞后边函数的执行</p>
+<h3 id="异步模式"><a href="#异步模式" class="headerlink" title="异步模式"></a>异步模式</h3><p>开始执行后，js现成遇到异步操作会将异步操作放入异步调用线程（web APIs），之后立即开始下一个任务。<br>异步调用线程会在异步执行完成后，将回调函数压入消息队列中<br>在js主线程的函数栈操作完毕后，Event Loop 会循环将回调函数取出回调函数交给主线程执行</p>
+<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/yibu.png" class="">
+<p>运行环境提供的API是以同步或者异步模式的方式工作的，比如console.log()会在主线程同步执行，当执行setTimeout时会交给异步线程去处理。</p>
+<h3 id="回调函数-异步编程方案的根基"><a href="#回调函数-异步编程方案的根基" class="headerlink" title="回调函数-异步编程方案的根基"></a>回调函数-异步编程方案的根基</h3><p>回调函数<br>事件机制<br>发布订阅</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>三种状态<br>Pending、Fulfilled、Rejected。<br>Promise执行完成后的状态不可被改变</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// resolve 和 reject 函数只能执行一个</span></span><br><span class="line">    resolve(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reject(new Error(&#x27;promise rejected&#x27;));</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h4><p>Promise then方法会返回一个新的Promise对象</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">123</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promise2 = promise.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(promise === promise2); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>前面then方法回调函数的返回值会作为后面then 方法回调的参数<br>后面的then方法实际上是为上一个then方法返回的promise注册回调</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// 123</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="string">&#x27;上个then中返回的Promse结果&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// 上个then中返回的Promse结果  // 如果上个then函数返回了新的Promise， 相当于执行返回的Promise的then（）函数</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>如果promise执行中遇到了抛出异常，就会执行 onRejectd 函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Error: 手动抛出异常</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的方式可以写成在最后添加catch方法的方式，在promise中异常会通过他很方法向后传递，因此在最后添加catch（）方法可以捕获整个链式过程中抛出的异常，相当于为整个Promise链条注册的失败回调</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于 </span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;手动抛出异常&#x27;</span>);</span><br><span class="line">    resolve(<span class="number">123</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res); <span class="comment">// undefined  // 上一个函数没有返回一个新的Promise或者数值，所以res是undefined  </span></span><br><span class="line">&#125;).then(<span class="literal">undefined</span>, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以在全局为出现异常的Promise 添加异常处理，不过这种方式不推荐，因改为每一个promise添加特定的异常处理<br>浏览器环境</p>
+<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/2.png" class="">
+
+<p>node环境</p>
+<img src="/2020/08/26/JS%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/3.png" class="">
+
+<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><p>Promise.resolve()        快速地把一个值转化为Promise对象</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// Promise &#123; true &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果接受一个Promise对象，则会返回该Promise对象</span></span><br><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.resolve(promise) === promise</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现 thenable 接口</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve(&#123;</span><br><span class="line">    then: <span class="function"><span class="keyword">function</span>(<span class="params">onResolve, onReject</span>) </span>&#123;</span><br><span class="line">        onResolve(<span class="string">&#x27;thenable&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Promise.reject()     返回一个失败地Promise对象</p>
+<h4 id="Promise-并行执行"><a href="#Promise-并行执行" class="headerlink" title="Promise 并行执行"></a>Promise 并行执行</h4><ul>
+<li>Promise.all()<br>多个Promise 合并为一个Promise，会在下个then方法传递给回调函数 结果数组，需要注意all方法中地任意一个Promise执行了reject（）方法或者抛出异常，会导致触发整个Promise.all返回的Promise对象执行onReject回调</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">1000</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">5000</span>)</span><br><span class="line">            &#125;, <span class="number">5000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1, p2]).then(<span class="function"><span class="params">values</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(values);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// [ 1000, 5000 ]   // 5 s 后</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Promise.race();<br>Promise.race()方法同样会合并多个Promise，与all()不同的是，race方法会等待第一个完成的任务，并向后传递第一个执行完成的任务的结果</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">1000</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="number">5000</span>)</span><br><span class="line">    &#125;, <span class="number">5000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([p1, p2]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1000   // 1 s 后</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="微任务，promise执行顺序"><a href="#微任务，promise执行顺序" class="headerlink" title="微任务，promise执行顺序"></a>微任务，promise执行顺序</h4><p>promise（除此之外还有MutationObserver对象，node中的process.nextTick）的回调会作为微任务执行，微任务会在当前任务执行结束后立即执行，不会在消息队列的队尾排队<br>类似setTimeout 等大部分异步调用都会作为宏任务 执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;code start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve(<span class="string">&#x27;Promise&#x27;</span>).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;code end&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// code start</span></span><br><span class="line"><span class="comment">// code end</span></span><br><span class="line"><span class="comment">// Promise</span></span><br><span class="line"><span class="comment">// setTimeout</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Generator异步方案"><a href="#Generator异步方案" class="headerlink" title="Generator异步方案"></a>Generator异步方案</h3><p>生成器函数的调用会返回生成器对象而不是立即执行函数内容，只有调用生成器对象的next()方法函数才会开始执行</p>
+]]></content>
+      <tags>
+        <tag>notes</tag>
+        <tag>javascript</tag>
+        <tag>异步编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>centOs 服务器部署</title>
+    <url>/2020/11/11/centOs-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h3 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h3><h4 id="安装-nvm"><a href="#安装-nvm" class="headerlink" title="安装 nvm"></a>安装 nvm</h4><p>安装nvm，执行一下命另下载安装nvm并注册到bash，可以在命令行使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget -qO- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0.35.3&#x2F;install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>bash 修改后需要exit重新连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nvm --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装-node"><a href="#安装-node" class="headerlink" title="安装 node"></a>安装 node</h4><p>借助nvm安装node最新版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nvm install --lts</span><br></pre></td></tr></table></figure>
+
+
+<p>安装 pm2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm i -g pm2</span><br></pre></td></tr></table></figure>
+
+<p>查看pm2 启动日志</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pm2 log</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>centOS</tag>
       </tags>
   </entry>
   <entry>
@@ -596,6 +618,95 @@
 ]]></content>
   </entry>
   <entry>
+    <title>leetcode</title>
+    <url>/2021/01/05/leetcode/</url>
+    <content><![CDATA[<h3 id="leetCode"><a href="#leetCode" class="headerlink" title="leetCode"></a>leetCode</h3><h4 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a>二进制中1的个数</h4><p>输入一个整数（以二进制串形式），输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> n = <span class="number">0b00000000000000000000000000001011</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> bits = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> mask = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> ( (mask &amp; n) !== <span class="number">0</span>) &#123;</span><br><span class="line">			bits ++;</span><br><span class="line">		&#125;</span><br><span class="line">		mask &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> bits;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hammingWeight(n))</span><br></pre></td></tr></table></figure>
+
+<h4 id="环形链表"><a href="#环形链表" class="headerlink" title="环形链表"></a>环形链表</h4><p>给定一个链表，判断链表中是否有环。</p>
+<p>如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。</p>
+<p>如果链表中存在环，则返回 true 。 否则，返回 false 。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;ListNode&#125;</span> <span class="variable">head</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hasCycle = <span class="function"><span class="keyword">function</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (head === <span class="literal">null</span>) &#123;<span class="keyword">return</span> <span class="literal">false</span>&#125;</span><br><span class="line">	<span class="keyword">let</span> fast = head.next;</span><br><span class="line">	<span class="keyword">let</span> low = head;</span><br><span class="line">	<span class="keyword">while</span>(fast !== <span class="literal">null</span> &amp;&amp; fast.next !== <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (fast === low) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		fast = fast.next.next;</span><br><span class="line">		low = low.next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="环形链表-II"><a href="#环形链表-II" class="headerlink" title="环形链表 II"></a>环形链表 II</h4><p>leetcode 142 中等</p>
+<p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</p>
+<p>说明：不允许修改给定的链表。</p>
+<p>你是否可以使用 O(1) 空间解决此题？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;ListNode&#125;</span> <span class="variable">head</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;ListNode&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> detectCycle = <span class="function"><span class="keyword">function</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (head === <span class="literal">null</span> || head.next === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">let</span> fast = head.next;</span><br><span class="line">	<span class="keyword">let</span> low = head;</span><br><span class="line">	<span class="keyword">while</span>(fast !== <span class="literal">null</span> &amp;&amp; fast.next !== <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (fast === low) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(low.value)</span><br><span class="line">			<span class="comment">// 当快慢指针重合时，此时定义一个新的指针pre指向第一个节点，low指针同时向后移动，pre和low重合点即入环节点</span></span><br><span class="line">			<span class="keyword">let</span> pre = head;</span><br><span class="line">			low = low.next;</span><br><span class="line">			<span class="keyword">while</span>(low !== pre) &#123;</span><br><span class="line">				low = low.next;</span><br><span class="line">				pre = pre.next;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> pre;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		fast = fast.next.next;</span><br><span class="line">		low = low.next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mobx</title>
+    <url>/2021/01/14/mobx/</url>
+    <content><![CDATA[<h3 id="mobx"><a href="#mobx" class="headerlink" title="mobx"></a>mobx</h3><h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p>mobx需要项目支持装饰器语法，在<strong>create-react-app</strong>项目中，进行下面的操作</p>
+<p>方式一:</p>
+<pre><code>  1. npm run eject
+  2. npm install @babel/plugin-proposal-decorators
+  3. package.json
+
+    &quot;babel&quot;: &#123;
+        &quot;plugins&quot;: [
+            [
+                &quot;@babel/plugin-proposal-decorators&quot;,
+                &#123;
+                    &quot;legacy&quot;: true
+                &#125;
+            ]
+        ]
+    &#125;</code></pre>
+<p>  方式二:</p>
+<pre><code>  1. npm install react-app-rewired @babel/plugin-proposal-decorators customize-cra
+
+  2. 在项目根目录下创建 config-overrides.js
+
+      const &#123; override, addDecoratorsLegacy &#125; = require(&quot;customize-cra&quot;);
+
+      module.exports = override(addDecoratorsLegacy());
+
+  3. package.json
+
+      &quot;scripts&quot;: &#123;
+          &quot;start&quot;: &quot;react-app-rewired start&quot;,
+          &quot;build&quot;: &quot;react-app-rewired build&quot;,
+          &quot;test&quot;: &quot;react-app-rewired test&quot;,
+      &#125;</code></pre>
+<p>解决vscode编辑器关于装饰器语法的警告</p>
+<p>  “javascript.implicitProjectConfig.experimentalDecorators”: true</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm i mobx mobx-react</span><br></pre></td></tr></table></figure>
+
+<h4 id="上手使用"><a href="#上手使用" class="headerlink" title="上手使用"></a>上手使用</h4><p>这里通过一个简易的商品列表的功能，来演示<strong>mobx</strong>的使用</p>
+<p>首先需要创建一下文件结构</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">src&#x2F;</span><br><span class="line">---- product&#x2F;</span><br><span class="line">	 ---- store&#x2F;</span><br><span class="line">	      ---- mobx.js</span><br><span class="line">	 ---- index.js</span><br><span class="line">---- index.js</span><br></pre></td></tr></table></figure>
+
+<p>我们在<strong>mobx.js中</strong>创建一个<strong>store</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, action, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 通过observable修饰后的变量修改后才能被监听到</span></span><br><span class="line">	@observable list = [<span class="string">&#x27;商品1&#x27;</span>];</span><br><span class="line">	@observable isPicking = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 计算属性，当依赖项改变时重新计算计算属性值，需要加 get</span></span><br><span class="line">	@computed get totalNo () &#123;</span><br><span class="line">		<span class="keyword">const</span> temp = <span class="built_in">this</span>.list.filter(<span class="function"><span class="params">l</span> =&gt;</span> !l.isEat)</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			num: temp.length,</span><br><span class="line">			weight: temp.reduce(<span class="function">(<span class="params">total, l</span>) =&gt;</span> &#123;<span class="keyword">return</span> total + l.weight&#125;, <span class="number">0</span>),</span><br><span class="line">			list: temp,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	@computed get totalEat () &#123;</span><br><span class="line">		<span class="keyword">const</span> temp = <span class="built_in">this</span>.list.filter(<span class="function"><span class="params">l</span> =&gt;</span> l.isEat)</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			num: temp.length,</span><br><span class="line">			weight: temp.reduce(<span class="function">(<span class="params">total, l</span>) =&gt;</span> &#123;<span class="keyword">return</span> total + l.weight&#125;, <span class="number">0</span>),</span><br><span class="line">			list: temp,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 修饰用于修改属性值得方法，.bound 修饰才能保证this指向正确</span></span><br><span class="line">	@action.bound eat = <span class="function">(<span class="params">code</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.list.find(<span class="function"><span class="params">l</span> =&gt;</span> l.code === code).isEat = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@action.bound addList = <span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">this</span>.list.push(&#123;</span><br><span class="line">			code: <span class="built_in">this</span>.code ++,</span><br><span class="line">			weight: <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random() * <span class="number">500</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例并导出</span></span><br><span class="line"><span class="keyword">const</span> product = <span class="keyword">new</span> Product();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> product;</span><br></pre></td></tr></table></figure>
+
+<p>创建好的<strong>store</strong>需要在全局引入，并放入容器中方便子组件获取</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx-react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> product <span class="keyword">from</span> <span class="string">&#x27;./product/store/mobx&#x27;</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider product=&#123;product&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们在组件中尝试使用它</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; inject, observer &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx-react&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@inject(<span class="string">&#x27;product&#x27;</span>) <span class="comment">// 注入product这个store</span></span><br><span class="line">@observer  <span class="comment">// 当数据改变时会响应式通知组件更新</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; list, addList, totalNo, totalEat, eat &#125; = <span class="built_in">this</span>.props.product;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div className=<span class="string">&quot;App&quot;</span>&gt;</span><br><span class="line">				&lt;h2&gt;苹果篮子&lt;/h2&gt;</span><br><span class="line">				&lt;hr/&gt;</span><br><span class="line">				&lt;div className=<span class="string">&quot;total&quot;</span>&gt;</span><br><span class="line">					&lt;div className=<span class="string">&quot;hastotal&quot;</span>&gt;</span><br><span class="line">						&lt;div&gt;当前&lt;/div&gt;</span><br><span class="line">						&lt;div&gt;&#123;totalNo.num&#125;个苹果，&#123;totalNo.weight&#125;克&lt;/div&gt;</span><br><span class="line">					&lt;/div&gt;</span><br><span class="line">					&lt;div className=<span class="string">&quot;nototal&quot;</span>&gt;</span><br><span class="line">						&lt;div&gt;已吃掉&lt;/div&gt;</span><br><span class="line">						&lt;div&gt;&#123;totalEat.num&#125;个苹果，&#123;totalEat.weight&#125;克&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">					&lt;/div&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">				&#123;totalNo.list.map(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;appleitem&quot;</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;button&quot;&gt;</span><br><span class="line">							&lt;button onClick=&#123;() =&gt; &#123;eat(l.code)&#125;&#125;&gt;吃掉&lt;/button&gt;</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;appleImage&quot;&gt;</span><br><span class="line">							&lt;img src=&#123;apple&#125; /&gt;</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;title&quot;&gt;</span><br><span class="line">							红苹果 - &#123;l.code&#125;号</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;wiehgt&quot;&gt;</span><br><span class="line">							&#123;l.weight&#125;克</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">				&#125;)&#125;</span><br><span class="line">				&lt;p className=<span class="string">&quot;pickWrapper&quot;</span>&gt;</span><br><span class="line">					&lt;button className=<span class="string">&quot;pick&quot;</span> onClick=&#123;<span class="function">() =&gt;</span> &#123;</span><br><span class="line">						<span class="built_in">this</span>.props.product.addList(<span class="string">&#x27;商品&#x27;</span>)</span><br><span class="line">					&#125;&#125;&gt;添加一个商品&lt;/button&gt;</span><br><span class="line">				&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以看到<strong>list</strong>数据在页面中展示了</p>
+]]></content>
+      <tags>
+        <tag>mobx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>npm安装过程</title>
+    <url>/2021/01/21/npm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>以安装gulp-imagemin为例</p>
+<p>请求一个接口 <a href="https://registry.npmjs.com/gulp">https://registry.npmjs.com/gulp</a> 你的镜像地址 + 项目名</p>
+<p>这个接口会返回json数据</p>
+<p>下载某个npm模块后，回家压倒node_modules中，检查木块的package.json 的 scripts ，是否有 install 和 postinstall， 这两个会自动执行</p>
+]]></content>
+  </entry>
+  <entry>
     <title>react-hooks</title>
     <url>/2021/01/20/react-hooks/</url>
     <content><![CDATA[<h3 id="react-hooks"><a href="#react-hooks" class="headerlink" title="react hooks"></a>react hooks</h3><h4 id="userState"><a href="#userState" class="headerlink" title="userState"></a>userState</h4><p><strong>useState</strong> 在使用声明时可以传一个函数，这个函数可以用于动态的给 <strong>useState</strong> 附初始值，而函数中的代码又只会执行一次。</p>
@@ -832,12 +943,6 @@
       </tags>
   </entry>
   <entry>
-    <title>test</title>
-    <url>/2021/12/20/test/</url>
-    <content><![CDATA[<p>test along push 6</p>
-]]></content>
-  </entry>
-  <entry>
     <title>vue-router原理</title>
     <url>/2020/08/27/vue-router%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h2 id="vue-router-原理"><a href="#vue-router-原理" class="headerlink" title="vue-router 原理"></a>vue-router 原理</h2><p>模拟实现一个<code>vue-router</code>,详见 <a href="https://github.com/alongithub/vue-router-source/blob/master/src/vuerouter/index.js">vuerouter/index.js</a></p>
@@ -944,6 +1049,114 @@
         <tag>vue</tag>
         <tag>vue源码</tag>
         <tag>vue3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue响应式原理</title>
+    <url>/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="VUE-响应式原理"><a href="#VUE-响应式原理" class="headerlink" title="VUE 响应式原理"></a>VUE 响应式原理</h2><h3 id="数据响应式原理"><a href="#数据响应式原理" class="headerlink" title="数据响应式原理"></a>数据响应式原理</h3><p>Vue 2.x</p>
+<blockquote>
+<p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。</p>
+</blockquote>
+<p>defineProperty 代码示例，详见 <a href="./test/defineproperty.html">defineProty示例</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据劫持</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(data, <span class="string">&#x27;msg&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// 可枚举</span></span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 可配置(可以使用delete删除)</span></span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">    get() &#123;</span><br><span class="line">        <span class="comment">// 需要用一个新的字段保存实际的msg值，因为在get中如果访问msg会导致重复触发getter</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get:&#x27;</span>, data._msg);</span><br><span class="line">        <span class="keyword">return</span> data._msg;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    set(newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set:&#x27;</span>, newValue);</span><br><span class="line">        <span class="keyword">if</span> (newValue === data._msg) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        data._msg = newValue;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = data._msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line">data.msg = <span class="string">&#x27;hello world&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.msg);</span><br></pre></td></tr></table></figure>
+
+<p>Vue 3.x</p>
+<p>Proxy 代码示例， 详见 <a href="./test/proxy.html">Proxy示例</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">    count: <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">    get (target, key) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get, key: &#x27;</span>, key, target[key]);</span><br><span class="line">        <span class="keyword">return</span> target[key];</span><br><span class="line">    &#125;,</span><br><span class="line">    set(target, key, newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set, key:&#x27;</span>, key, newValue);</span><br><span class="line">        <span class="keyword">if</span> (target[key] === newValue) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        target[key] = newValue;</span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = target[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line">vm.msg = <span class="string">&#x27;along&#x27;</span>;</span><br><span class="line"></span><br><span class="line">vm.count = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="发布订阅模式-与-观察者模式"><a href="#发布订阅模式-与-观察者模式" class="headerlink" title="发布订阅模式 与 观察者模式"></a>发布订阅模式 与 观察者模式</h3><p>发布订阅模式</p>
+<p>vue和node事件基于发布订阅模式</p>
+<p>vue 自定义事件示例,实现兄弟组件间的通讯</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eventBus.js 事件中心</span></span><br><span class="line"><span class="keyword">let</span> eventBus = <span class="keyword">new</span> Vue();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册两个事件，A、B 在created生命周期中注册两个订阅者，C 发布事件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A,vue </span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 1&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B.vue</span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 2&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// C.vue</span></span><br><span class="line"><span class="comment">// 触发事件，发布者</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    onDataChange() &#123;</span><br><span class="line">        eventBus.$emit(<span class="string">&#x27;datachange&#x27;</span>, &#123;<span class="attr">text</span>: <span class="string">&#x27;along&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模拟实现 事件中心 详见 <a href="./test/eventemitter.html">eventemitter</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件触发器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $on(eventType, handler) &#123;</span><br><span class="line">        <span class="comment">// 如果没有注册过该事件，设置该事件为空数组</span></span><br><span class="line">        <span class="built_in">this</span>.subs[eventType] = <span class="built_in">this</span>.subs[eventType] || [];</span><br><span class="line">        <span class="built_in">this</span>.subs[eventType].push(handler);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    $emit(eventType) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.subs[eventType]) &#123;</span><br><span class="line">            <span class="built_in">this</span>.subs[eventType].forEach(<span class="function"><span class="params">handler</span> =&gt;</span> &#123;</span><br><span class="line">                handler(); </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="keyword">let</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 1&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 2&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">em.$emit(<span class="string">&#x27;click&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>观察者模式</p>
+<p>vue响应式机制使用了观察者模式</p>
+<p>观察者模式没有事件中心，只有发布者和订阅者，发布者需要知道订阅者的存在</p>
+<ul>
+<li>观察者模式中，订阅者称为观察者，Watcher<ul>
+<li>update(), 观察者需要实现update方法，定义事件发生时具体要做的事情</li>
+</ul>
+</li>
+<li>发布者，Dep<ul>
+<li>subs: 存储观察者的数组</li>
+<li>addSub(): 注册添加观察者</li>
+<li>notify(): 事件发生时，通知所有的观察者update()方法</li>
+</ul>
+</li>
+</ul>
+<p>观察者模式代码示例，详见<a href="./test/depwatcher.html"></a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 发布者</span><br><span class="line">class Dep &#123;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        &#x2F;&#x2F; 记录所有的订阅者</span><br><span class="line">        this.subs &#x3D; [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    addSub(sub) &#123;</span><br><span class="line">        if (sub &amp;&amp; sub.update) &#123;</span><br><span class="line">            this.subs.push(sub);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify() &#123;</span><br><span class="line">        this.subs.forEach(sub &#x3D;&gt; &#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 订阅者</span><br><span class="line">class Watcher &#123;</span><br><span class="line">    update() &#123;</span><br><span class="line">        console.log(&#39;update&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; test</span><br><span class="line">let dep &#x3D; new Dep();</span><br><span class="line">let watcher &#x3D; new Watcher();</span><br><span class="line"></span><br><span class="line">dep.addSub(watcher);</span><br><span class="line"></span><br><span class="line">dep.notify();</span><br></pre></td></tr></table></figure>
+
+<p>观察者模式和发布订阅模式的区别</p>
+<ul>
+<li>观察者模式由具体目标调度，当时间触发，Dep就会调用观察者的方法，观察者和发布者之间存在依赖关系</li>
+<li>发布/订阅模式由事件中心调度，发布者和订阅者不需要知道对方的存在</li>
+</ul>
+<p><img src="./readmeimg/diffofwatcher.png"></p>
+<h3 id="vue-响应式原理总览"><a href="#vue-响应式原理总览" class="headerlink" title="vue 响应式原理总览"></a>vue 响应式原理总览</h3><p><img src="./readmeimg/vue.png"></p>
+<h4 id="VUE"><a href="#VUE" class="headerlink" title="VUE"></a>VUE</h4><ul>
+<li>负责接收初始化参数</li>
+<li>负责把data中的属性注入到Vue中，转换为getter/setter</li>
+<li>负责调用Observer监听data中属性的变换</li>
+<li>负责调用Compiler解析指令/差值表达式</li>
+</ul>
+<p>类图<br>|  VUE   |<br>|  —-  |<br>| + $options <br/> + $el <br/> + $data|<br>| - _proxyDate() | </p>
+<h4 id="Observer-数据劫持"><a href="#Observer-数据劫持" class="headerlink" title="Observer 数据劫持"></a>Observer 数据劫持</h4><ul>
+<li>负责把data中的数据转换成响应式数据</li>
+<li>data中的某个属性是对象时，把该对象属性也转换成响应式数据</li>
+<li>数据变化时发送通知</li>
+</ul>
+<p>类图<br>|  Observer   |<br>|  —-  |<br>| + walk() <br/> + defineReactive|</p>
+<h4 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h4><ul>
+<li>编译模板，解析指令差值表达式</li>
+<li>负责页面的首次渲染</li>
+<li>数据变化时更新视图</li>
+</ul>
+<p>类图<br>|  Compiler   |<br>|  —-  |<br>| + el <br/> + vm|<br>| + compile(el) <br/> + compilerElement(node) <br/> + compileText(node) <br/> + isDirective(attrName) <br> + isTextNode(node) <br/> + isElementNode(node) |</p>
+<ul>
+<li>compile(el) 解析节点，如果是文本节点，解析差值表达式，如果是元素节点解析指令</li>
+<li>compileElement(node) 解析元素节点</li>
+<li>compileText(node) 解析文本节点</li>
+<li>isDirective(attrName) 判断属性是否是指令</li>
+</ul>
+<h4 id="Dep-Dependency"><a href="#Dep-Dependency" class="headerlink" title="Dep(Dependency)"></a>Dep(Dependency)</h4><ul>
+<li>收集依赖，添加观察者</li>
+<li>通知所有观察者更新数据</li>
+</ul>
+<p>类图<br>|  Dep   |<br>|  —-  |<br>| + subs |<br>| + addSub(sub) <br/> + notify() | </p>
+<h4 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h4><ul>
+<li>数据变化时dep通知所有watcher 更新视图</li>
+<li>自身实例化时 注册到dep 对象中</li>
+</ul>
+<p>类图<br>|  Watcher   |<br>|  —-  |<br>| + vm <br/> + key <br/> + cb <br/> + oldValue |<br>| + update() | </p>
+<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><p>了解了响应式原理的几个部分，本项目简易实现一个响应式vue</p>
+<p>目前实现的功能</p>
+<ul>
+<li><input disabled="" type="checkbox"> 差值表达式 <ul>
+<li><input checked="" disabled="" type="checkbox"> 绑定值 <code>&#123;&#123;data&#125;&#125;</code></li>
+<li><input disabled="" type="checkbox"> 表达式 <code>&#123;&#123;data + 1&#125;&#125;</code></li>
+<li><input disabled="" type="checkbox"> …</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 模板指令<ul>
+<li><input checked="" disabled="" type="checkbox"> <code>v-text</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>v-html</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>v-model</code> 双向绑定</li>
+<li><input disabled="" type="checkbox"> <code>v-on</code><ul>
+<li><input checked="" disabled="" type="checkbox"> 绑定<code>vue</code>中的<code>methods</code> </li>
+<li><input disabled="" type="checkbox"> …</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1076,201 +1289,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue响应式原理</title>
-    <url>/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h2 id="VUE-响应式原理"><a href="#VUE-响应式原理" class="headerlink" title="VUE 响应式原理"></a>VUE 响应式原理</h2><h3 id="数据响应式原理"><a href="#数据响应式原理" class="headerlink" title="数据响应式原理"></a>数据响应式原理</h3><p>Vue 2.x</p>
-<blockquote>
-<p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。</p>
-</blockquote>
-<p>defineProperty 代码示例，详见 <a href="./test/defineproperty.html">defineProty示例</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据劫持</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(data, <span class="string">&#x27;msg&#x27;</span>, &#123;</span><br><span class="line">    <span class="comment">// 可枚举</span></span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 可配置(可以使用delete删除)</span></span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">    get() &#123;</span><br><span class="line">        <span class="comment">// 需要用一个新的字段保存实际的msg值，因为在get中如果访问msg会导致重复触发getter</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get:&#x27;</span>, data._msg);</span><br><span class="line">        <span class="keyword">return</span> data._msg;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    set(newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set:&#x27;</span>, newValue);</span><br><span class="line">        <span class="keyword">if</span> (newValue === data._msg) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        data._msg = newValue;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = data._msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line">data.msg = <span class="string">&#x27;hello world&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.msg);</span><br></pre></td></tr></table></figure>
-
-<p>Vue 3.x</p>
-<p>Proxy 代码示例， 详见 <a href="./test/proxy.html">Proxy示例</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">    count: <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">    get (target, key) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;get, key: &#x27;</span>, key, target[key]);</span><br><span class="line">        <span class="keyword">return</span> target[key];</span><br><span class="line">    &#125;,</span><br><span class="line">    set(target, key, newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;set, key:&#x27;</span>, key, newValue);</span><br><span class="line">        <span class="keyword">if</span> (target[key] === newValue) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        target[key] = newValue;</span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#app&#x27;</span>).textContent = target[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line">vm.msg = <span class="string">&#x27;along&#x27;</span>;</span><br><span class="line"></span><br><span class="line">vm.count = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="发布订阅模式-与-观察者模式"><a href="#发布订阅模式-与-观察者模式" class="headerlink" title="发布订阅模式 与 观察者模式"></a>发布订阅模式 与 观察者模式</h3><p>发布订阅模式</p>
-<p>vue和node事件基于发布订阅模式</p>
-<p>vue 自定义事件示例,实现兄弟组件间的通讯</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eventBus.js 事件中心</span></span><br><span class="line"><span class="keyword">let</span> eventBus = <span class="keyword">new</span> Vue();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册两个事件，A、B 在created生命周期中注册两个订阅者，C 发布事件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A,vue </span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 1&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B.vue</span></span><br><span class="line">created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">&#x27;datachange&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;datachange, then 2&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// C.vue</span></span><br><span class="line"><span class="comment">// 触发事件，发布者</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    onDataChange() &#123;</span><br><span class="line">        eventBus.$emit(<span class="string">&#x27;datachange&#x27;</span>, &#123;<span class="attr">text</span>: <span class="string">&#x27;along&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>模拟实现 事件中心 详见 <a href="./test/eventemitter.html">eventemitter</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件触发器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $on(eventType, handler) &#123;</span><br><span class="line">        <span class="comment">// 如果没有注册过该事件，设置该事件为空数组</span></span><br><span class="line">        <span class="built_in">this</span>.subs[eventType] = <span class="built_in">this</span>.subs[eventType] || [];</span><br><span class="line">        <span class="built_in">this</span>.subs[eventType].push(handler);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    $emit(eventType) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.subs[eventType]) &#123;</span><br><span class="line">            <span class="built_in">this</span>.subs[eventType].forEach(<span class="function"><span class="params">handler</span> =&gt;</span> &#123;</span><br><span class="line">                handler(); </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="keyword">let</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 1&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line">em.$on(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;click then 2&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">em.$emit(<span class="string">&#x27;click&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>观察者模式</p>
-<p>vue响应式机制使用了观察者模式</p>
-<p>观察者模式没有事件中心，只有发布者和订阅者，发布者需要知道订阅者的存在</p>
-<ul>
-<li>观察者模式中，订阅者称为观察者，Watcher<ul>
-<li>update(), 观察者需要实现update方法，定义事件发生时具体要做的事情</li>
-</ul>
-</li>
-<li>发布者，Dep<ul>
-<li>subs: 存储观察者的数组</li>
-<li>addSub(): 注册添加观察者</li>
-<li>notify(): 事件发生时，通知所有的观察者update()方法</li>
-</ul>
-</li>
-</ul>
-<p>观察者模式代码示例，详见<a href="./test/depwatcher.html"></a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 发布者</span><br><span class="line">class Dep &#123;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        &#x2F;&#x2F; 记录所有的订阅者</span><br><span class="line">        this.subs &#x3D; [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    addSub(sub) &#123;</span><br><span class="line">        if (sub &amp;&amp; sub.update) &#123;</span><br><span class="line">            this.subs.push(sub);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify() &#123;</span><br><span class="line">        this.subs.forEach(sub &#x3D;&gt; &#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 订阅者</span><br><span class="line">class Watcher &#123;</span><br><span class="line">    update() &#123;</span><br><span class="line">        console.log(&#39;update&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; test</span><br><span class="line">let dep &#x3D; new Dep();</span><br><span class="line">let watcher &#x3D; new Watcher();</span><br><span class="line"></span><br><span class="line">dep.addSub(watcher);</span><br><span class="line"></span><br><span class="line">dep.notify();</span><br></pre></td></tr></table></figure>
-
-<p>观察者模式和发布订阅模式的区别</p>
-<ul>
-<li>观察者模式由具体目标调度，当时间触发，Dep就会调用观察者的方法，观察者和发布者之间存在依赖关系</li>
-<li>发布/订阅模式由事件中心调度，发布者和订阅者不需要知道对方的存在</li>
-</ul>
-<p><img src="./readmeimg/diffofwatcher.png"></p>
-<h3 id="vue-响应式原理总览"><a href="#vue-响应式原理总览" class="headerlink" title="vue 响应式原理总览"></a>vue 响应式原理总览</h3><p><img src="./readmeimg/vue.png"></p>
-<h4 id="VUE"><a href="#VUE" class="headerlink" title="VUE"></a>VUE</h4><ul>
-<li>负责接收初始化参数</li>
-<li>负责把data中的属性注入到Vue中，转换为getter/setter</li>
-<li>负责调用Observer监听data中属性的变换</li>
-<li>负责调用Compiler解析指令/差值表达式</li>
-</ul>
-<p>类图<br>|  VUE   |<br>|  —-  |<br>| + $options <br/> + $el <br/> + $data|<br>| - _proxyDate() | </p>
-<h4 id="Observer-数据劫持"><a href="#Observer-数据劫持" class="headerlink" title="Observer 数据劫持"></a>Observer 数据劫持</h4><ul>
-<li>负责把data中的数据转换成响应式数据</li>
-<li>data中的某个属性是对象时，把该对象属性也转换成响应式数据</li>
-<li>数据变化时发送通知</li>
-</ul>
-<p>类图<br>|  Observer   |<br>|  —-  |<br>| + walk() <br/> + defineReactive|</p>
-<h4 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h4><ul>
-<li>编译模板，解析指令差值表达式</li>
-<li>负责页面的首次渲染</li>
-<li>数据变化时更新视图</li>
-</ul>
-<p>类图<br>|  Compiler   |<br>|  —-  |<br>| + el <br/> + vm|<br>| + compile(el) <br/> + compilerElement(node) <br/> + compileText(node) <br/> + isDirective(attrName) <br> + isTextNode(node) <br/> + isElementNode(node) |</p>
-<ul>
-<li>compile(el) 解析节点，如果是文本节点，解析差值表达式，如果是元素节点解析指令</li>
-<li>compileElement(node) 解析元素节点</li>
-<li>compileText(node) 解析文本节点</li>
-<li>isDirective(attrName) 判断属性是否是指令</li>
-</ul>
-<h4 id="Dep-Dependency"><a href="#Dep-Dependency" class="headerlink" title="Dep(Dependency)"></a>Dep(Dependency)</h4><ul>
-<li>收集依赖，添加观察者</li>
-<li>通知所有观察者更新数据</li>
-</ul>
-<p>类图<br>|  Dep   |<br>|  —-  |<br>| + subs |<br>| + addSub(sub) <br/> + notify() | </p>
-<h4 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h4><ul>
-<li>数据变化时dep通知所有watcher 更新视图</li>
-<li>自身实例化时 注册到dep 对象中</li>
-</ul>
-<p>类图<br>|  Watcher   |<br>|  —-  |<br>| + vm <br/> + key <br/> + cb <br/> + oldValue |<br>| + update() | </p>
-<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><p>了解了响应式原理的几个部分，本项目简易实现一个响应式vue</p>
-<p>目前实现的功能</p>
-<ul>
-<li><input disabled="" type="checkbox"> 差值表达式 <ul>
-<li><input checked="" disabled="" type="checkbox"> 绑定值 <code>&#123;&#123;data&#125;&#125;</code></li>
-<li><input disabled="" type="checkbox"> 表达式 <code>&#123;&#123;data + 1&#125;&#125;</code></li>
-<li><input disabled="" type="checkbox"> …</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 模板指令<ul>
-<li><input checked="" disabled="" type="checkbox"> <code>v-text</code></li>
-<li><input checked="" disabled="" type="checkbox"> <code>v-html</code></li>
-<li><input checked="" disabled="" type="checkbox"> <code>v-model</code> 双向绑定</li>
-<li><input disabled="" type="checkbox"> <code>v-on</code><ul>
-<li><input checked="" disabled="" type="checkbox"> 绑定<code>vue</code>中的<code>methods</code> </li>
-<li><input disabled="" type="checkbox"> …</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>webpack</title>
-    <url>/2020/08/27/webpack/</url>
-    <content><![CDATA[<h2 id="WEBPACK"><a href="#WEBPACK" class="headerlink" title="WEBPACK"></a>WEBPACK</h2><h3 id="模块化问题"><a href="#模块化问题" class="headerlink" title="模块化问题"></a>模块化问题</h3><ul>
-<li>兼容问题：  ES6 =&gt; ES5</li>
-<li>模块文件多，网络请求频繁：  打包多个模块到一起</li>
-<li>所有的前端资源都需要模块化：  打包不同类型文件</li>
-</ul>
-<h3 id="打包工具"><a href="#打包工具" class="headerlink" title="打包工具"></a>打包工具</h3><ul>
-<li>webpack <ul>
-<li>模块打包 Module bundler</li>
-<li>模块加载 loader</li>
-<li>代码拆分 Code Splitting</li>
-<li>资源模块 Asset Module</li>
-</ul>
-</li>
-</ul>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add webpack webpack-cli --dev</span><br></pre></td></tr></table></figure>
-
-<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>webpack 4 支持零配置打包，可以通过index.html中引入的script找到所有相关文件并打包</p>
-<p>也可以通过修改配置自定义</p>
-<p>创建 webpack.config.js 文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const path &#x3D; require(&#39;path&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    mode: &#39;none&#39;,</span><br><span class="line">    entry: &#39;.&#x2F;src&#x2F;index.js&#39;, &#x2F;&#x2F; 相对路径不能省略 .&#x2F;</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &#39;bundle.js&#39;,</span><br><span class="line">        path: path.join(__dirname, &#39;output&#39;), &#x2F;&#x2F; 指定输出文件路径，必须是一个绝对路径</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="webpack-原理"><a href="#webpack-原理" class="headerlink" title="webpack 原理"></a>webpack 原理</h4><h4 id="webpack-资源加载-Loader"><a href="#webpack-资源加载-Loader" class="headerlink" title="webpack 资源加载 Loader"></a>webpack 资源加载 Loader</h4><p>webpack 加载资源的方式</p>
-<ul>
-<li><p>遵循ES Modules 标准的import声明</p>
-</li>
-<li><p>遵循CommonJS标准的require函数</p>
-</li>
-<li><p>遵循AMD标准的define函数和require函数</p>
-</li>
-<li><p>样式代码中的@import指令和url函数</p>
-</li>
-<li><p>HTML代码中图片标签的src属性</p>
-</li>
-</ul>
-<p>loader 加载器类型大致分为三类</p>
-<ul>
-<li>编译转换类</li>
-<li>文件操作类型  比如文件拷贝</li>
-<li>代码检查类   eslint</li>
-</ul>
-<p>每一种资源都需要特定的加载器来加载。</p>
-<p>通过webpack 配置文件中的 module.rules 来配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;test: &#x2F;.css$&#x2F;, use: &#39;css-loader&#39;&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="处理css"><a href="#处理css" class="headerlink" title="处理css"></a>处理css</h5><p><code>[&#39;style-loader&#39;,&#39;css-loader&#39;]</code></p>
-<h5 id="文件资源加载-图片字体"><a href="#文件资源加载-图片字体" class="headerlink" title="文件资源加载, 图片字体"></a>文件资源加载, 图片字体</h5><p><code>[&#39;file-loader&#39;]</code> file-loader 会在打包时将目标复制到输出文件夹，并将输出模块的路径作为返回值返回</p>
-<p><code>[&#39;url-loader&#39;]</code> url-loader 采用Data urls 协议，（url直接表示文件内容），将文件转换成base64 直接写到代码中</p>
-<p>最好的方式是较小的资源使用url-loader 转换，较大的文件使用file-loader 拷贝</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &#123;</span><br><span class="line">    test: &#x2F;\.(png|jpg|jpeg|gif)$&#x2F;,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: &#39;url-loader&#39;,</span><br><span class="line">        options: &#123;</span><br><span class="line">            esModule: false,</span><br><span class="line">            limit: 10 * 1024,</span><br><span class="line">            &#x2F;&#x2F; outputPath: &#39;images&#x2F;&#39;,</span><br><span class="line">            &#x2F;&#x2F; name: &#39;[name].[hash:5].[ext]&#39;,</span><br><span class="line">            &#x2F;&#x2F; publicPath: &#39;&#39;, &#x2F;&#x2F; 可以写cdn地址</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="编译-ES6"><a href="#编译-ES6" class="headerlink" title="编译 ES6"></a>编译 ES6</h5><p><code>yarn add babel-loader @babel/core @babel/preset-env --dev</code></p>
-<p>配置 规则</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: &#x2F;\.js$&#x2F;,</span><br><span class="line">        use: &#123;</span><br><span class="line">            loader: &#39;babel-loader&#39;,</span><br><span class="line">            options: &#123;</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;&#39;,</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<h4 id="自定义-loader"><a href="#自定义-loader" class="headerlink" title="自定义 loader"></a>自定义 loader</h4><p>实现一个md转html的loader</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> marked = <span class="built_in">require</span>(<span class="string">&#x27;marked&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数 source 就是读取到的文件文本</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">source</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> html = marked(source);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// loader管道的最后一个loader必须要分会一段js脚本文本</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`module.exports = <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(html)&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="插件机制"><a href="#插件机制" class="headerlink" title="插件机制"></a>插件机制</h4><p>通过配置webpack的plugins数组配置插件</p>
-<h5 id="自动清除输出目录"><a href="#自动清除输出目录" class="headerlink" title="自动清除输出目录"></a>自动清除输出目录</h5><p>clean-webpack-plugin</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;CleanWebpackPlugin&#125; &#x3D; require(&#39;clean-webpack-plugin&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new CleanWebpackPlugin(),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="自动生成html-html-webpack-plugin"><a href="#自动生成html-html-webpack-plugin" class="headerlink" title="自动生成html html-webpack-plugin"></a>自动生成html html-webpack-plugin</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const HtmlWebpakPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new HtmlWebpakPlugin(&#123;</span><br><span class="line">            title: &#39;vue-app&#39;, </span><br><span class="line">            url: &#39;&#x2F;&#39;, &#x2F;&#x2F; 自定义参数</span><br><span class="line">            template: &#39;.&#x2F;public&#x2F;index.html&#39;, </span><br><span class="line">            filename: &#39;index.html&#39;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h5 id="复制文件-copy-webpack-plugin"><a href="#复制文件-copy-webpack-plugin" class="headerlink" title="复制文件  copy-webpack-plugin"></a>复制文件  copy-webpack-plugin</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const CopyWebpackPlugin &#x3D; require(&#39;copy-webpack-plugin&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new CopyWebpackPlugin(&#123;</span><br><span class="line">            patterns: [</span><br><span class="line">                &#123;</span><br><span class="line">                    from: &#39;public&#x2F;favicon.ico&#39;,</span><br><span class="line">                    to: &#39;&#39;</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="插件实现原理"><a href="#插件实现原理" class="headerlink" title="插件实现原理"></a>插件实现原理</h4><p>通过钩子机制实现</p>
-<p>插件必须是一个函数或者包含apply 方法的对象</p>
-<p>一般都会定义一个类型，通过实例来实现</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 实现一个去处打包后文件注释的方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> </span>&#123;</span><br><span class="line">    <span class="comment">// apply 方法会在webpack启动时被调用</span></span><br><span class="line">    apply (compiler)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;webpack 启动 &#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// emit 钩子在webpack准备往目标目录输出文件时执行,</span></span><br><span class="line">        <span class="comment">// 第一个参数是插件名称， 第二个参数函数的参数是打包过程的上下文</span></span><br><span class="line">        compiler.hooks.emit.tap(<span class="string">&#x27;MyPlugin&#x27;</span>, <span class="function"><span class="params">compilation</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 获取即将写入的资源信息</span></span><br><span class="line">            <span class="keyword">const</span> assets = compilation.assets</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> assets) &#123;</span><br><span class="line">                <span class="comment">// key 就是 资源文件名称</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (key.endsWith(<span class="string">&#x27;.js&#x27;</span>))&#123;</span><br><span class="line">                    <span class="comment">// 这里只处理js文件</span></span><br><span class="line">                    <span class="comment">// source方法返回文件文本内容</span></span><br><span class="line">                    <span class="keyword">const</span> value = compilation.assets[key].source();</span><br><span class="line">                    <span class="comment">// 通过正则替换掉注释信息</span></span><br><span class="line">                    <span class="keyword">const</span> withoutComments = contents.replace(<span class="regexp">/\/\*\*+\*\//g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">                    compilation.assets[key] = &#123;</span><br><span class="line">                        source: <span class="function">() =&gt;</span> withoutComments,</span><br><span class="line">                        size: <span class="function">() =&gt;</span> withoutComments.length, <span class="comment">// 返回内容方法，必须</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    historyApiFallback: true, &#x2F;&#x2F;historyApiFallback设置为true那么所有的路径都执行index.html。</span><br><span class="line">    overlay: true, &#x2F;&#x2F; 将错误显示在html之上</span><br><span class="line">    port: 8080,</span><br><span class="line">    progress: true,</span><br><span class="line">    contentBase: &#39;.&#x2F;dist&#39;,</span><br><span class="line">    open: false,</span><br><span class="line">    hot: true,</span><br><span class="line">    disableHostCheck: true,  &#x2F;&#x2F; 没有这项ie 会重复报错，</span><br><span class="line">    historyApiFallback: true,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-<h4 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h4><h4 id="treeShaking"><a href="#treeShaking" class="headerlink" title="treeShaking"></a>treeShaking</h4><p>去除未引用代码</p>
-<p>treeShaking会在生产环境下自动开启，其他环境下可以通过配置usedExports和minimize来手动开启treeShaking</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">optimization: &#123;</span><br><span class="line">    usedExports: true,</span><br><span class="line">    minimize: true,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <tags>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>webpack搭建react脚手架</title>
     <url>/2020/09/23/webpack%E6%90%AD%E5%BB%BAreact%E8%84%9A%E6%89%8B%E6%9E%B6/</url>
     <content><![CDATA[<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><h4 id="1-安装webpack"><a href="#1-安装webpack" class="headerlink" title="1. 安装webpack"></a>1. 安装webpack</h4><p>初始化项目，初始化package.json</p>
@@ -1365,6 +1383,93 @@
       </tags>
   </entry>
   <entry>
+    <title>webpack</title>
+    <url>/2020/08/27/webpack/</url>
+    <content><![CDATA[<h2 id="WEBPACK"><a href="#WEBPACK" class="headerlink" title="WEBPACK"></a>WEBPACK</h2><h3 id="模块化问题"><a href="#模块化问题" class="headerlink" title="模块化问题"></a>模块化问题</h3><ul>
+<li>兼容问题：  ES6 =&gt; ES5</li>
+<li>模块文件多，网络请求频繁：  打包多个模块到一起</li>
+<li>所有的前端资源都需要模块化：  打包不同类型文件</li>
+</ul>
+<h3 id="打包工具"><a href="#打包工具" class="headerlink" title="打包工具"></a>打包工具</h3><ul>
+<li>webpack <ul>
+<li>模块打包 Module bundler</li>
+<li>模块加载 loader</li>
+<li>代码拆分 Code Splitting</li>
+<li>资源模块 Asset Module</li>
+</ul>
+</li>
+</ul>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add webpack webpack-cli --dev</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>webpack 4 支持零配置打包，可以通过index.html中引入的script找到所有相关文件并打包</p>
+<p>也可以通过修改配置自定义</p>
+<p>创建 webpack.config.js 文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const path &#x3D; require(&#39;path&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    mode: &#39;none&#39;,</span><br><span class="line">    entry: &#39;.&#x2F;src&#x2F;index.js&#39;, &#x2F;&#x2F; 相对路径不能省略 .&#x2F;</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &#39;bundle.js&#39;,</span><br><span class="line">        path: path.join(__dirname, &#39;output&#39;), &#x2F;&#x2F; 指定输出文件路径，必须是一个绝对路径</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="webpack-原理"><a href="#webpack-原理" class="headerlink" title="webpack 原理"></a>webpack 原理</h4><h4 id="webpack-资源加载-Loader"><a href="#webpack-资源加载-Loader" class="headerlink" title="webpack 资源加载 Loader"></a>webpack 资源加载 Loader</h4><p>webpack 加载资源的方式</p>
+<ul>
+<li><p>遵循ES Modules 标准的import声明</p>
+</li>
+<li><p>遵循CommonJS标准的require函数</p>
+</li>
+<li><p>遵循AMD标准的define函数和require函数</p>
+</li>
+<li><p>样式代码中的@import指令和url函数</p>
+</li>
+<li><p>HTML代码中图片标签的src属性</p>
+</li>
+</ul>
+<p>loader 加载器类型大致分为三类</p>
+<ul>
+<li>编译转换类</li>
+<li>文件操作类型  比如文件拷贝</li>
+<li>代码检查类   eslint</li>
+</ul>
+<p>每一种资源都需要特定的加载器来加载。</p>
+<p>通过webpack 配置文件中的 module.rules 来配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;test: &#x2F;.css$&#x2F;, use: &#39;css-loader&#39;&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="处理css"><a href="#处理css" class="headerlink" title="处理css"></a>处理css</h5><p><code>[&#39;style-loader&#39;,&#39;css-loader&#39;]</code></p>
+<h5 id="文件资源加载-图片字体"><a href="#文件资源加载-图片字体" class="headerlink" title="文件资源加载, 图片字体"></a>文件资源加载, 图片字体</h5><p><code>[&#39;file-loader&#39;]</code> file-loader 会在打包时将目标复制到输出文件夹，并将输出模块的路径作为返回值返回</p>
+<p><code>[&#39;url-loader&#39;]</code> url-loader 采用Data urls 协议，（url直接表示文件内容），将文件转换成base64 直接写到代码中</p>
+<p>最好的方式是较小的资源使用url-loader 转换，较大的文件使用file-loader 拷贝</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &#123;</span><br><span class="line">    test: &#x2F;\.(png|jpg|jpeg|gif)$&#x2F;,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: &#39;url-loader&#39;,</span><br><span class="line">        options: &#123;</span><br><span class="line">            esModule: false,</span><br><span class="line">            limit: 10 * 1024,</span><br><span class="line">            &#x2F;&#x2F; outputPath: &#39;images&#x2F;&#39;,</span><br><span class="line">            &#x2F;&#x2F; name: &#39;[name].[hash:5].[ext]&#39;,</span><br><span class="line">            &#x2F;&#x2F; publicPath: &#39;&#39;, &#x2F;&#x2F; 可以写cdn地址</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="编译-ES6"><a href="#编译-ES6" class="headerlink" title="编译 ES6"></a>编译 ES6</h5><p><code>yarn add babel-loader @babel/core @babel/preset-env --dev</code></p>
+<p>配置 规则</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: &#x2F;\.js$&#x2F;,</span><br><span class="line">        use: &#123;</span><br><span class="line">            loader: &#39;babel-loader&#39;,</span><br><span class="line">            options: &#123;</span><br><span class="line">                presets: [&#39;@babel&#x2F;preset-env&#39;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;&#39;,</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义-loader"><a href="#自定义-loader" class="headerlink" title="自定义 loader"></a>自定义 loader</h4><p>实现一个md转html的loader</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> marked = <span class="built_in">require</span>(<span class="string">&#x27;marked&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数 source 就是读取到的文件文本</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">source</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> html = marked(source);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// loader管道的最后一个loader必须要分会一段js脚本文本</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`module.exports = <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(html)&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="插件机制"><a href="#插件机制" class="headerlink" title="插件机制"></a>插件机制</h4><p>通过配置webpack的plugins数组配置插件</p>
+<h5 id="自动清除输出目录"><a href="#自动清除输出目录" class="headerlink" title="自动清除输出目录"></a>自动清除输出目录</h5><p>clean-webpack-plugin</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const &#123;CleanWebpackPlugin&#125; &#x3D; require(&#39;clean-webpack-plugin&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new CleanWebpackPlugin(),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="自动生成html-html-webpack-plugin"><a href="#自动生成html-html-webpack-plugin" class="headerlink" title="自动生成html html-webpack-plugin"></a>自动生成html html-webpack-plugin</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const HtmlWebpakPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new HtmlWebpakPlugin(&#123;</span><br><span class="line">            title: &#39;vue-app&#39;, </span><br><span class="line">            url: &#39;&#x2F;&#39;, &#x2F;&#x2F; 自定义参数</span><br><span class="line">            template: &#39;.&#x2F;public&#x2F;index.html&#39;, </span><br><span class="line">            filename: &#39;index.html&#39;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="复制文件-copy-webpack-plugin"><a href="#复制文件-copy-webpack-plugin" class="headerlink" title="复制文件  copy-webpack-plugin"></a>复制文件  copy-webpack-plugin</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const CopyWebpackPlugin &#x3D; require(&#39;copy-webpack-plugin&#39;);</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new CopyWebpackPlugin(&#123;</span><br><span class="line">            patterns: [</span><br><span class="line">                &#123;</span><br><span class="line">                    from: &#39;public&#x2F;favicon.ico&#39;,</span><br><span class="line">                    to: &#39;&#39;</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="插件实现原理"><a href="#插件实现原理" class="headerlink" title="插件实现原理"></a>插件实现原理</h4><p>通过钩子机制实现</p>
+<p>插件必须是一个函数或者包含apply 方法的对象</p>
+<p>一般都会定义一个类型，通过实例来实现</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 实现一个去处打包后文件注释的方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> </span>&#123;</span><br><span class="line">    <span class="comment">// apply 方法会在webpack启动时被调用</span></span><br><span class="line">    apply (compiler)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;webpack 启动 &#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// emit 钩子在webpack准备往目标目录输出文件时执行,</span></span><br><span class="line">        <span class="comment">// 第一个参数是插件名称， 第二个参数函数的参数是打包过程的上下文</span></span><br><span class="line">        compiler.hooks.emit.tap(<span class="string">&#x27;MyPlugin&#x27;</span>, <span class="function"><span class="params">compilation</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 获取即将写入的资源信息</span></span><br><span class="line">            <span class="keyword">const</span> assets = compilation.assets</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> assets) &#123;</span><br><span class="line">                <span class="comment">// key 就是 资源文件名称</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (key.endsWith(<span class="string">&#x27;.js&#x27;</span>))&#123;</span><br><span class="line">                    <span class="comment">// 这里只处理js文件</span></span><br><span class="line">                    <span class="comment">// source方法返回文件文本内容</span></span><br><span class="line">                    <span class="keyword">const</span> value = compilation.assets[key].source();</span><br><span class="line">                    <span class="comment">// 通过正则替换掉注释信息</span></span><br><span class="line">                    <span class="keyword">const</span> withoutComments = contents.replace(<span class="regexp">/\/\*\*+\*\//g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">                    compilation.assets[key] = &#123;</span><br><span class="line">                        source: <span class="function">() =&gt;</span> withoutComments,</span><br><span class="line">                        size: <span class="function">() =&gt;</span> withoutComments.length, <span class="comment">// 返回内容方法，必须</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    historyApiFallback: true, &#x2F;&#x2F;historyApiFallback设置为true那么所有的路径都执行index.html。</span><br><span class="line">    overlay: true, &#x2F;&#x2F; 将错误显示在html之上</span><br><span class="line">    port: 8080,</span><br><span class="line">    progress: true,</span><br><span class="line">    contentBase: &#39;.&#x2F;dist&#39;,</span><br><span class="line">    open: false,</span><br><span class="line">    hot: true,</span><br><span class="line">    disableHostCheck: true,  &#x2F;&#x2F; 没有这项ie 会重复报错，</span><br><span class="line">    historyApiFallback: true,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h4 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h4><h4 id="treeShaking"><a href="#treeShaking" class="headerlink" title="treeShaking"></a>treeShaking</h4><p>去除未引用代码</p>
+<p>treeShaking会在生产环境下自动开启，其他环境下可以通过配置usedExports和minimize来手动开启treeShaking</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">optimization: &#123;</span><br><span class="line">    usedExports: true,</span><br><span class="line">    minimize: true,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>位运算</title>
     <url>/2021/01/06/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p>一、位运算<br>二进制：计算机中所有数据的存储和运算都是以二进制（补码）的形式进行的, 数字是四个字节，一个字节为8位，则一个数字是由32位二进制表示的<br>    a -&gt; 97, A -&gt; 65, ‘0’ -&gt; 48<br>举例：5 , -5<br>    原码：<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1000 0000  0000 0000  0000 0000  0000 0101<br>    反码：（将原码）符号位不变，数值位取反（0变1，1变0）<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1111 1111  1111 1111  1111 1111  1111 1010<br>    补码：负数等于反码+1,如果负数反码全是1, 则最后补码全是0, 正数与源码反码一样。<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1111 1111  1111 1111  1111 1111  1111 1011<br>结论：正数的原码、反码、补码都是一样的<br>    0：0000 0000  0000 0000  0000 0000  0000 0000<br>    -0:1000 0000  0000 0000  0000 0000  0000 0000<br>位运算符：7个<br>    &amp;（按位与，and）：两个数字同为1，则为1，否则就是0<br>    |（按位或，or）：两个数字只要有一个是1，则结果为1<br>    ^（按位异或，xor）：两个数字不相同为1，相同为0<br>    ~（按位取反，not）：0变1，1变0<br>    &lt;&lt;（左移，shl）：a shl b，把二进制数a左移b位，在后面补0，相当于a乘以2的b次方，保留符号位<br>    &gt;&gt;（右移，shr）：把a右移b位（去掉末b位），相当于a除以2的b次方，高位补原符号位（0或1）， 保留符号位<br>    &gt;&gt;&gt;（无符号右移）：把a右移b位（去掉末b位），相当于a除以2的b次方，高位补0</p>
@@ -1402,23 +1507,6 @@
 </li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>原型链继承</title>
-    <url>/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/</url>
-    <content><![CDATA[<h2 id="什么是原型"><a href="#什么是原型" class="headerlink" title="什么是原型"></a>什么是原型</h2><img src="/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF.png" class="">
-
-<p>每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型”继承”属性，实例对象可通过__proto__访问到对象的原型，这个原型指向构造函数的prototype。</p>
-<p>每个原型都有一个 constructor 属性指向关联的构造函数</p>
-<p>当读取实例的属性时，如果找不到，就会查找与对象关联的原型中的属性，如果还查不到，就去找原型的原型，一直找到最顶层为止</p>
-<p>构造函数的constructor 指向 Function 构造器。</p>
-<p>Function的原型指向Function.prototype</p>
-<p>Function 的构造函数指向自己 Function.constructor === Function.<strong>proto</strong>.constructor === Function</p>
-]]></content>
-      <tags>
-        <tag>原型链</tag>
-        <tag>继承</tag>
-      </tags>
   </entry>
   <entry>
     <title>备忘</title>
@@ -1469,6 +1557,23 @@
       </tags>
   </entry>
   <entry>
+    <title>原型链继承</title>
+    <url>/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/</url>
+    <content><![CDATA[<h2 id="什么是原型"><a href="#什么是原型" class="headerlink" title="什么是原型"></a>什么是原型</h2><img src="/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF.png" class="">
+
+<p>每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型”继承”属性，实例对象可通过__proto__访问到对象的原型，这个原型指向构造函数的prototype。</p>
+<p>每个原型都有一个 constructor 属性指向关联的构造函数</p>
+<p>当读取实例的属性时，如果找不到，就会查找与对象关联的原型中的属性，如果还查不到，就去找原型的原型，一直找到最顶层为止</p>
+<p>构造函数的constructor 指向 Function 构造器。</p>
+<p>Function的原型指向Function.prototype</p>
+<p>Function 的构造函数指向自己 Function.constructor === Function.<strong>proto</strong>.constructor === Function</p>
+]]></content>
+      <tags>
+        <tag>原型链</tag>
+        <tag>继承</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>微信开发者工具</title>
     <url>/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<p>微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码</p>
@@ -1504,6 +1609,202 @@
       <tags>
         <tag>Promise</tag>
         <tag>Promise源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>脚手架工具</title>
+    <url>/2020/08/27/%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<h2 id="脚手架工具"><a href="#脚手架工具" class="headerlink" title="脚手架工具"></a>脚手架工具</h2><p>特定项目脚手架，比如</p>
+<ul>
+<li>creat-react-app</li>
+<li>vue-cli</li>
+</ul>
+<p>通用脚手架工具</p>
+<ul>
+<li>Yeoman</li>
+<li>plop</li>
+</ul>
+<h3 id="Yeoman-通用脚手架"><a href="#Yeoman-通用脚手架" class="headerlink" title="Yeoman 通用脚手架"></a>Yeoman 通用脚手架</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn global add yo</span><br><span class="line">yarn global add generator-node</span><br></pre></td></tr></table></figure>
+<p>我再安装时出现了yo不是内部命令的问题<br>将yarn添加到path 重新执行上述命令，可以通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn global bin</span><br></pre></td></tr></table></figure>
+<p>查看yarn全局安装路径</p>
+<p>创建生成器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yo node</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">? The name above already exists on npm, choose another? Yes</span><br><span class="line">? Module Name along-yo  &#x2F;&#x2F; 生成器名称</span><br><span class="line">? Description test yeoman &#x2F;&#x2F; 描述</span><br><span class="line">? Project homepage url https:&#x2F;&#x2F;github.com&#x2F;alongithub&#x2F;along-yo &#x2F;&#x2F; 访问地址</span><br><span class="line">? Author&#39;s Name along &#x2F;&#x2F; 作者</span><br><span class="line">? Author&#39;s Email 1792108796@qq.com &#x2F;&#x2F; 邮箱</span><br><span class="line">? Author&#39;s Homepage https:&#x2F;&#x2F;github.com&#x2F;alongithub &#x2F;&#x2F; 作者主页</span><br><span class="line">? Package keywords (comma to split) node,test,yeoman &#x2F;&#x2F; 关键字</span><br><span class="line">? Send coverage reports to coveralls No &#x2F;&#x2F; 覆盖率</span><br><span class="line">? Enter Node versions (comma separated)</span><br></pre></td></tr></table></figure>
+
+<p>已进入到相应目录使用 yo 指令生成项目，可是却在其他文件夹下生成了项目。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Just found a &#96;.yo-rc.json&#96; in a parent directory.</span><br><span class="line">Setting the project root at: &#x2F;Users&#x2F;Pacos</span><br></pre></td></tr></table></figure>
+
+<p>找到 .yo-rc.json 文件，删除既可以解决。</p>
+<h3 id="Yeoman-Sub-Generator"><a href="#Yeoman-Sub-Generator" class="headerlink" title="Yeoman Sub Generator"></a>Yeoman Sub Generator</h3><p>如果只需要生成项目结构的一部分，比如增加eslint，或者单独增加一个readme，可以使用yeoman 提供的sub generator 功能</p>
+<p>比如使用 generator-node 提供的cli子集生成cli应用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yo node:cli</span><br></pre></td></tr></table></figure>
+
+<p>之后yo会重写package.json, 自动写入 bin, dependencies 信息,并创建cli基础结构</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;bin&quot;: &quot;lib/cli.js&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;meow&quot;: &quot;^3.7.0&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自动创建的cli   lib/cli.js</span></span><br><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> meow = <span class="built_in">require</span>(<span class="string">&#x27;meow&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> yeomandemo = <span class="built_in">require</span>(<span class="string">&#x27;./&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cli = meow(<span class="string">`</span></span><br><span class="line"><span class="string">Usage</span></span><br><span class="line"><span class="string">  $ yeomandemo [input]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Options</span></span><br><span class="line"><span class="string">  --foo  Lorem ipsum. [Default: false]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Examples</span></span><br><span class="line"><span class="string">  $ yeomandemo</span></span><br><span class="line"><span class="string">  unicorns</span></span><br><span class="line"><span class="string">  $ yeomandemo rainbows</span></span><br><span class="line"><span class="string">  unicorns &amp; rainbows</span></span><br><span class="line"><span class="string">`</span>);</span><br></pre></td></tr></table></figure>
+<p>之后先通过命令安装package中的依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn   </span><br><span class="line">&#x2F;&#x2F; 或者npm install</span><br></pre></td></tr></table></figure>
+
+<p>link到全局范围</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn link</span><br></pre></td></tr></table></figure>
+
+<p>通过创建的项目名称即可在全局使用cli命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yeomandemo --help</span><br></pre></td></tr></table></figure>
+
+<pre style="background: #000; color: #ccc">
+C:\Users\admin\Desktop\yeomandemo>yeomandemo --help
+  yodemo
+
+  Usage
+    $ yeomandemo [input]
+
+  Options
+    --foo  Lorem ipsum. [Default: false]
+
+  Examples
+    $ yeomandemo
+    unicorns
+    $ yeomandemo rainbows
+    unicorns & rainbows
+</pre>
+
+<h3 id="以generator-webapp为例，创建一个webapp项目"><a href="#以generator-webapp为例，创建一个webapp项目" class="headerlink" title="以generator-webapp为例，创建一个webapp项目"></a>以generator-webapp为例，创建一个webapp项目</h3><p>安装对应的generator</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn global add generator-webapp</span><br></pre></td></tr></table></figure>
+
+<p>执行generator</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yo webapp</span><br></pre></td></tr></table></figure>
+
+<p>之后根据提示选择需要的依赖即可创建webapp项目，由于这个生成器存在一些c++模块所以安装时会比较慢</p>
+<p>执行启动就可以看到界面了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn start</span><br></pre></td></tr></table></figure>
+<p><img src="/20200616191859687/20200617112953463.png" alt="image"><br><img src="/20200616191859687/20200617111505906.png" alt="npm 镜像源"></p>
+<h3 id="创建自己的generator"><a href="#创建自己的generator" class="headerlink" title="创建自己的generator"></a>创建自己的generator</h3><p>创建Generator项目需要遵循一定的结构</p>
+<pre style="background: #000; color: #ccc">
+├ generators/ ·····································  生成器目录
+|  ├ app/ ·········································  默认生成器目录
+|  |  └ index.js ··································  默认生成器入口实现
+|  └ component/ ···································  sub generator 目录
+|     └ index.js ··································  sub generator 实现
+└ package.json
+</pre>
+
+<ol>
+<li><p>创建生成器目录  generator-alongtest， 初始化项目, 安装 yeoman-generator模块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd generator-alongtest</span><br><span class="line">yarn init</span><br><span class="line">yarn add yeoman-generator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建generator 规定的项目结构 ，app/index.js 中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; generator入口</span><br><span class="line">const Generator &#x3D; require(&#39;yeoman-generator&#39;);</span><br><span class="line">module.exports &#x3D; class extends Generator &#123;</span><br><span class="line">    writing() &#123;</span><br><span class="line">        &#x2F;&#x2F; yeoman 在生成文件阶段自动调用此方法</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 使用yeoman的fs方法在项目中创建一个temp.txt文件，文件内容是一个随机浮点数</span><br><span class="line">        this.fs.write(</span><br><span class="line">            this.destinationPath(&#39;temp.txt&#39;),</span><br><span class="line">            Math.random().toString()</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>将自定义generator link到全局</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn link</span><br></pre></td></tr></table></figure></li>
+<li><p>新建一个项目文件夹，如 test，</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd test</span><br><span class="line">yo alongtest</span><br></pre></td></tr></table></figure>
+<p>此时可以看到test文件夹自动生成了temp.txt文件</p>
+<pre style="background:#000;color:#ccc">
+C:\Users\admin\Desktop\alontest>yo alongtest
+   create temp.txt 
+</pre>
+
+<h3 id="接收用户输入并通过模板创建文件"><a href="#接收用户输入并通过模板创建文件" class="headerlink" title="接收用户输入并通过模板创建文件"></a>接收用户输入并通过模板创建文件</h3><ol>
+<li>app 下创建模板文件夹templates，和项目文件index.html,package.json<br>这里只用两个文件代表初始化项目中的所有文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;templates&#x2F;index.html</span><br><span class="line">&#x2F;&#x2F; 模板文件</span><br><span class="line">&#x2F;&#x2F; 内部通过EJ5 模板标记输出数据</span><br><span class="line">&#x2F;&#x2F; 其他的EJS 语法也支持</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;</span><br><span class="line">            &lt;%&#x3D; name %&gt;</span><br><span class="line">        &lt;&#x2F;title&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">         &lt;%if (name) &#123;%&gt;</span><br><span class="line">            project &lt;%&#x3D; name%&gt;</span><br><span class="line">        &lt;%&#125; else &#123;%&gt;</span><br><span class="line">            no name</span><br><span class="line">        &lt;%&#125;%&gt;</span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; package.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;&lt;%&#x3D; name%&gt;&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">    &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">    &quot;license&quot;: &quot;MIT&quot;,</span><br><span class="line">    &quot;dependencies&quot;: &#123;</span><br><span class="line">      &quot;yeoman-generator&quot;: &quot;^4.10.1&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>入口文件 app/index.js<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; generator入口</span><br><span class="line">const Generator &#x3D; require(&#39;yeoman-generator&#39;);</span><br><span class="line">module.exports &#x3D; class extends Generator &#123;</span><br><span class="line">    &#x2F;&#x2F; 获取用户输入</span><br><span class="line">    prompting() &#123;</span><br><span class="line">        return this.prompt([</span><br><span class="line">            &#123;</span><br><span class="line">                type: &#39;input&#39;,</span><br><span class="line">                name: &#39;name&#39;,</span><br><span class="line">                message: &#39;your project name&#39;,</span><br><span class="line">                default: this.appname, &#x2F;&#x2F; 自动取到了当前项目目录</span><br><span class="line">            &#125;,</span><br><span class="line">        ]).then(answer &#x3D;&gt; &#123;</span><br><span class="line">            this.answer &#x3D; answer;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    writing() &#123;</span><br><span class="line">        const filelist &#x3D; [&#39;index.html&#39;, &#39;package.json&#39;];</span><br><span class="line">        &#x2F;&#x2F; yeoman 在生成文件阶段自动调用此方法</span><br><span class="line">        &#x2F;&#x2F; this.fs.write(</span><br><span class="line">        &#x2F;&#x2F;     this.destinationPath(&#39;temp.txt&#39;),</span><br><span class="line">        &#x2F;&#x2F;     Math.random().toString()</span><br><span class="line">        &#x2F;&#x2F; )</span><br><span class="line"></span><br><span class="line">        filelist.forEach(file &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; 通过模板引擎吸入文件到目标目录</span><br><span class="line">            &#x2F;&#x2F; 找到模板文件</span><br><span class="line">            const tmpl &#x3D; this.templatePath(file)</span><br><span class="line">            &#x2F;&#x2F; 输出目标路径</span><br><span class="line">            const output &#x3D; this.destinationPath(file);</span><br><span class="line">            &#x2F;&#x2F; 模板数据上下文</span><br><span class="line">            const context &#x3D; this.answer;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            this.fs.copyTpl(tmpl, output, context); </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在新建项目中执行 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yo alongtest</span><br></pre></td></tr></table></figure>
+此时命令行会询问信息，最终创建项目结构<pre style="background:#000;color: #fff">
+C:\Users\admin\Desktop\alontest>yo alongtest
+? your project name along
+conflict index.html
+? Overwrite index.html? overwrite
+ force index.html
+</pre>
+生成的index.html 与 package.json<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span></span><br><span class="line">            along</span><br><span class="line">        <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">            project along</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;along&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;main&quot;</span>: <span class="string">&quot;index.js&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;license&quot;</span>: <span class="string">&quot;MIT&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;yeoman-generator&quot;</span>: <span class="string">&quot;^4.10.1&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到yeomon通过模板填充的方式创建了初始项目文件</p>
+<h3 id="发布generator"><a href="#发布generator" class="headerlink" title="发布generator"></a>发布generator</h3><ol>
+<li><p>创建.gitignore， 提交到git</p>
+</li>
+<li><p>发布到npm<br><code>npm publish</code> 或者 <code>yarn publish</code><br>根据提示输入版本和用户名密码，发布成功<br>如果设置过其他npm 镜像需要切换回npm 镜像，可以借助nrm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn global add nrm</span><br><span class="line">nrm ls &#x2F;&#x2F; 查看所有可用镜像</span><br><span class="line">nrm use npm</span><br></pre></td></tr></table></figure></li>
+<li><p>之后可以通过yarn global add generator-alongtest 安装 发布的生成器</p>
+</li>
+</ol>
+<h3 id="小型脚手架工具-plop"><a href="#小型脚手架工具-plop" class="headerlink" title="小型脚手架工具 plop"></a>小型脚手架工具 plop</h3><p>用于集成到项目中生成项目中同类型的项目文件</p>
+<ol>
+<li>安装到项目依赖中<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add plop --dev</span><br></pre></td></tr></table></figure></li>
+<li>创建入口问及那 plopfile.js</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; plop 入口问及那</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; plop &#x3D;&gt; &#123;</span><br><span class="line">    plop.setGenerator(&#39;static&#39;, &#123; &#x2F;&#x2F; 模板名称</span><br><span class="line">        description: &#39;create static component&#39;,</span><br><span class="line">        prompts: [ &#x2F;&#x2F; 询问用户输入</span><br><span class="line">            &#123;</span><br><span class="line">                type: &#39;input&#39;,</span><br><span class="line">                name: &#39;name&#39;,</span><br><span class="line">                message: &#39;static component name&#39;,</span><br><span class="line">            &#125;,</span><br><span class="line">        ],</span><br><span class="line">        actions: [ &#x2F;&#x2F; 完成交互后执行的动作</span><br><span class="line">            &#123;</span><br><span class="line">                type: &#39;add&#39;, &#x2F;&#x2F; 添加文件</span><br><span class="line">                path: &#39;src&#x2F;&#123;&#123;name&#125;&#125;&#x2F;index.html&#39;, &#x2F;&#x2F; 创建后文件路径</span><br><span class="line">                templateFile: &#39;plop-templates&#x2F;static-components&#x2F;index.hbs&#39; &#x2F;&#x2F; 模板文件路径</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                type: &#39;add&#39;, &#x2F;&#x2F; 添加文件</span><br><span class="line">                path: &#39;src&#x2F;&#123;&#123;name&#125;&#125;&#x2F;css&#x2F;index.css&#39;,</span><br><span class="line">                templateFile: &#39;plop-templates&#x2F;static-components&#x2F;css&#x2F;style.hbs&#39;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                type: &#39;add&#39;, &#x2F;&#x2F; 添加文件</span><br><span class="line">                path: &#39;src&#x2F;&#123;&#123;name&#125;&#125;&#x2F;js&#x2F;index.js&#39;,</span><br><span class="line">                templateFile: &#39;plop-templates&#x2F;static-components&#x2F;js&#x2F;index.hbs&#39;</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>创建模板文件</li>
+</ol>
+<p>可以在根目录创建模板文件，模板文件目录没有严格要求，需要与入口文件中一致,模板文件后缀名未hbs</p>
+<pre style="background:#000;color: #ccc">
+├ plop-templates/ ···············································  模板目录
+|  └ static-components/ ·········································  静态组件目录
+|     ├ css/ ····················································  css 模板文件夹
+|     |  └ style.hbs ············································  css 模板
+|     ├ js/ ·····················································  js 模板文件夹
+|     |  └ index.hbs ············································  js 模板文件
+|     └ index.hbs ···············································  html 模板文件
+└ package.json
+</pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; css&#x2F;style.hbs</span><br><span class="line">.&#123;&#123;name&#125;&#125; &#123;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; index.hbs</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;&#123;&#123;name&#125;&#125;&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body class&#x3D;&quot;&#123;&#123;name&#125;&#125;&quot;&gt;</span><br><span class="line">        &#123;&#123;name&#125;&#125; body</span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用plop命令快速创建组件<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn plop static</span><br></pre></td></tr></table></figure>
+输入组件名 home  <pre style="background:#000;color: #ccc">
+$ C:\Users\admin\Desktop\plop-templates\node_modules\.bin\plop static
+? static component name home
+√  ++ \src\home\index.html
+√  ++ \src\home\css\index.css
+√  ++ \src\home\js\index.js
+Done in 7.45s.
+</pre>
+
+</li>
+</ol>
+<p>可以看到自动创建的组件文件结构<br><img src="/20200616191859687/20200617061312210.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; home&#x2F;css&#x2F;index.css</span><br><span class="line">.home &#123;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; home&#x2F;index.html</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;home&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body class&#x3D;&quot;home&quot;&gt;</span><br><span class="line">        home body</span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="脚手架原理实现"><a href="#脚手架原理实现" class="headerlink" title="脚手架原理实现"></a>脚手架原理实现</h3><p>脚手架的原理很简单，无非是将与定义的文件结构通过模板处理输出到目标文件，我们可以手动实现一个脚手架工具</p>
+<ol>
+<li><p>初始化项目<br>创建文件夹<code>cli-source</code><br><code>cd cli-source</code><br>初始化项目<code>yarn init</code></p>
+</li>
+<li><p>创建模板文件<br>根目录下创建文件夹用于存放模板文件</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; templates&#x2F;index.html</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;&lt;%&#x3D;name%&gt;&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        </span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line">&#x2F;&#x2F; template&#x2F;style.css</span><br><span class="line">body&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>创建入口文件cli.js<br>安装所需依赖</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn add ejs</span><br></pre></td></tr></table></figure>
+<p>入口文件必须有标识</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// cli.js</span></span><br><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> inquirer = <span class="built_in">require</span>(<span class="string">&#x27;inquirer&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">inquirer.prompt([</span><br><span class="line">    &#123;</span><br><span class="line">        type: <span class="string">&#x27;input&#x27;</span>,</span><br><span class="line">        name: <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">        message: <span class="string">&#x27;Project name?&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">])</span><br><span class="line">.then(<span class="function"><span class="params">anwser</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> tml = path.join(__dirname, <span class="string">&#x27;templates&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 目标目录</span></span><br><span class="line">    <span class="keyword">const</span> destDir = process.cwd();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制模板文件到目标路径</span></span><br><span class="line"></span><br><span class="line">    fs.readdir(tml, <span class="function">(<span class="params">err, files</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">throw</span> err</span><br><span class="line">        &#125;</span><br><span class="line">        files.forEach(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">            ejs.renderFile(path.join(tml, file), anwser, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"></span><br><span class="line">                fs.writeFileSync(path.join(destDir, file), result)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改package.json<br>添加bin指定执行文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;bin&quot;: &quot;cli.js&quot;,</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>使用和发布<br>可以通过<code>yarn link</code>link到全局使用，或者通过<code>yarn publish</code>发布到npm</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>脚手架</tag>
       </tags>
   </entry>
   <entry>
@@ -2654,6 +2955,234 @@
 ]]></content>
       <tags>
         <tag>Vue ssr</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构与算法</title>
+    <url>/2020/05/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h2><h3 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h3><h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>数组在内存中是连续存放的，数组内的数据，可以通过索引值直接取出得到（只要记录该数组头部的第一个数据位置，然后累加空间位置即可）    </p>
+<h5 id="数组与链表的区别"><a href="#数组与链表的区别" class="headerlink" title="数组与链表的区别"></a>数组与链表的区别</h5><ul>
+<li>链表的长度是可变的，数组的长度是固定的。</li>
+<li>链表不会根据有序位置存储，进行插入数据元素时，可以用指针来充分利用内存空间。数组的空间是连续的，可能导致空间无法使用。另外如果数组长度发生改变,可能需要重新开辟连续内存。</li>
+</ul>
+<p>数组更适合在数据数量确定，即较少甚至不需要使用新增数据、删除数据操作的场景下使用，这样就有效地规避了数组天然的劣势。在数据对位置敏感的场景下，比如需要高频根据索引位置查找数据时，数组就是个很好的选择了。</p>
+<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><ul>
+<li>新增：数组中插入元素需要对之后的元素进行后移操作，时间复杂度O(n)</li>
+<li>删除：数组中删除元素需要对之后的元素进行前移操作，时间复杂度O(n)</li>
+<li>基于索引的查找：通过索引直接访问，时间复杂度O(1)</li>
+<li>基于条件查找索引：需要类似链表一样遍历数组，时间复杂度O(n)</li>
+</ul>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ul>
+<li>空串，含有零个字符的串</li>
+<li>空格串，只包含空格的串，可以包含一个或多个空格</li>
+<li>子串、主串（原串），目标串中任意连续字符组成的串称为该串的子串，目标串为子串的主串</li>
+</ul>
+<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><ul>
+<li>字符串可以用订场数组来实现</li>
+<li>也可以使用链式存储实现</li>
+</ul>
+<h5 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h5><ul>
+<li>新增: 字符串中插入字符需要对之后字符进行后移操作，时间复杂度O(n);</li>
+<li>删除: 删除操作需要对之后字符进行前移，时间复杂度为O(n);</li>
+<li>查找(字符串匹配), 在符串A（长度n）中查找字符串B（长度m）(n &gt;= m),则A是主串，B是模式串。时间复杂度为O(mn)<ol>
+<li>首先从主串的第一个字符开始，判断模式串的第一个字符是否与其相等</li>
+<li>如果不相等,继续判断主串的后续字符是否相等，如果相等判断后续的字符是否依次与子串中的后续字符相等</li>
+<li>如果存在不相等重新回到之前的步骤，判断第一个字符。如果持续相等直到模式串的最后一个字符，则匹配成功</li>
+</ol>
+</li>
+</ul>
+<h5 id="算法案例"><a href="#算法案例" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="找出两个字符串的最大公共子串"><a href="#找出两个字符串的最大公共子串" class="headerlink" title="找出两个字符串的最大公共子串"></a>找出两个字符串的最大公共子串</h6><p>假设有且仅有 1 个最大公共子串。比如，输入 a = “13452439”， b = “123456”。由于字符串 “345” 同时在 a 和 b 中出现，且是同时出现在 a 和 b 中的最长子串。因此输出 “345”。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="string">&#x27;helloalong&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">&#x27;wellcomelloalnn&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@name</span>: 获取 两个字符串公共的最长子串</span></span><br><span class="line"><span class="comment">* <span class="doctag">@test</span>: test font</span></span><br><span class="line"><span class="comment">* <span class="doctag">@msg</span>: </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param <span class="type">&#123;*&#125;</span> <span class="variable">str1</span></span></span></span><br><span class="line"><span class="comment">* <span class="doctag">@param <span class="type">&#123;*&#125;</span> <span class="variable">str2</span></span></span></span><br><span class="line"><span class="comment">* <span class="doctag">@return <span class="type">&#123;*&#125;</span></span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCommenStr</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> max_len = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> max_len_str = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span> ; i &lt; str1.length ; i ++ ) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; str2.length ; j ++ ) &#123;</span><br><span class="line">			<span class="keyword">if</span> (str1[i] === str2[j]) &#123;</span><br><span class="line">				<span class="keyword">let</span> l = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">let</span> temp_length = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">let</span> temp_length_str = str2[j];</span><br><span class="line">				<span class="keyword">while</span>(l + i &lt; str1.length &amp;&amp; l + j &lt; str2.length) &#123;</span><br><span class="line"></span><br><span class="line">					<span class="keyword">if</span> (str1[i + l] === str2[j + l]) &#123;</span><br><span class="line">						temp_length ++;</span><br><span class="line">						temp_length_str += str1[i + l];</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">					l ++;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (temp_length &gt; max_len) &#123;</span><br><span class="line">					max_len = temp_length;</span><br><span class="line">					max_len_str = temp_length_str;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`‘<span class="subst">$&#123;str1&#125;</span>’与‘<span class="subst">$&#123;str2&#125;</span>’的最大公共子串为‘<span class="subst">$&#123;max_len_str&#125;</span>’,长度为<span class="subst">$&#123;max_len&#125;</span>`</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getCommenStr(str1, str2); <span class="comment">// ‘helloalong’与‘wellcomelloalnn’的最大公共子串为‘elloal’,长度为6</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="树"><a href="#树" class="headerlink" title="树"></a>树</h4><ul>
+<li>父节点、子节点：A 结点是 B 结点和 C 结点的上级，则 A 就是 B 和 C 的父结点，B 和 C 是 A 的子结点。</li>
+<li>兄弟节点: B、C 同时是A的孩子，B、C互为兄弟节点</li>
+<li>根节点:没有父节点的节点</li>
+<li>叶子节点: 没有子节点的节点</li>
+<li>层：根节点为第一层，根节点的孩子为第二层，根节点孩子的孩子为第三层，以此类推</li>
+<li>深度： 树中节点的最大层数</li>
+</ul>
+<p><strong>二叉树</strong></p>
+<ul>
+<li>满二叉树，定义为除了叶子结点外，所有结点都有 2 个子结点。</li>
+<li>完全二叉树，定义为除了最后一层以外，其他层的结点个数都达到最大，并且最后一层的叶子结点都靠左排列。（完全二叉树的名称是从存储控件的利用率视角来看的。对于一棵完全二叉树而言，仅仅浪费了下标为 0 的存储位置。而如果是一棵非完全二叉树，则会浪费大量的存储空间）</li>
+</ul>
+<p>二叉树的存储可以是基于指针的链式存储法，也可以基于数组顺序存储法</p>
+<ul>
+<li>链式存储法，使用链表，每个节点有三个字段，一个存储数据，另外两个分别存储指向左右子节点的指针</li>
+<li>照规律把结点存放在数组里，从数组下标为1的位置开始，按树层级从左到右依次存储树中的每个节点，顺序的存储法中，可以发现如果结点 X 的下标为 i，那么 X 的左子结点总是存放在 2 * i 的位置，X 的右子结点总是存放在 2 * i + 1 的位置</li>
+</ul>
+<p><strong>树的操作</strong></p>
+<ul>
+<li>删除：O(1)</li>
+<li>查找：树数据的查找操作和链表一样，都需要遍历每一个数据去判断，所以时间复杂度是 O(n)</li>
+<li>遍历: 前序遍历、中序遍历、后序遍历。这里的序指的是父结点的遍历顺序，前序就是先遍历父结点，中序就是中间遍历父结点，后序就是最后遍历父结点。遍历的时间复杂度为O(n)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">	<span class="built_in">console</span>.log(root.data);</span><br><span class="line">	traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">	traverse(root.right);</span><br><span class="line">	<span class="built_in">console</span>.log(root.data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>二叉查找树</strong></p>
+<ul>
+<li>在二叉查找树中的任意一个结点，其左子树中的每个结点的值，都要小于这个结点的值</li>
+<li>在二叉查找树中的任意一个结点，其右子树中每个结点的值，都要大于这个结点的值</li>
+<li>在二叉查找树中，会尽可能规避两个结点数值相等的情况</li>
+<li>对二叉查找树进行中序遍历，就可以输出一个从小到大的有序数据队列</li>
+</ul>
+<p><strong>二叉查找树的操作</strong></p>
+<ul>
+<li>查找，时间复杂度O(logn)<ul>
+<li>首先判断根结点是否等于要查找的数据，如果是就返回</li>
+<li>如果根结点大于要查找的数据，就在左子树中递归执行查找动作，直到叶子结点</li>
+<li>如果根结点小于要查找的数据，就在右子树中递归执行查找动作，直到叶子结点</li>
+</ul>
+</li>
+<li>插入, 时间复杂度O(logn)<ul>
+<li>从根结点开始，如果要插入的数据比根结点的数据大，且根结点的右子结点不为空，则在根结点的右子树中继续尝试执行插入操作。直到找到为空的子结点执行插入动作</li>
+</ul>
+</li>
+<li>删除，二叉查找树的删除比较复杂，可以分为三种情况<ol>
+<li>删除的节点是叶子节点，直接删除，将其父节点对应指针指向null即可</li>
+<li>如果删除的节点只有一个子节点，只需要将父节点的指针指向删除节点的子节点</li>
+<li>如果删除节点有两个子节点，有两种删除方法。<ul>
+<li>第一种，找到要删除节点的左子树中的最大节点，替换要删除的节点。</li>
+<li>第二中，找到要删除节点的右子树中的最小节点，替换要删除的节点。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="算法案例-1"><a href="#算法案例-1" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="实现一个二叉查找树"><a href="#实现一个二叉查找树" class="headerlink" title="实现一个二叉查找树"></a>实现一个二叉查找树</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 树的节点</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (data, leftnode, rightnode) &#123;</span><br><span class="line">		<span class="built_in">this</span>.data = data;</span><br><span class="line">		<span class="built_in">this</span>.leftNode = leftnode;</span><br><span class="line">		<span class="built_in">this</span>.rightNode = rightnode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	setLeft(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.leftNode = node;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	setRight(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.rightNode = node;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tree</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(array) &#123;</span><br><span class="line">		<span class="built_in">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="built_in">this</span>.array = array;</span><br><span class="line">		<span class="keyword">if</span> (array <span class="keyword">instanceof</span> <span class="built_in">Array</span> &amp;&amp; array.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			Tree.reduceArrayToTree.call(<span class="built_in">this</span>, array)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 根据输入数组，输出二叉查找树，数组不含重复</span></span><br><span class="line">	<span class="keyword">static</span> reduceArrayToTree (array) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">		<span class="comment">// 以第一个元素为根元素</span></span><br><span class="line">		<span class="keyword">let</span> i = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">let</span> root = <span class="keyword">new</span> Node(array[<span class="number">0</span>], <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">		<span class="keyword">while</span> (i &lt; array.length) &#123;</span><br><span class="line">			<span class="built_in">this</span>.putNode(root, <span class="keyword">new</span> Node(array[i]));</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">this</span>.root = root;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 向树上插入一个节点</span></span><br><span class="line">	putNode(item, node) &#123;</span><br><span class="line">		<span class="keyword">if</span> (node.data &gt; item.data) &#123;</span><br><span class="line">			<span class="keyword">if</span> (item.rightNode) &#123;</span><br><span class="line">				<span class="built_in">this</span>.putNode(item.rightNode, node);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				item.setRight(node)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (item.leftNode) &#123;</span><br><span class="line">				<span class="built_in">this</span>.putNode(item.leftNode, node);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				item.setLeft(node)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	each(root, outputarray) &#123;</span><br><span class="line">		root.leftNode &amp;&amp; <span class="built_in">this</span>.each(root.leftNode, outputarray);</span><br><span class="line">		outputarray.push(root.data);</span><br><span class="line">		root.rightNode &amp;&amp; <span class="built_in">this</span>.each(root.rightNode, outputarray);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 中序遍历二叉树</span></span><br><span class="line">	middleEach() &#123;</span><br><span class="line">		<span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">		<span class="built_in">this</span>.each(<span class="built_in">this</span>.root, a);</span><br><span class="line">		<span class="built_in">console</span>.log(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tree = <span class="keyword">new</span> Tree([<span class="number">3</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">33</span>, <span class="number">90</span>]);</span><br><span class="line">tree.middleEach();	</span><br></pre></td></tr></table></figure>
+
+<h6 id="字典树查找字符串"><a href="#字典树查找字符串" class="headerlink" title="字典树查找字符串"></a>字典树查找字符串</h6><p>实现查找一组字符串中是否出现过某个字符串</p>
+<p>目标字符串集合包含字符串个数为n, 平均长度为m</p>
+<p>条件，不能直接判断两个字符串是否相等，需要一次对比两个串中的每个位置的字符。</p>
+<p>这道题可以借助字符串双重遍历的查找方法来查找，但是，这种算法时间复杂度为O(mn);</p>
+<p>可以通过树结构牺牲控件换时间的方法，具体实现思路</p>
+<ul>
+<li>创建字典树<ul>
+<li>根结点不包含字符</li>
+<li>根结点外每一个结点都只包含一个字符</li>
+<li>从根结点到某一叶子结点，路径上经过的字符连接起来，即为集合中的某个字符串</li>
+</ul>
+</li>
+<li>对于一个输入字符串，判断它能否在这个树结构中走到叶子结点。如果能，则出现过</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(data) &#123;</span><br><span class="line">		<span class="built_in">this</span>.data = data;</span><br><span class="line">		<span class="built_in">this</span>.child = [];</span><br><span class="line">	&#125;</span><br><span class="line">	pushChild(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.child.push(node);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字典树类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrTree</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(array) &#123;</span><br><span class="line">		<span class="built_in">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">			<span class="built_in">this</span>.addString(<span class="built_in">this</span>.root, array[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 添加字符串字典</span></span><br><span class="line">	addString(parent, str) &#123;</span><br><span class="line">		<span class="keyword">let</span> currentP = parent; <span class="comment">// 保存上一个父节点</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i ++) &#123;</span><br><span class="line">			<span class="comment">// 查找父节点是否存在子节点，且子节点的值为目标字符</span></span><br><span class="line">			<span class="keyword">const</span> item = currentP.child.find(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> l.data === str[i];</span><br><span class="line">			&#125;)</span><br><span class="line">			<span class="keyword">if</span> (item) &#123;</span><br><span class="line">				<span class="comment">// 如果存在，作为新的父节点</span></span><br><span class="line">				currentP = item;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">// 不存在添加这个字符的分支</span></span><br><span class="line">				<span class="keyword">let</span> current = <span class="keyword">new</span> Node(str[i])</span><br><span class="line">				currentP.pushChild(current);</span><br><span class="line">				currentP = current;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	find(str) &#123;</span><br><span class="line">		<span class="comment">// 保存上一个父节点，一直向下查找，直查找到叶子节点并且查找到最后一个字符</span></span><br><span class="line">		<span class="keyword">let</span> parentnode = <span class="built_in">this</span>.root;</span><br><span class="line">		<span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; str.length) &#123;</span><br><span class="line">			<span class="keyword">let</span> code = str[i++]; <span class="comment">// 目标字符</span></span><br><span class="line">			<span class="comment">// 从当前父节点查找是否存在值为code的目标节点</span></span><br><span class="line">			<span class="keyword">let</span> node = parentnode.child.find(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> l.data === code;</span><br><span class="line">			&#125;)</span><br><span class="line">			<span class="built_in">console</span>.log(node)</span><br><span class="line">			<span class="keyword">if</span> (node) &#123;</span><br><span class="line">				parentnode = node;</span><br><span class="line">				<span class="comment">// 如果查找到目标字符串的最后一个字符串，且当前父节点为叶子结点</span></span><br><span class="line">				<span class="keyword">if</span> (i === str.length &amp;&amp; parentnode.child.length === <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> array = [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;along&#x27;</span>, <span class="string">&#x27;along&#x27;</span>, <span class="string">&#x27;well&#x27;</span>];</span><br><span class="line"><span class="keyword">const</span> tree = <span class="keyword">new</span> StrTree(array);</span><br><span class="line"><span class="built_in">console</span>.log(tree.root)</span><br><span class="line"><span class="built_in">console</span>.log(tree.find(<span class="string">&#x27;alonge&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(tree.find(<span class="string">&#x27;along&#x27;</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="实现按层级输出树"><a href="#实现按层级输出树" class="headerlink" title="实现按层级输出树"></a>实现按层级输出树</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 按层级遍历树</span></span><br><span class="line"><span class="comment">// 用数组模拟一个队列</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Inn</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>()&#123;</span><br><span class="line">		<span class="built_in">this</span>.arr = [];</span><br><span class="line">	&#125;</span><br><span class="line">	pop() &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">this</span>.arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="comment">// 取出对头</span></span><br><span class="line">			<span class="keyword">return</span> <span class="built_in">this</span>.arr.shift();</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	push(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.arr.push(node)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> inn = <span class="keyword">new</span> Inn();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">levelTraverse</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 借助栈来实现</span></span><br><span class="line">	inn.push(node);</span><br><span class="line">	<span class="keyword">let</span> popnode = inn.pop();</span><br><span class="line">	<span class="keyword">while</span>(popnode) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(popnode.data)</span><br><span class="line">		<span class="keyword">if</span> (popnode.child.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			popnode.child.forEach(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				inn.push(l);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		popnode = inn.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模拟一棵树</span></span><br><span class="line"><span class="keyword">let</span> root = &#123;</span><br><span class="line">	data: <span class="number">1</span>,</span><br><span class="line">	child: [</span><br><span class="line">		&#123;<span class="attr">data</span>: <span class="number">2</span>, <span class="attr">child</span>: [</span><br><span class="line">			&#123;<span class="attr">data</span>: <span class="number">4</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">			&#123;<span class="attr">data</span>: <span class="number">5</span>, <span class="attr">child</span>: [</span><br><span class="line">				&#123;<span class="attr">data</span>: <span class="number">6</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">			]&#125;,</span><br><span class="line">		]&#125;,</span><br><span class="line">		&#123;<span class="attr">data</span>: <span class="number">3</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">levelTraverse(root)</span><br></pre></td></tr></table></figure>
+
+<h4 id="哈希表（散列表）"><a href="#哈希表（散列表）" class="headerlink" title="哈希表（散列表）"></a>哈希表（散列表）</h4><p>数据数值条件的查找时，之前的数据结构，都需要对全部数据或者部分数据进行遍历；<br>哈希表的设计采用了函数映射的思想，将记录的存储位置与记录的关键字关联起来。这样的设计方式，能够快速定位到想要查找的记录，而且不需要与表中存在的记录的关键字比较后再来进行查找;</p>
+<h5 id="实现思想"><a href="#实现思想" class="headerlink" title="实现思想"></a>实现思想</h5><p>在数组中，可以通过索引快速的查找到数据，这是因为，数组实现了 <strong>地址=f(下标)</strong> 的映射关系，当我们去取某个索引的值时，可以在O(1)的时间复杂度内，返回实际内存地址存储的内容</p>
+<blockquote>
+<p>哈希表的核心思想也是类似的，只要实现  <strong>地址=f(关键字)</strong> 的 映射关系，就可以完成数值的快速查找了</p>
+</blockquote>
+<ul>
+<li>Hash函数: 地址与关键字的映射，其实就是Hash函数，Hash函数设计的好坏会直接影响到对哈希表的操作效率。hash函数可以将所有的关键字计算出对应的地址</li>
+<li>哈希冲突: 由于关键字的不确定性，两个关键字计算的结果可能指向同一地址。这种情况称为哈希冲突。需要在设计哈希函数时进行规避，但是哈希冲突只能尽可能减少，不能完全避免</li>
+</ul>
+<p>随着数据量变多、内存分布越来越多，哈希冲突的可能性也会变大。因此哈希表需要设计合理的哈希函数，并且对冲突有一套处理机制</p>
+<p><strong>解决哈希冲突常见的方法</strong></p>
+<ul>
+<li>开放寻址,常见的线性探测法<br>  如果发现数据地址重复，在重复地址向下查找，知道找到第一个未被使用的地址，插入数据</li>
+<li>拉链法（链地址法）<br>  将统一地址的数据存储到一张线性链表中。</li>
+</ul>
+<p><strong>哈希表的优缺点</strong><br>优点: 哈希表可以实现快速的插入、删除、查找操作<br>缺点: 哈希表中的数据是无序的,哈希表中的key不允许重复</p>
+<h5 id="算法案例-2"><a href="#算法案例-2" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="模拟哈希表的建立和关键字查找流程"><a href="#模拟哈希表的建立和关键字查找流程" class="headerlink" title="模拟哈希表的建立和关键字查找流程"></a>模拟哈希表的建立和关键字查找流程</h6><p>将关键字序列 {7, 8, 30, 11, 18, 9, 14} 存储到哈希表中。哈希函数为： H (key) = (key * 3) % 7，处理冲突采用线性探测法</p>
+<p>我们借助除留余数法实现Hash函数<code>H (key) = (key * 3) % 7</code>，通过一个数组模拟内存</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 哈希表类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hash</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>() &#123;</span><br><span class="line">		<span class="comment">// 借助一个数组，模拟一段内存,初始长度为7</span></span><br><span class="line">		<span class="built_in">this</span>.addr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">7</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// hash函数</span></span><br><span class="line">	<span class="keyword">static</span> H = <span class="function"><span class="params">key</span> =&gt;</span> (key * <span class="number">3</span>) % <span class="number">7</span></span><br><span class="line"></span><br><span class="line">	set(key, value) &#123;</span><br><span class="line">		<span class="keyword">let</span> index = Hash.H(key); </span><br><span class="line">		<span class="comment">// 如果内存已被占用，向下查找</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">this</span>.addr[index]) &#123;</span><br><span class="line">			index ++;</span><br><span class="line">			<span class="keyword">if</span> (index &gt;= <span class="built_in">this</span>.addr.length) &#123;</span><br><span class="line">				<span class="comment">// 开拓双倍内存，赋值源内存数据</span></span><br><span class="line">				<span class="keyword">let</span> before = <span class="built_in">this</span>.addr;</span><br><span class="line">				<span class="built_in">this</span>.addr = [...before, ...new <span class="built_in">Array</span>(before.length)];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">this</span>.addr[index] = &#123;<span class="attr">key</span>: key, <span class="attr">value</span>: value&#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	get(key) &#123;</span><br><span class="line">		<span class="keyword">let</span> index = Hash.H(key);</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">this</span>.addr[index]) &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">this</span>.addr[index].key === key) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">this</span>.addr[index].value</span><br><span class="line">			&#125;</span><br><span class="line">			index ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 辅助打印</span></span><br><span class="line">	getAddlog(key) &#123;</span><br><span class="line">		<span class="keyword">let</span> value = <span class="built_in">this</span>.get(key);</span><br><span class="line">		<span class="built_in">console</span>.log(value);</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">const</span> hash = <span class="keyword">new</span> Hash();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> array = [</span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">7</span>, <span class="attr">value</span>: <span class="string">&#x27;value7&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">8</span>, <span class="attr">value</span>: <span class="string">&#x27;value8&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">30</span>, <span class="attr">value</span>: <span class="string">&#x27;value30&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">11</span>, <span class="attr">value</span>: <span class="string">&#x27;value11&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">18</span>, <span class="attr">value</span>: <span class="string">&#x27;value18&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">9</span>, <span class="attr">value</span>: <span class="string">&#x27;value9&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">14</span>, <span class="attr">value</span>: <span class="string">&#x27;value14&#x27;</span>&#125;</span><br><span class="line">]; <span class="comment">// 目标数据</span></span><br><span class="line"></span><br><span class="line">array.forEach(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">	hash.set(l.key, l.value);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hash.addr);</span><br><span class="line"></span><br><span class="line">hash.getAddlog(<span class="number">9</span>);</span><br><span class="line">hash.getAddlog(<span class="number">30</span>);</span><br><span class="line">hash.getAddlog(<span class="number">18</span>);</span><br><span class="line">hash.getAddlog(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h6 id="two-sums，-获取数组中加和等于目标值的两个数"><a href="#two-sums，-获取数组中加和等于目标值的两个数" class="headerlink" title="two sums， 获取数组中加和等于目标值的两个数"></a>two sums， 获取数组中加和等于目标值的两个数</h6><p>给定一个整数数组 arr 和一个目标值 target，请你在该数组中找出加和等于目标值的那两个整数，并返回它们的在数组中下标</p>
+<p>可以假设，原数组中没有重复元素，而且有且只有一组答案。但是，数组中的元素只能使用一次。</p>
+<p>这道题可以借助哈希表提高时间效率，这里我直接使用js中的对象作为哈希表使用。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">twosums</span>(<span class="params">array, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> hash = &#123;&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">		<span class="keyword">const</span> item = array[i];</span><br><span class="line">		<span class="keyword">if</span> (item &lt; target) &#123;</span><br><span class="line">			<span class="keyword">if</span>(hash.hasOwnProperty(item)) &#123;</span><br><span class="line">				<span class="keyword">return</span> [hash[item], i] </span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				hash[target - item] = i; <span class="comment">// 保存互补数值的下标</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">twosums( [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>] , <span class="number">4</span>); <span class="comment">// [0, 2]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p>递归的应用非常广泛，很多数据结构和算法的编码实现都要用到递归，例如分治策略、快速排序</p>
+<blockquote>
+<p>递归的基本思想就是把规模大的问题转化为规模小的相同的子问题来解决。</p>
+</blockquote>
+<p>递归需要满足的两个条件</p>
+<ul>
+<li>可以拆解为除了数据规模以外，求解思路完全相同的子问题</li>
+<li>存在终止条件</li>
+</ul>
+<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><h6 id="汉诺塔问题"><a href="#汉诺塔问题" class="headerlink" title="汉诺塔问题"></a>汉诺塔问题</h6><p>汉诺塔问题是源于印度一个古老传说的益智玩具。大梵天创造世界的时候做了三根金刚石柱子，在一根柱子上从下往上按照大小顺序摞着 64 片黄金圆盘。大梵天命令婆罗门把圆盘从下面开始按大小顺序重新摆放在另一根柱子上，并且规定，在小圆盘上不能放大圆盘，在三根柱子之间一次只能移动一个圆盘。</p>
+<ol>
+<li>问题分解 将n个圆片从x =&gt; z<ul>
+<li>首先，将 n-1 个从小到大的圆片 x =&gt; y, 再将最大的x =&gt; z，此时就完成了最大的圆片移动到z</li>
+<li>接下来问题就转变成了将 n-1 个从小到大的圆片 y =&gt; z, 开始新一轮递归</li>
+</ul>
+</li>
+<li>终止条件， n = 1时, 直接将目标移动到z</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将n个圆片从 x 移动到 z</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hanio</span>(<span class="params">n, x, y, z</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;移动: &quot;</span> + x + <span class="string">&quot; -&gt; &quot;</span> + z)</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	hanio(n<span class="number">-1</span>, x, z, y)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;移动: &quot;</span> + x + <span class="string">&quot; -&gt; &quot;</span> + z)</span><br><span class="line">	hanio(n - <span class="number">1</span>, y, x, z)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hanio(<span class="number">3</span>, <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;z&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; y</span></span><br><span class="line"><span class="comment">// 移动: z -&gt; y</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: y -&gt; x</span></span><br><span class="line"><span class="comment">// 移动: y -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="找到第x个斐波那契数"><a href="#找到第x个斐波那契数" class="headerlink" title="找到第x个斐波那契数"></a>找到第x个斐波那契数</h6><p>斐波那契数列是：0，1，1，2，3，5，8，13，21，34，55，89，144……。你会发现，这个数列中元素的性质是，某个数等于它前面两个数的和；也就是 a[n+2] = a[n+1] + a[n]。至于起始两个元素，则分别为 0 和 1。在这个数列中的数字，就被称为斐波那契数。</p>
+<p>现在的问题是，写一个函数，输入 x，输出斐波那契数列中第 x 位的元素。例如，输入 4，输出 2；输入 9，输出 21。要求：需要用递归的方式来实现</p>
+<ol>
+<li>问题分解<ul>
+<li>获取第x位置的数值，只需要知道 第 x - 1 和 第x- 2 个位置的数值，求和即可</li>
+<li>问题转化为 获取 第 x - 1, 和 第 x-2 个位置的数值。进入递归体</li>
+</ul>
+</li>
+<li>终止条件<ul>
+<li>当x = 1,返回 0， 当x = 2 返回 1</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span>  <span class="keyword">if</span> (x === <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> Fibonacci(x - <span class="number">1</span>) + Fibonacci(x - <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Fibonacci(<span class="number">4</span>) <span class="comment">// 2</span></span><br><span class="line">Fibonacci(<span class="number">9</span>) <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h4><p>分治法的核心思想就是分而治之，将一个难以直接解决的大问题，分割成一些可以直接解决的小问题。如果分割后的问题仍然无法直接解决，那么就继续递归地分割，直到每个小问题都可解</p>
+<p>这些子问题具备互相独立、形式相同的特点。这样，我们就可以采用同一种解法，递归地去解决这些子问题。最后，再将每个子问题的解合并，就得到了原问题的解</p>
+<p>分治法解决问题需要具备以下特征</p>
+<ul>
+<li><strong>难度在降低</strong>，难度跟数据的规模成正比</li>
+<li><strong>问题可分</strong>，原问题可以分解为若干个规模较小的同类型问题</li>
+<li><strong>解可合并</strong>，利用所有子问题的解，可合并出原问题的解</li>
+<li><strong>相互独立</strong>，各个子问题之间相互独立，某个子问题的求解不会影响到另一个子问题</li>
+</ul>
+<p>分治法在每轮递归上，都包含了分解问题、解决问题和合并结果这 3 个步骤</p>
+<h5 id="算法案例-3"><a href="#算法案例-3" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h6><p>二分查找的思路</p>
+<p>选择一个标志 i 将集合 L 分为二个子集合，一般可以使用中位数；</p>
+<p>判断标志 L(i) 是否能与要查找的值 des 相等，相等则直接返回结果；</p>
+<p>如果不相等，需要判断 L(i) 与 des 的大小；</p>
+<p>基于判断的结果决定下步是向左查找还是向右查找。如果向某个方向查找的空间为 0，则返回结果未查到；</p>
+<p>回到步骤 1。    </p>
+<p>在数组 { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } 中，查找 8 是否出现过</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 从一个有序集合中找到某个元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">arr, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">let</span> middle = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high) &#123;	</span><br><span class="line">		middle = (high + low) &gt;&gt; <span class="number">1</span>  ;</span><br><span class="line">		<span class="keyword">const</span> value = arr[middle]</span><br><span class="line">		<span class="keyword">if</span> (value === target) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (value &lt; target) &#123;</span><br><span class="line">			low = middle + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (value &gt; target) &#123;</span><br><span class="line">			high = middle - <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol>
+<li>二分查找的时间复杂度是 O(logn)，这也是分治法普遍具备的特性。当你面对某个代码题，而且约束了时间复杂度是 O(logn) 或者是 O(nlogn) 时，可以想一下分治法是否可行。</li>
+<li>二分查找的循环次数并不确定。一般是达到某个条件就跳出循环。因此，编码的时候，多数会采用 while 循环加 break 跳出的代码结构。</li>
+<li>二分查找处理的原问题必须是有序的。因此，当你在一个有序数据环境中处理问题时，可以考虑分治法。相反，如果原问题中的数据并不是有序的，则使用分治法的可能性就会很低了。</li>
+</ol>
+</blockquote>
+<h6 id="查找第一个大于9的数"><a href="#查找第一个大于9的数" class="headerlink" title="查找第一个大于9的数"></a>查找第一个大于9的数</h6><p>在一个有序数组中，查找出第一个大于 9 的数字，假设一定存在。例如，arr = { -1, 3, 3, 7, 10, 14, 14 }; 则返回 10。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">arr, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">let</span> middle = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt; high) &#123;</span><br><span class="line">		middle = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (arr[middle] &lt;= target) &#123;</span><br><span class="line">			low = middle + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (middle === <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (arr[middle - <span class="number">1</span>] &gt; target) &#123;</span><br><span class="line">					high = middle;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> arr[middle];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><ul>
+<li><p>冒泡排序<br>从第一个数据开始，依次比较相邻元素的大小。如果前者大于后者，则进行交换操作，把大的元素往后交换。通过多轮迭代，直到没有交换操作为止<br>冒泡排序最好时间复杂度是 O(n)<br>冒泡排序最坏时间复杂度会比较惨，是 O(n*n)<br>冒泡排序不需要额外的空间，所以空间复杂度是 O(1)。冒泡排序过程中，当元素相同时不做交换，所以冒泡排序是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = arr.length; i &gt; <span class="number">1</span>; i --) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; i - <span class="number">1</span>; j ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="keyword">let</span> t = arr[j];</span><br><span class="line">			arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">			arr[j + <span class="number">1</span>] = t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>插入排序<br>插入排序最好时间复杂度是 O(n)<br>插入排序最坏时间复杂度则需要 O(n*n)<br>插入排序不需要开辟额外的空间，所以空间复杂度是 O(1)<br>插入排序是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="comment">// 从头元素开始依次将头元素插入到前面数组的合适位置</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i&lt; arr.length; i ++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &gt; <span class="number">0</span>; j --) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="keyword">let</span> temp = arr[j];</span><br><span class="line">			arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">			arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>归并排序<br>归并排序最好、最坏、平均时间复杂度都是 O(nlogn)<br>空间复杂度方面，由于每次合并的操作都需要开辟基于数组的临时内存空间，所以空间复杂度为 O(n)<br>归并是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="comment">// 它首先将数组不断地二分，直到最后每个部分只包含 1 个数据。然后再对每个部分分别进行排序，最后将排序好的相邻的两部分合并在一起，这样整个数组就有序了。</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (arr.length === <span class="number">1</span>) &#123; <span class="comment">// 递归出口</span></span><br><span class="line">	<span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = [];</span><br><span class="line"><span class="keyword">let</span> middle = (arr.length) &gt;&gt; <span class="number">1</span>; <span class="comment">// 用于当前数组折半</span></span><br><span class="line"><span class="keyword">let</span> left = sort(arr.slice(<span class="number">0</span>, middle));</span><br><span class="line"><span class="keyword">let</span> right = sort(arr.slice(middle));</span><br><span class="line">merge(left, right, a); <span class="comment">// 向上合并</span></span><br><span class="line"><span class="keyword">return</span> a;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left, right, arr</span>) </span>&#123;</span><br><span class="line"><span class="comment">// 一次比较两个数组的头元素，将较小的元素放入目标数组中，如果其中一个数组元素全部取出，直接将另一个数组剩余元素依次放到目标数组中</span></span><br><span class="line"><span class="keyword">while</span>(left.length &amp;&amp; right.length) &#123;</span><br><span class="line">	<span class="keyword">if</span> (left[<span class="number">0</span>] &lt;= right[<span class="number">0</span>] ) &#123;</span><br><span class="line">		arr.push(left.shift())</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		arr.push(right.shift());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(left.length) &#123;</span><br><span class="line">	arr.push(left.shift())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(right.length) &#123;</span><br><span class="line">	arr.push(right.shift())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> arr;</span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>快速排序<br>它的每轮迭代，会选取数组中任意一个数据作为分区点，将小于它的元素放在它的左侧，大于它的放在它的右侧。再利用分治思想，继续分别对左右两侧进行同样的操作，直至每个区间缩小为 1，则完成排序。<br>在快排的最好时间的复杂度下，如果每次选取分区点时，都能选中中位数，把数组等分成两个，那么此时的时间复杂度和归并一样，都是 O(n<em>logn)。<br>而在最坏的时间复杂度下，也就是如果每次分区都选中了最小值或最大值，得到不均等的两组。那么就需要 n 次的分区操作，每次分区平均扫描 n / 2 个元素，此时时间复杂度就退化为 O(n</em>n) 了。<br>快速排序法在大部分情况下，统计上是很难选到极端情况的。因此它平均的时间复杂度是 O(n*logn)。<br>快速排序法的空间方面，使用了交换法，因此空间复杂度为 O(1)。<br>快排是不稳定的排序算法。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr, left, right</span>) </span>&#123;</span><br><span class="line"><span class="keyword">let</span> length = arr.length;</span><br><span class="line">left = <span class="keyword">typeof</span> left === <span class="string">&#x27;number&#x27;</span> ? left : <span class="number">0</span>;</span><br><span class="line">right = <span class="keyword">typeof</span> right === <span class="string">&#x27;number&#x27;</span> ? right : length - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> middleindex;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (left &lt; right) &#123;</span><br><span class="line">	middleindex = partition(arr, left, right);</span><br><span class="line">	sort(arr, left, middleindex - <span class="number">1</span>);</span><br><span class="line">	sort(arr, middleindex + <span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">partition</span>(<span class="params">arr, left, right</span>) </span>&#123;</span><br><span class="line"><span class="keyword">let</span> index = left; <span class="comment">// 基准线</span></span><br><span class="line">left = index + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (index &lt; right) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[index] &gt; arr[right]) &#123;</span><br><span class="line">			swap(arr, index, right)</span><br><span class="line">			index = right;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			right --;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (index &gt; left) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[index] &lt; arr[left]) &#123;</span><br><span class="line">			swap(arr, index, left);</span><br><span class="line">			index = left;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			left ++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> index;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">swap</span>(<span class="params">arr, x, y</span>) </span>&#123;</span><br><span class="line">arr[y] = arr[x] ^ arr[y];   </span><br><span class="line">arr[x] = arr[x] ^ arr[y];</span><br><span class="line">arr[y] = arr[y] ^ arr[x];</span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>

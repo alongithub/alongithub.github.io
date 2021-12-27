@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="mobx"/>
+
+
+
+
+  <meta name="keywords" content="mobx," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2021/01/14/mobx/"/>
+
+
+<meta name="description" content="mobx准备mobx需要项目支持装饰器语法，在create-react-app项目中，进行下面的操作 方式一:   1. npm run eject   2. npm install @babel&#x2F;plugin-proposal-decorators   3. package.json      &quot;babel&quot;: &amp;#123;         &quot;plugins&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mobx">
+<meta property="og:url" content="https://github.com/alongithub/2021/01/14/mobx/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="mobx准备mobx需要项目支持装饰器语法，在create-react-app项目中，进行下面的操作 方式一:   1. npm run eject   2. npm install @babel&#x2F;plugin-proposal-decorators   3. package.json      &quot;babel&quot;: &amp;#123;         &quot;plugins&amp;quo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-14T07:16:30.000Z">
+<meta property="article:modified_time" content="2021-12-27T02:11:24.848Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="mobx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> mobx - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#mobx"><span class="toc-text">mobx</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E6%89%8B%E4%BD%BF%E7%94%A8"><span class="toc-text">上手使用</span></a></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          mobx
+        
+      </h1>
+
+      <time class="post-time">
+          1月 14 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="mobx"><a href="#mobx" class="headerlink" title="mobx"></a>mobx</h3><h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p>mobx需要项目支持装饰器语法，在<strong>create-react-app</strong>项目中，进行下面的操作</p>
+<p>方式一:</p>
+<pre><code>  1. npm run eject
+  2. npm install @babel/plugin-proposal-decorators
+  3. package.json
+
+    &quot;babel&quot;: &#123;
+        &quot;plugins&quot;: [
+            [
+                &quot;@babel/plugin-proposal-decorators&quot;,
+                &#123;
+                    &quot;legacy&quot;: true
+                &#125;
+            ]
+        ]
+    &#125;</code></pre>
+<p>  方式二:</p>
+<pre><code>  1. npm install react-app-rewired @babel/plugin-proposal-decorators customize-cra
+
+  2. 在项目根目录下创建 config-overrides.js
+
+      const &#123; override, addDecoratorsLegacy &#125; = require(&quot;customize-cra&quot;);
+
+      module.exports = override(addDecoratorsLegacy());
+
+  3. package.json
+
+      &quot;scripts&quot;: &#123;
+          &quot;start&quot;: &quot;react-app-rewired start&quot;,
+          &quot;build&quot;: &quot;react-app-rewired build&quot;,
+          &quot;test&quot;: &quot;react-app-rewired test&quot;,
+      &#125;</code></pre>
+<p>解决vscode编辑器关于装饰器语法的警告</p>
+<p>  “javascript.implicitProjectConfig.experimentalDecorators”: true</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i mobx mobx-react</span><br></pre></td></tr></table></figure>
+
+<h4 id="上手使用"><a href="#上手使用" class="headerlink" title="上手使用"></a>上手使用</h4><p>这里通过一个简易的商品列表的功能，来演示<strong>mobx</strong>的使用</p>
+<p>首先需要创建一下文件结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src&#x2F;</span><br><span class="line">---- product&#x2F;</span><br><span class="line">	 ---- store&#x2F;</span><br><span class="line">	      ---- mobx.js</span><br><span class="line">	 ---- index.js</span><br><span class="line">---- index.js</span><br></pre></td></tr></table></figure>
+
+<p>我们在<strong>mobx.js中</strong>创建一个<strong>store</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, action, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 通过observable修饰后的变量修改后才能被监听到</span></span><br><span class="line">	@observable list = [<span class="string">&#x27;商品1&#x27;</span>];</span><br><span class="line">	@observable isPicking = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 计算属性，当依赖项改变时重新计算计算属性值，需要加 get</span></span><br><span class="line">	@computed get totalNo () &#123;</span><br><span class="line">		<span class="keyword">const</span> temp = <span class="built_in">this</span>.list.filter(<span class="function"><span class="params">l</span> =&gt;</span> !l.isEat)</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			num: temp.length,</span><br><span class="line">			weight: temp.reduce(<span class="function">(<span class="params">total, l</span>) =&gt;</span> &#123;<span class="keyword">return</span> total + l.weight&#125;, <span class="number">0</span>),</span><br><span class="line">			list: temp,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	@computed get totalEat () &#123;</span><br><span class="line">		<span class="keyword">const</span> temp = <span class="built_in">this</span>.list.filter(<span class="function"><span class="params">l</span> =&gt;</span> l.isEat)</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			num: temp.length,</span><br><span class="line">			weight: temp.reduce(<span class="function">(<span class="params">total, l</span>) =&gt;</span> &#123;<span class="keyword">return</span> total + l.weight&#125;, <span class="number">0</span>),</span><br><span class="line">			list: temp,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 修饰用于修改属性值得方法，.bound 修饰才能保证this指向正确</span></span><br><span class="line">	@action.bound eat = <span class="function">(<span class="params">code</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.list.find(<span class="function"><span class="params">l</span> =&gt;</span> l.code === code).isEat = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@action.bound addList = <span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">this</span>.list.push(&#123;</span><br><span class="line">			code: <span class="built_in">this</span>.code ++,</span><br><span class="line">			weight: <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random() * <span class="number">500</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例并导出</span></span><br><span class="line"><span class="keyword">const</span> product = <span class="keyword">new</span> Product();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> product;</span><br></pre></td></tr></table></figure>
+
+<p>创建好的<strong>store</strong>需要在全局引入，并放入容器中方便子组件获取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx-react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> product <span class="keyword">from</span> <span class="string">&#x27;./product/store/mobx&#x27;</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider product=&#123;product&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们在组件中尝试使用它</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; inject, observer &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx-react&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@inject(<span class="string">&#x27;product&#x27;</span>) <span class="comment">// 注入product这个store</span></span><br><span class="line">@observer  <span class="comment">// 当数据改变时会响应式通知组件更新</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; list, addList, totalNo, totalEat, eat &#125; = <span class="built_in">this</span>.props.product;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div className=<span class="string">&quot;App&quot;</span>&gt;</span><br><span class="line">				&lt;h2&gt;苹果篮子&lt;/h2&gt;</span><br><span class="line">				&lt;hr/&gt;</span><br><span class="line">				&lt;div className=<span class="string">&quot;total&quot;</span>&gt;</span><br><span class="line">					&lt;div className=<span class="string">&quot;hastotal&quot;</span>&gt;</span><br><span class="line">						&lt;div&gt;当前&lt;/div&gt;</span><br><span class="line">						&lt;div&gt;&#123;totalNo.num&#125;个苹果，&#123;totalNo.weight&#125;克&lt;/div&gt;</span><br><span class="line">					&lt;/div&gt;</span><br><span class="line">					&lt;div className=<span class="string">&quot;nototal&quot;</span>&gt;</span><br><span class="line">						&lt;div&gt;已吃掉&lt;/div&gt;</span><br><span class="line">						&lt;div&gt;&#123;totalEat.num&#125;个苹果，&#123;totalEat.weight&#125;克&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">					&lt;/div&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">				&#123;totalNo.list.map(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;appleitem&quot;</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;button&quot;&gt;</span><br><span class="line">							&lt;button onClick=&#123;() =&gt; &#123;eat(l.code)&#125;&#125;&gt;吃掉&lt;/button&gt;</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;appleImage&quot;&gt;</span><br><span class="line">							&lt;img src=&#123;apple&#125; /&gt;</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;title&quot;&gt;</span><br><span class="line">							红苹果 - &#123;l.code&#125;号</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">						&lt;div className=&quot;wiehgt&quot;&gt;</span><br><span class="line">							&#123;l.weight&#125;克</span><br><span class="line"><span class="xml">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">				&#125;)&#125;</span><br><span class="line">				&lt;p className=<span class="string">&quot;pickWrapper&quot;</span>&gt;</span><br><span class="line">					&lt;button className=<span class="string">&quot;pick&quot;</span> onClick=&#123;<span class="function">() =&gt;</span> &#123;</span><br><span class="line">						<span class="built_in">this</span>.props.product.addList(<span class="string">&#x27;商品&#x27;</span>)</span><br><span class="line">					&#125;&#125;&gt;添加一个商品&lt;/button&gt;</span><br><span class="line">				&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以看到<strong>list</strong>数据在页面中展示了</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/mobx/">mobx</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/01/20/react-hooks/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">react-hooks</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/01/14/redux/">
+        <span class="next-text nav-default">redux</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

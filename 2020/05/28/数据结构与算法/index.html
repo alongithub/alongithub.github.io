@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="数据结构与算法整理，概念与练习"/>
+
+
+
+
+  <meta name="keywords" content="算法,数据结构," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/05/28/数据结构与算法/"/>
+
+
+<meta name="description" content="数据结构与算法整理，概念与练习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法">
+<meta property="og:url" content="https://github.com/alongithub/2020/05/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="数据结构与算法整理，概念与练习">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-28T02:43:40.000Z">
+<meta property="article:modified_time" content="2021-12-27T02:10:51.293Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 数据结构与算法 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95"><span class="toc-text">数据结构与算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E8%A1%A8"><span class="toc-text">线性表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-text">队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">数组与链表的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-text">操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C-1"><span class="toc-text">操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%A1%88%E4%BE%8B"><span class="toc-text">算法案例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2"><span class="toc-text">找出两个字符串的最大公共子串</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91"><span class="toc-text">树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%A1%88%E4%BE%8B-1"><span class="toc-text">算法案例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="toc-text">实现一个二叉查找树</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字典树查找字符串</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%8C%89%E5%B1%82%E7%BA%A7%E8%BE%93%E5%87%BA%E6%A0%91"><span class="toc-text">实现按层级输出树</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%EF%BC%88%E6%95%A3%E5%88%97%E8%A1%A8%EF%BC%89"><span class="toc-text">哈希表（散列表）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E6%83%B3"><span class="toc-text">实现思想</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%A1%88%E4%BE%8B-2"><span class="toc-text">算法案例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%BB%BA%E7%AB%8B%E5%92%8C%E5%85%B3%E9%94%AE%E5%AD%97%E6%9F%A5%E6%89%BE%E6%B5%81%E7%A8%8B"><span class="toc-text">模拟哈希表的建立和关键字查找流程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#two-sums%EF%BC%8C-%E8%8E%B7%E5%8F%96%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8A%A0%E5%92%8C%E7%AD%89%E4%BA%8E%E7%9B%AE%E6%A0%87%E5%80%BC%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0"><span class="toc-text">two sums， 获取数组中加和等于目标值的两个数</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B1%89%E8%AF%BA%E5%A1%94%E9%97%AE%E9%A2%98"><span class="toc-text">汉诺塔问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E7%AC%ACx%E4%B8%AA%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0"><span class="toc-text">找到第x个斐波那契数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%B2%BB"><span class="toc-text">分治</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%A1%88%E4%BE%8B-3"><span class="toc-text">算法案例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%A4%A7%E4%BA%8E9%E7%9A%84%E6%95%B0"><span class="toc-text">查找第一个大于9的数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-text">排序</span></a></li></ol></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          数据结构与算法
+        
+      </h1>
+
+      <time class="post-time">
+          5月 28 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h2><h3 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h3><h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>数组在内存中是连续存放的，数组内的数据，可以通过索引值直接取出得到（只要记录该数组头部的第一个数据位置，然后累加空间位置即可）    </p>
+<h5 id="数组与链表的区别"><a href="#数组与链表的区别" class="headerlink" title="数组与链表的区别"></a>数组与链表的区别</h5><ul>
+<li>链表的长度是可变的，数组的长度是固定的。</li>
+<li>链表不会根据有序位置存储，进行插入数据元素时，可以用指针来充分利用内存空间。数组的空间是连续的，可能导致空间无法使用。另外如果数组长度发生改变,可能需要重新开辟连续内存。</li>
+</ul>
+<p>数组更适合在数据数量确定，即较少甚至不需要使用新增数据、删除数据操作的场景下使用，这样就有效地规避了数组天然的劣势。在数据对位置敏感的场景下，比如需要高频根据索引位置查找数据时，数组就是个很好的选择了。</p>
+<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><ul>
+<li>新增：数组中插入元素需要对之后的元素进行后移操作，时间复杂度O(n)</li>
+<li>删除：数组中删除元素需要对之后的元素进行前移操作，时间复杂度O(n)</li>
+<li>基于索引的查找：通过索引直接访问，时间复杂度O(1)</li>
+<li>基于条件查找索引：需要类似链表一样遍历数组，时间复杂度O(n)</li>
+</ul>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ul>
+<li>空串，含有零个字符的串</li>
+<li>空格串，只包含空格的串，可以包含一个或多个空格</li>
+<li>子串、主串（原串），目标串中任意连续字符组成的串称为该串的子串，目标串为子串的主串</li>
+</ul>
+<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><ul>
+<li>字符串可以用订场数组来实现</li>
+<li>也可以使用链式存储实现</li>
+</ul>
+<h5 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h5><ul>
+<li>新增: 字符串中插入字符需要对之后字符进行后移操作，时间复杂度O(n);</li>
+<li>删除: 删除操作需要对之后字符进行前移，时间复杂度为O(n);</li>
+<li>查找(字符串匹配), 在符串A（长度n）中查找字符串B（长度m）(n &gt;= m),则A是主串，B是模式串。时间复杂度为O(mn)<ol>
+<li>首先从主串的第一个字符开始，判断模式串的第一个字符是否与其相等</li>
+<li>如果不相等,继续判断主串的后续字符是否相等，如果相等判断后续的字符是否依次与子串中的后续字符相等</li>
+<li>如果存在不相等重新回到之前的步骤，判断第一个字符。如果持续相等直到模式串的最后一个字符，则匹配成功</li>
+</ol>
+</li>
+</ul>
+<h5 id="算法案例"><a href="#算法案例" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="找出两个字符串的最大公共子串"><a href="#找出两个字符串的最大公共子串" class="headerlink" title="找出两个字符串的最大公共子串"></a>找出两个字符串的最大公共子串</h6><p>假设有且仅有 1 个最大公共子串。比如，输入 a = “13452439”， b = “123456”。由于字符串 “345” 同时在 a 和 b 中出现，且是同时出现在 a 和 b 中的最长子串。因此输出 “345”。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="string">&#x27;helloalong&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">&#x27;wellcomelloalnn&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@name</span>: 获取 两个字符串公共的最长子串</span></span><br><span class="line"><span class="comment">* <span class="doctag">@test</span>: test font</span></span><br><span class="line"><span class="comment">* <span class="doctag">@msg</span>: </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param <span class="type">&#123;*&#125;</span> <span class="variable">str1</span></span></span></span><br><span class="line"><span class="comment">* <span class="doctag">@param <span class="type">&#123;*&#125;</span> <span class="variable">str2</span></span></span></span><br><span class="line"><span class="comment">* <span class="doctag">@return <span class="type">&#123;*&#125;</span></span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCommenStr</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> max_len = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> max_len_str = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span> ; i &lt; str1.length ; i ++ ) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; str2.length ; j ++ ) &#123;</span><br><span class="line">			<span class="keyword">if</span> (str1[i] === str2[j]) &#123;</span><br><span class="line">				<span class="keyword">let</span> l = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">let</span> temp_length = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">let</span> temp_length_str = str2[j];</span><br><span class="line">				<span class="keyword">while</span>(l + i &lt; str1.length &amp;&amp; l + j &lt; str2.length) &#123;</span><br><span class="line"></span><br><span class="line">					<span class="keyword">if</span> (str1[i + l] === str2[j + l]) &#123;</span><br><span class="line">						temp_length ++;</span><br><span class="line">						temp_length_str += str1[i + l];</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">					l ++;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (temp_length &gt; max_len) &#123;</span><br><span class="line">					max_len = temp_length;</span><br><span class="line">					max_len_str = temp_length_str;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`‘<span class="subst">$&#123;str1&#125;</span>’与‘<span class="subst">$&#123;str2&#125;</span>’的最大公共子串为‘<span class="subst">$&#123;max_len_str&#125;</span>’,长度为<span class="subst">$&#123;max_len&#125;</span>`</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getCommenStr(str1, str2); <span class="comment">// ‘helloalong’与‘wellcomelloalnn’的最大公共子串为‘elloal’,长度为6</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="树"><a href="#树" class="headerlink" title="树"></a>树</h4><ul>
+<li>父节点、子节点：A 结点是 B 结点和 C 结点的上级，则 A 就是 B 和 C 的父结点，B 和 C 是 A 的子结点。</li>
+<li>兄弟节点: B、C 同时是A的孩子，B、C互为兄弟节点</li>
+<li>根节点:没有父节点的节点</li>
+<li>叶子节点: 没有子节点的节点</li>
+<li>层：根节点为第一层，根节点的孩子为第二层，根节点孩子的孩子为第三层，以此类推</li>
+<li>深度： 树中节点的最大层数</li>
+</ul>
+<p><strong>二叉树</strong></p>
+<ul>
+<li>满二叉树，定义为除了叶子结点外，所有结点都有 2 个子结点。</li>
+<li>完全二叉树，定义为除了最后一层以外，其他层的结点个数都达到最大，并且最后一层的叶子结点都靠左排列。（完全二叉树的名称是从存储控件的利用率视角来看的。对于一棵完全二叉树而言，仅仅浪费了下标为 0 的存储位置。而如果是一棵非完全二叉树，则会浪费大量的存储空间）</li>
+</ul>
+<p>二叉树的存储可以是基于指针的链式存储法，也可以基于数组顺序存储法</p>
+<ul>
+<li>链式存储法，使用链表，每个节点有三个字段，一个存储数据，另外两个分别存储指向左右子节点的指针</li>
+<li>照规律把结点存放在数组里，从数组下标为1的位置开始，按树层级从左到右依次存储树中的每个节点，顺序的存储法中，可以发现如果结点 X 的下标为 i，那么 X 的左子结点总是存放在 2 * i 的位置，X 的右子结点总是存放在 2 * i + 1 的位置</li>
+</ul>
+<p><strong>树的操作</strong></p>
+<ul>
+<li>删除：O(1)</li>
+<li>查找：树数据的查找操作和链表一样，都需要遍历每一个数据去判断，所以时间复杂度是 O(n)</li>
+<li>遍历: 前序遍历、中序遍历、后序遍历。这里的序指的是父结点的遍历顺序，前序就是先遍历父结点，中序就是中间遍历父结点，后序就是最后遍历父结点。遍历的时间复杂度为O(n)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">	<span class="built_in">console</span>.log(root.data);</span><br><span class="line">	traverse(root.right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">	traverse(root.left);</span><br><span class="line">	traverse(root.right);</span><br><span class="line">	<span class="built_in">console</span>.log(root.data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>二叉查找树</strong></p>
+<ul>
+<li>在二叉查找树中的任意一个结点，其左子树中的每个结点的值，都要小于这个结点的值</li>
+<li>在二叉查找树中的任意一个结点，其右子树中每个结点的值，都要大于这个结点的值</li>
+<li>在二叉查找树中，会尽可能规避两个结点数值相等的情况</li>
+<li>对二叉查找树进行中序遍历，就可以输出一个从小到大的有序数据队列</li>
+</ul>
+<p><strong>二叉查找树的操作</strong></p>
+<ul>
+<li>查找，时间复杂度O(logn)<ul>
+<li>首先判断根结点是否等于要查找的数据，如果是就返回</li>
+<li>如果根结点大于要查找的数据，就在左子树中递归执行查找动作，直到叶子结点</li>
+<li>如果根结点小于要查找的数据，就在右子树中递归执行查找动作，直到叶子结点</li>
+</ul>
+</li>
+<li>插入, 时间复杂度O(logn)<ul>
+<li>从根结点开始，如果要插入的数据比根结点的数据大，且根结点的右子结点不为空，则在根结点的右子树中继续尝试执行插入操作。直到找到为空的子结点执行插入动作</li>
+</ul>
+</li>
+<li>删除，二叉查找树的删除比较复杂，可以分为三种情况<ol>
+<li>删除的节点是叶子节点，直接删除，将其父节点对应指针指向null即可</li>
+<li>如果删除的节点只有一个子节点，只需要将父节点的指针指向删除节点的子节点</li>
+<li>如果删除节点有两个子节点，有两种删除方法。<ul>
+<li>第一种，找到要删除节点的左子树中的最大节点，替换要删除的节点。</li>
+<li>第二中，找到要删除节点的右子树中的最小节点，替换要删除的节点。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="算法案例-1"><a href="#算法案例-1" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="实现一个二叉查找树"><a href="#实现一个二叉查找树" class="headerlink" title="实现一个二叉查找树"></a>实现一个二叉查找树</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 树的节点</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (data, leftnode, rightnode) &#123;</span><br><span class="line">		<span class="built_in">this</span>.data = data;</span><br><span class="line">		<span class="built_in">this</span>.leftNode = leftnode;</span><br><span class="line">		<span class="built_in">this</span>.rightNode = rightnode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	setLeft(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.leftNode = node;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	setRight(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.rightNode = node;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tree</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(array) &#123;</span><br><span class="line">		<span class="built_in">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="built_in">this</span>.array = array;</span><br><span class="line">		<span class="keyword">if</span> (array <span class="keyword">instanceof</span> <span class="built_in">Array</span> &amp;&amp; array.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			Tree.reduceArrayToTree.call(<span class="built_in">this</span>, array)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 根据输入数组，输出二叉查找树，数组不含重复</span></span><br><span class="line">	<span class="keyword">static</span> reduceArrayToTree (array) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">		<span class="comment">// 以第一个元素为根元素</span></span><br><span class="line">		<span class="keyword">let</span> i = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">let</span> root = <span class="keyword">new</span> Node(array[<span class="number">0</span>], <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">		<span class="keyword">while</span> (i &lt; array.length) &#123;</span><br><span class="line">			<span class="built_in">this</span>.putNode(root, <span class="keyword">new</span> Node(array[i]));</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">this</span>.root = root;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 向树上插入一个节点</span></span><br><span class="line">	putNode(item, node) &#123;</span><br><span class="line">		<span class="keyword">if</span> (node.data &gt; item.data) &#123;</span><br><span class="line">			<span class="keyword">if</span> (item.rightNode) &#123;</span><br><span class="line">				<span class="built_in">this</span>.putNode(item.rightNode, node);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				item.setRight(node)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (item.leftNode) &#123;</span><br><span class="line">				<span class="built_in">this</span>.putNode(item.leftNode, node);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				item.setLeft(node)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	each(root, outputarray) &#123;</span><br><span class="line">		root.leftNode &amp;&amp; <span class="built_in">this</span>.each(root.leftNode, outputarray);</span><br><span class="line">		outputarray.push(root.data);</span><br><span class="line">		root.rightNode &amp;&amp; <span class="built_in">this</span>.each(root.rightNode, outputarray);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 中序遍历二叉树</span></span><br><span class="line">	middleEach() &#123;</span><br><span class="line">		<span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">		<span class="built_in">this</span>.each(<span class="built_in">this</span>.root, a);</span><br><span class="line">		<span class="built_in">console</span>.log(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tree = <span class="keyword">new</span> Tree([<span class="number">3</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">33</span>, <span class="number">90</span>]);</span><br><span class="line">tree.middleEach();	</span><br></pre></td></tr></table></figure>
+
+<h6 id="字典树查找字符串"><a href="#字典树查找字符串" class="headerlink" title="字典树查找字符串"></a>字典树查找字符串</h6><p>实现查找一组字符串中是否出现过某个字符串</p>
+<p>目标字符串集合包含字符串个数为n, 平均长度为m</p>
+<p>条件，不能直接判断两个字符串是否相等，需要一次对比两个串中的每个位置的字符。</p>
+<p>这道题可以借助字符串双重遍历的查找方法来查找，但是，这种算法时间复杂度为O(mn);</p>
+<p>可以通过树结构牺牲控件换时间的方法，具体实现思路</p>
+<ul>
+<li>创建字典树<ul>
+<li>根结点不包含字符</li>
+<li>根结点外每一个结点都只包含一个字符</li>
+<li>从根结点到某一叶子结点，路径上经过的字符连接起来，即为集合中的某个字符串</li>
+</ul>
+</li>
+<li>对于一个输入字符串，判断它能否在这个树结构中走到叶子结点。如果能，则出现过</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(data) &#123;</span><br><span class="line">		<span class="built_in">this</span>.data = data;</span><br><span class="line">		<span class="built_in">this</span>.child = [];</span><br><span class="line">	&#125;</span><br><span class="line">	pushChild(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.child.push(node);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字典树类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrTree</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(array) &#123;</span><br><span class="line">		<span class="built_in">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">			<span class="built_in">this</span>.addString(<span class="built_in">this</span>.root, array[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 添加字符串字典</span></span><br><span class="line">	addString(parent, str) &#123;</span><br><span class="line">		<span class="keyword">let</span> currentP = parent; <span class="comment">// 保存上一个父节点</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i ++) &#123;</span><br><span class="line">			<span class="comment">// 查找父节点是否存在子节点，且子节点的值为目标字符</span></span><br><span class="line">			<span class="keyword">const</span> item = currentP.child.find(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> l.data === str[i];</span><br><span class="line">			&#125;)</span><br><span class="line">			<span class="keyword">if</span> (item) &#123;</span><br><span class="line">				<span class="comment">// 如果存在，作为新的父节点</span></span><br><span class="line">				currentP = item;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">// 不存在添加这个字符的分支</span></span><br><span class="line">				<span class="keyword">let</span> current = <span class="keyword">new</span> Node(str[i])</span><br><span class="line">				currentP.pushChild(current);</span><br><span class="line">				currentP = current;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	find(str) &#123;</span><br><span class="line">		<span class="comment">// 保存上一个父节点，一直向下查找，直查找到叶子节点并且查找到最后一个字符</span></span><br><span class="line">		<span class="keyword">let</span> parentnode = <span class="built_in">this</span>.root;</span><br><span class="line">		<span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; str.length) &#123;</span><br><span class="line">			<span class="keyword">let</span> code = str[i++]; <span class="comment">// 目标字符</span></span><br><span class="line">			<span class="comment">// 从当前父节点查找是否存在值为code的目标节点</span></span><br><span class="line">			<span class="keyword">let</span> node = parentnode.child.find(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> l.data === code;</span><br><span class="line">			&#125;)</span><br><span class="line">			<span class="built_in">console</span>.log(node)</span><br><span class="line">			<span class="keyword">if</span> (node) &#123;</span><br><span class="line">				parentnode = node;</span><br><span class="line">				<span class="comment">// 如果查找到目标字符串的最后一个字符串，且当前父节点为叶子结点</span></span><br><span class="line">				<span class="keyword">if</span> (i === str.length &amp;&amp; parentnode.child.length === <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> array = [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;along&#x27;</span>, <span class="string">&#x27;along&#x27;</span>, <span class="string">&#x27;well&#x27;</span>];</span><br><span class="line"><span class="keyword">const</span> tree = <span class="keyword">new</span> StrTree(array);</span><br><span class="line"><span class="built_in">console</span>.log(tree.root)</span><br><span class="line"><span class="built_in">console</span>.log(tree.find(<span class="string">&#x27;alonge&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(tree.find(<span class="string">&#x27;along&#x27;</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="实现按层级输出树"><a href="#实现按层级输出树" class="headerlink" title="实现按层级输出树"></a>实现按层级输出树</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按层级遍历树</span></span><br><span class="line"><span class="comment">// 用数组模拟一个队列</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Inn</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>()&#123;</span><br><span class="line">		<span class="built_in">this</span>.arr = [];</span><br><span class="line">	&#125;</span><br><span class="line">	pop() &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">this</span>.arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="comment">// 取出对头</span></span><br><span class="line">			<span class="keyword">return</span> <span class="built_in">this</span>.arr.shift();</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	push(node) &#123;</span><br><span class="line">		<span class="built_in">this</span>.arr.push(node)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> inn = <span class="keyword">new</span> Inn();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">levelTraverse</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 借助栈来实现</span></span><br><span class="line">	inn.push(node);</span><br><span class="line">	<span class="keyword">let</span> popnode = inn.pop();</span><br><span class="line">	<span class="keyword">while</span>(popnode) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(popnode.data)</span><br><span class="line">		<span class="keyword">if</span> (popnode.child.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			popnode.child.forEach(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">				inn.push(l);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		popnode = inn.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模拟一棵树</span></span><br><span class="line"><span class="keyword">let</span> root = &#123;</span><br><span class="line">	data: <span class="number">1</span>,</span><br><span class="line">	child: [</span><br><span class="line">		&#123;<span class="attr">data</span>: <span class="number">2</span>, <span class="attr">child</span>: [</span><br><span class="line">			&#123;<span class="attr">data</span>: <span class="number">4</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">			&#123;<span class="attr">data</span>: <span class="number">5</span>, <span class="attr">child</span>: [</span><br><span class="line">				&#123;<span class="attr">data</span>: <span class="number">6</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">			]&#125;,</span><br><span class="line">		]&#125;,</span><br><span class="line">		&#123;<span class="attr">data</span>: <span class="number">3</span>, <span class="attr">child</span>: []&#125;,</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">levelTraverse(root)</span><br></pre></td></tr></table></figure>
+
+<h4 id="哈希表（散列表）"><a href="#哈希表（散列表）" class="headerlink" title="哈希表（散列表）"></a>哈希表（散列表）</h4><p>数据数值条件的查找时，之前的数据结构，都需要对全部数据或者部分数据进行遍历；<br>哈希表的设计采用了函数映射的思想，将记录的存储位置与记录的关键字关联起来。这样的设计方式，能够快速定位到想要查找的记录，而且不需要与表中存在的记录的关键字比较后再来进行查找;</p>
+<h5 id="实现思想"><a href="#实现思想" class="headerlink" title="实现思想"></a>实现思想</h5><p>在数组中，可以通过索引快速的查找到数据，这是因为，数组实现了 <strong>地址=f(下标)</strong> 的映射关系，当我们去取某个索引的值时，可以在O(1)的时间复杂度内，返回实际内存地址存储的内容</p>
+<blockquote>
+<p>哈希表的核心思想也是类似的，只要实现  <strong>地址=f(关键字)</strong> 的 映射关系，就可以完成数值的快速查找了</p>
+</blockquote>
+<ul>
+<li>Hash函数: 地址与关键字的映射，其实就是Hash函数，Hash函数设计的好坏会直接影响到对哈希表的操作效率。hash函数可以将所有的关键字计算出对应的地址</li>
+<li>哈希冲突: 由于关键字的不确定性，两个关键字计算的结果可能指向同一地址。这种情况称为哈希冲突。需要在设计哈希函数时进行规避，但是哈希冲突只能尽可能减少，不能完全避免</li>
+</ul>
+<p>随着数据量变多、内存分布越来越多，哈希冲突的可能性也会变大。因此哈希表需要设计合理的哈希函数，并且对冲突有一套处理机制</p>
+<p><strong>解决哈希冲突常见的方法</strong></p>
+<ul>
+<li>开放寻址,常见的线性探测法<br>  如果发现数据地址重复，在重复地址向下查找，知道找到第一个未被使用的地址，插入数据</li>
+<li>拉链法（链地址法）<br>  将统一地址的数据存储到一张线性链表中。</li>
+</ul>
+<p><strong>哈希表的优缺点</strong><br>优点: 哈希表可以实现快速的插入、删除、查找操作<br>缺点: 哈希表中的数据是无序的,哈希表中的key不允许重复</p>
+<h5 id="算法案例-2"><a href="#算法案例-2" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="模拟哈希表的建立和关键字查找流程"><a href="#模拟哈希表的建立和关键字查找流程" class="headerlink" title="模拟哈希表的建立和关键字查找流程"></a>模拟哈希表的建立和关键字查找流程</h6><p>将关键字序列 {7, 8, 30, 11, 18, 9, 14} 存储到哈希表中。哈希函数为： H (key) = (key * 3) % 7，处理冲突采用线性探测法</p>
+<p>我们借助除留余数法实现Hash函数<code>H (key) = (key * 3) % 7</code>，通过一个数组模拟内存</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 哈希表类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hash</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>() &#123;</span><br><span class="line">		<span class="comment">// 借助一个数组，模拟一段内存,初始长度为7</span></span><br><span class="line">		<span class="built_in">this</span>.addr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">7</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// hash函数</span></span><br><span class="line">	<span class="keyword">static</span> H = <span class="function"><span class="params">key</span> =&gt;</span> (key * <span class="number">3</span>) % <span class="number">7</span></span><br><span class="line"></span><br><span class="line">	set(key, value) &#123;</span><br><span class="line">		<span class="keyword">let</span> index = Hash.H(key); </span><br><span class="line">		<span class="comment">// 如果内存已被占用，向下查找</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">this</span>.addr[index]) &#123;</span><br><span class="line">			index ++;</span><br><span class="line">			<span class="keyword">if</span> (index &gt;= <span class="built_in">this</span>.addr.length) &#123;</span><br><span class="line">				<span class="comment">// 开拓双倍内存，赋值源内存数据</span></span><br><span class="line">				<span class="keyword">let</span> before = <span class="built_in">this</span>.addr;</span><br><span class="line">				<span class="built_in">this</span>.addr = [...before, ...new <span class="built_in">Array</span>(before.length)];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">this</span>.addr[index] = &#123;<span class="attr">key</span>: key, <span class="attr">value</span>: value&#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	get(key) &#123;</span><br><span class="line">		<span class="keyword">let</span> index = Hash.H(key);</span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">this</span>.addr[index]) &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">this</span>.addr[index].key === key) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">this</span>.addr[index].value</span><br><span class="line">			&#125;</span><br><span class="line">			index ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 辅助打印</span></span><br><span class="line">	getAddlog(key) &#123;</span><br><span class="line">		<span class="keyword">let</span> value = <span class="built_in">this</span>.get(key);</span><br><span class="line">		<span class="built_in">console</span>.log(value);</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">const</span> hash = <span class="keyword">new</span> Hash();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> array = [</span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">7</span>, <span class="attr">value</span>: <span class="string">&#x27;value7&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">8</span>, <span class="attr">value</span>: <span class="string">&#x27;value8&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">30</span>, <span class="attr">value</span>: <span class="string">&#x27;value30&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">11</span>, <span class="attr">value</span>: <span class="string">&#x27;value11&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">18</span>, <span class="attr">value</span>: <span class="string">&#x27;value18&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">9</span>, <span class="attr">value</span>: <span class="string">&#x27;value9&#x27;</span>&#125;, </span><br><span class="line">	&#123;<span class="attr">key</span>: <span class="number">14</span>, <span class="attr">value</span>: <span class="string">&#x27;value14&#x27;</span>&#125;</span><br><span class="line">]; <span class="comment">// 目标数据</span></span><br><span class="line"></span><br><span class="line">array.forEach(<span class="function"><span class="params">l</span> =&gt;</span> &#123;</span><br><span class="line">	hash.set(l.key, l.value);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hash.addr);</span><br><span class="line"></span><br><span class="line">hash.getAddlog(<span class="number">9</span>);</span><br><span class="line">hash.getAddlog(<span class="number">30</span>);</span><br><span class="line">hash.getAddlog(<span class="number">18</span>);</span><br><span class="line">hash.getAddlog(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h6 id="two-sums，-获取数组中加和等于目标值的两个数"><a href="#two-sums，-获取数组中加和等于目标值的两个数" class="headerlink" title="two sums， 获取数组中加和等于目标值的两个数"></a>two sums， 获取数组中加和等于目标值的两个数</h6><p>给定一个整数数组 arr 和一个目标值 target，请你在该数组中找出加和等于目标值的那两个整数，并返回它们的在数组中下标</p>
+<p>可以假设，原数组中没有重复元素，而且有且只有一组答案。但是，数组中的元素只能使用一次。</p>
+<p>这道题可以借助哈希表提高时间效率，这里我直接使用js中的对象作为哈希表使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">twosums</span>(<span class="params">array, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> hash = &#123;&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i ++) &#123;</span><br><span class="line">		<span class="keyword">const</span> item = array[i];</span><br><span class="line">		<span class="keyword">if</span> (item &lt; target) &#123;</span><br><span class="line">			<span class="keyword">if</span>(hash.hasOwnProperty(item)) &#123;</span><br><span class="line">				<span class="keyword">return</span> [hash[item], i] </span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				hash[target - item] = i; <span class="comment">// 保存互补数值的下标</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">twosums( [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>] , <span class="number">4</span>); <span class="comment">// [0, 2]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p>递归的应用非常广泛，很多数据结构和算法的编码实现都要用到递归，例如分治策略、快速排序</p>
+<blockquote>
+<p>递归的基本思想就是把规模大的问题转化为规模小的相同的子问题来解决。</p>
+</blockquote>
+<p>递归需要满足的两个条件</p>
+<ul>
+<li>可以拆解为除了数据规模以外，求解思路完全相同的子问题</li>
+<li>存在终止条件</li>
+</ul>
+<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><h6 id="汉诺塔问题"><a href="#汉诺塔问题" class="headerlink" title="汉诺塔问题"></a>汉诺塔问题</h6><p>汉诺塔问题是源于印度一个古老传说的益智玩具。大梵天创造世界的时候做了三根金刚石柱子，在一根柱子上从下往上按照大小顺序摞着 64 片黄金圆盘。大梵天命令婆罗门把圆盘从下面开始按大小顺序重新摆放在另一根柱子上，并且规定，在小圆盘上不能放大圆盘，在三根柱子之间一次只能移动一个圆盘。</p>
+<ol>
+<li>问题分解 将n个圆片从x =&gt; z<ul>
+<li>首先，将 n-1 个从小到大的圆片 x =&gt; y, 再将最大的x =&gt; z，此时就完成了最大的圆片移动到z</li>
+<li>接下来问题就转变成了将 n-1 个从小到大的圆片 y =&gt; z, 开始新一轮递归</li>
+</ul>
+</li>
+<li>终止条件， n = 1时, 直接将目标移动到z</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将n个圆片从 x 移动到 z</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hanio</span>(<span class="params">n, x, y, z</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;移动: &quot;</span> + x + <span class="string">&quot; -&gt; &quot;</span> + z)</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	hanio(n<span class="number">-1</span>, x, z, y)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;移动: &quot;</span> + x + <span class="string">&quot; -&gt; &quot;</span> + z)</span><br><span class="line">	hanio(n - <span class="number">1</span>, y, x, z)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hanio(<span class="number">3</span>, <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;z&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; y</span></span><br><span class="line"><span class="comment">// 移动: z -&gt; y</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: y -&gt; x</span></span><br><span class="line"><span class="comment">// 移动: y -&gt; z</span></span><br><span class="line"><span class="comment">// 移动: x -&gt; z</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="找到第x个斐波那契数"><a href="#找到第x个斐波那契数" class="headerlink" title="找到第x个斐波那契数"></a>找到第x个斐波那契数</h6><p>斐波那契数列是：0，1，1，2，3，5，8，13，21，34，55，89，144……。你会发现，这个数列中元素的性质是，某个数等于它前面两个数的和；也就是 a[n+2] = a[n+1] + a[n]。至于起始两个元素，则分别为 0 和 1。在这个数列中的数字，就被称为斐波那契数。</p>
+<p>现在的问题是，写一个函数，输入 x，输出斐波那契数列中第 x 位的元素。例如，输入 4，输出 2；输入 9，输出 21。要求：需要用递归的方式来实现</p>
+<ol>
+<li>问题分解<ul>
+<li>获取第x位置的数值，只需要知道 第 x - 1 和 第x- 2 个位置的数值，求和即可</li>
+<li>问题转化为 获取 第 x - 1, 和 第 x-2 个位置的数值。进入递归体</li>
+</ul>
+</li>
+<li>终止条件<ul>
+<li>当x = 1,返回 0， 当x = 2 返回 1</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fibonacci</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span>  <span class="keyword">if</span> (x === <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> Fibonacci(x - <span class="number">1</span>) + Fibonacci(x - <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Fibonacci(<span class="number">4</span>) <span class="comment">// 2</span></span><br><span class="line">Fibonacci(<span class="number">9</span>) <span class="comment">// 21</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h4><p>分治法的核心思想就是分而治之，将一个难以直接解决的大问题，分割成一些可以直接解决的小问题。如果分割后的问题仍然无法直接解决，那么就继续递归地分割，直到每个小问题都可解</p>
+<p>这些子问题具备互相独立、形式相同的特点。这样，我们就可以采用同一种解法，递归地去解决这些子问题。最后，再将每个子问题的解合并，就得到了原问题的解</p>
+<p>分治法解决问题需要具备以下特征</p>
+<ul>
+<li><strong>难度在降低</strong>，难度跟数据的规模成正比</li>
+<li><strong>问题可分</strong>，原问题可以分解为若干个规模较小的同类型问题</li>
+<li><strong>解可合并</strong>，利用所有子问题的解，可合并出原问题的解</li>
+<li><strong>相互独立</strong>，各个子问题之间相互独立，某个子问题的求解不会影响到另一个子问题</li>
+</ul>
+<p>分治法在每轮递归上，都包含了分解问题、解决问题和合并结果这 3 个步骤</p>
+<h5 id="算法案例-3"><a href="#算法案例-3" class="headerlink" title="算法案例"></a>算法案例</h5><h6 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h6><p>二分查找的思路</p>
+<p>选择一个标志 i 将集合 L 分为二个子集合，一般可以使用中位数；</p>
+<p>判断标志 L(i) 是否能与要查找的值 des 相等，相等则直接返回结果；</p>
+<p>如果不相等，需要判断 L(i) 与 des 的大小；</p>
+<p>基于判断的结果决定下步是向左查找还是向右查找。如果向某个方向查找的空间为 0，则返回结果未查到；</p>
+<p>回到步骤 1。    </p>
+<p>在数组 { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } 中，查找 8 是否出现过</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从一个有序集合中找到某个元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">arr, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">let</span> middle = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high) &#123;	</span><br><span class="line">		middle = (high + low) &gt;&gt; <span class="number">1</span>  ;</span><br><span class="line">		<span class="keyword">const</span> value = arr[middle]</span><br><span class="line">		<span class="keyword">if</span> (value === target) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (value &lt; target) &#123;</span><br><span class="line">			low = middle + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (value &gt; target) &#123;</span><br><span class="line">			high = middle - <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol>
+<li>二分查找的时间复杂度是 O(logn)，这也是分治法普遍具备的特性。当你面对某个代码题，而且约束了时间复杂度是 O(logn) 或者是 O(nlogn) 时，可以想一下分治法是否可行。</li>
+<li>二分查找的循环次数并不确定。一般是达到某个条件就跳出循环。因此，编码的时候，多数会采用 while 循环加 break 跳出的代码结构。</li>
+<li>二分查找处理的原问题必须是有序的。因此，当你在一个有序数据环境中处理问题时，可以考虑分治法。相反，如果原问题中的数据并不是有序的，则使用分治法的可能性就会很低了。</li>
+</ol>
+</blockquote>
+<h6 id="查找第一个大于9的数"><a href="#查找第一个大于9的数" class="headerlink" title="查找第一个大于9的数"></a>查找第一个大于9的数</h6><p>在一个有序数组中，查找出第一个大于 9 的数字，假设一定存在。例如，arr = { -1, 3, 3, 7, 10, 14, 14 }; 则返回 10。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">arr, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">let</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">let</span> middle = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt; high) &#123;</span><br><span class="line">		middle = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (arr[middle] &lt;= target) &#123;</span><br><span class="line">			low = middle + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (middle === <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (arr[middle - <span class="number">1</span>] &gt; target) &#123;</span><br><span class="line">					high = middle;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> arr[middle];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><ul>
+<li><p>冒泡排序<br>从第一个数据开始，依次比较相邻元素的大小。如果前者大于后者，则进行交换操作，把大的元素往后交换。通过多轮迭代，直到没有交换操作为止<br>冒泡排序最好时间复杂度是 O(n)<br>冒泡排序最坏时间复杂度会比较惨，是 O(n*n)<br>冒泡排序不需要额外的空间，所以空间复杂度是 O(1)。冒泡排序过程中，当元素相同时不做交换，所以冒泡排序是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = arr.length; i &gt; <span class="number">1</span>; i --) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; i - <span class="number">1</span>; j ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="keyword">let</span> t = arr[j];</span><br><span class="line">			arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">			arr[j + <span class="number">1</span>] = t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>插入排序<br>插入排序最好时间复杂度是 O(n)<br>插入排序最坏时间复杂度则需要 O(n*n)<br>插入排序不需要开辟额外的空间，所以空间复杂度是 O(1)<br>插入排序是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 从头元素开始依次将头元素插入到前面数组的合适位置</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i&lt; arr.length; i ++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &gt; <span class="number">0</span>; j --) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="keyword">let</span> temp = arr[j];</span><br><span class="line">			arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">			arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>归并排序<br>归并排序最好、最坏、平均时间复杂度都是 O(nlogn)<br>空间复杂度方面，由于每次合并的操作都需要开辟基于数组的临时内存空间，所以空间复杂度为 O(n)<br>归并是稳定的排序算法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 它首先将数组不断地二分，直到最后每个部分只包含 1 个数据。然后再对每个部分分别进行排序，最后将排序好的相邻的两部分合并在一起，这样整个数组就有序了。</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (arr.length === <span class="number">1</span>) &#123; <span class="comment">// 递归出口</span></span><br><span class="line">	<span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = [];</span><br><span class="line"><span class="keyword">let</span> middle = (arr.length) &gt;&gt; <span class="number">1</span>; <span class="comment">// 用于当前数组折半</span></span><br><span class="line"><span class="keyword">let</span> left = sort(arr.slice(<span class="number">0</span>, middle));</span><br><span class="line"><span class="keyword">let</span> right = sort(arr.slice(middle));</span><br><span class="line">merge(left, right, a); <span class="comment">// 向上合并</span></span><br><span class="line"><span class="keyword">return</span> a;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left, right, arr</span>) </span>&#123;</span><br><span class="line"><span class="comment">// 一次比较两个数组的头元素，将较小的元素放入目标数组中，如果其中一个数组元素全部取出，直接将另一个数组剩余元素依次放到目标数组中</span></span><br><span class="line"><span class="keyword">while</span>(left.length &amp;&amp; right.length) &#123;</span><br><span class="line">	<span class="keyword">if</span> (left[<span class="number">0</span>] &lt;= right[<span class="number">0</span>] ) &#123;</span><br><span class="line">		arr.push(left.shift())</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		arr.push(right.shift());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(left.length) &#123;</span><br><span class="line">	arr.push(left.shift())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(right.length) &#123;</span><br><span class="line">	arr.push(right.shift())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> arr;</span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>快速排序<br>它的每轮迭代，会选取数组中任意一个数据作为分区点，将小于它的元素放在它的左侧，大于它的放在它的右侧。再利用分治思想，继续分别对左右两侧进行同样的操作，直至每个区间缩小为 1，则完成排序。<br>在快排的最好时间的复杂度下，如果每次选取分区点时，都能选中中位数，把数组等分成两个，那么此时的时间复杂度和归并一样，都是 O(n<em>logn)。<br>而在最坏的时间复杂度下，也就是如果每次分区都选中了最小值或最大值，得到不均等的两组。那么就需要 n 次的分区操作，每次分区平均扫描 n / 2 个元素，此时时间复杂度就退化为 O(n</em>n) 了。<br>快速排序法在大部分情况下，统计上是很难选到极端情况的。因此它平均的时间复杂度是 O(n*logn)。<br>快速排序法的空间方面，使用了交换法，因此空间复杂度为 O(1)。<br>快排是不稳定的排序算法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr, left, right</span>) </span>&#123;</span><br><span class="line"><span class="keyword">let</span> length = arr.length;</span><br><span class="line">left = <span class="keyword">typeof</span> left === <span class="string">&#x27;number&#x27;</span> ? left : <span class="number">0</span>;</span><br><span class="line">right = <span class="keyword">typeof</span> right === <span class="string">&#x27;number&#x27;</span> ? right : length - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> middleindex;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (left &lt; right) &#123;</span><br><span class="line">	middleindex = partition(arr, left, right);</span><br><span class="line">	sort(arr, left, middleindex - <span class="number">1</span>);</span><br><span class="line">	sort(arr, middleindex + <span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> arr;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">partition</span>(<span class="params">arr, left, right</span>) </span>&#123;</span><br><span class="line"><span class="keyword">let</span> index = left; <span class="comment">// 基准线</span></span><br><span class="line">left = index + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (index &lt; right) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[index] &gt; arr[right]) &#123;</span><br><span class="line">			swap(arr, index, right)</span><br><span class="line">			index = right;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			right --;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (index &gt; left) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[index] &lt; arr[left]) &#123;</span><br><span class="line">			swap(arr, index, left);</span><br><span class="line">			index = left;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			left ++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> index;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">swap</span>(<span class="params">arr, x, y</span>) </span>&#123;</span><br><span class="line">arr[y] = arr[x] ^ arr[y];   </span><br><span class="line">arr[x] = arr[x] ^ arr[y];</span><br><span class="line">arr[y] = arr[y] ^ arr[x];</span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+		  
+			<a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/08/26/ES6/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ES6</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
