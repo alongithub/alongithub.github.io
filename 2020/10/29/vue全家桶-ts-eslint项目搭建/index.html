@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="vue + vuex + vue-router + TypeScript + ESLint + Git + sass + 身份认证 + 权限系统"/>
+
+
+
+
+  <meta name="keywords" content="vue项目," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/10/29/vue全家桶-ts-eslint项目搭建/"/>
+
+
+<meta name="description" content="vue + vuex + vue-router + TypeScript + ESLint + Git + sass + 身份认证 + 权限系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue全家桶+ts+eslint项目搭建">
+<meta property="og:url" content="https://github.com/alongithub/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="vue + vuex + vue-router + TypeScript + ESLint + Git + sass + 身份认证 + 权限系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/1.png">
+<meta property="og:image" content="https://github.com/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/altf.png">
+<meta property="og:image" content="https://github.com/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/scss.png">
+<meta property="article:published_time" content="2020-10-29T01:32:03.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.594Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="vue项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/1.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> vue全家桶+ts+eslint项目搭建 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7"><span class="toc-text">安装脚手架工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE"><span class="toc-text">初始化项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE"><span class="toc-text">启动项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%87%E4%BB%B6%E8%B0%83%E6%95%B4"><span class="toc-text">初始化文件调整</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scr-app-vue"><span class="toc-text">scr&#x2F;app.vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#src-router-index-ts"><span class="toc-text">src&#x2F;router&#x2F;index.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#src-views-src-components-src-assets"><span class="toc-text">src&#x2F;views, src&#x2F;components, src&#x2F;assets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-text">创建目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8TS"><span class="toc-text">使用TS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-text">开始类型推断的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8ESLINT"><span class="toc-text">使用ESLINT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Element-UI-%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="toc-text">Element UI 组件库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-1"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5"><span class="toc-text">引入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#style-%E6%A0%B7%E5%BC%8F"><span class="toc-text">style 样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#style%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">style文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F%E5%8F%98%E9%87%8F"><span class="toc-text">全局样式变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-text">代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%A8%A1%E5%9D%97%E5%B0%81%E8%A3%85"><span class="toc-text">请求模块封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">创建文件目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99"><span class="toc-text">配置路由规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="toc-text">界面布局</span></a></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vue全家桶+ts+eslint项目搭建
+        
+      </h1>
+
+      <time class="post-time">
+          10月 29 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><h3 id="安装脚手架工具"><a href="#安装脚手架工具" class="headerlink" title="安装脚手架工具"></a>安装脚手架工具</h3><p>安装@vue-cli</p>
+<p>我这里用的是@vue-cli v4.5.8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @vue-cli -g</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><p>执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create boss</span><br></pre></td></tr></table></figure>
+
+
+<p>选择一个预设，这里选第三个手动配置选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">? Please pick a preset:</span><br><span class="line">  Default ([Vue 2] babel, eslint)</span><br><span class="line">  Default (Vue 3 Preview) ([Vue 3] babel, eslint)</span><br><span class="line">&gt; Manually select features  手动配置选项  </span><br></pre></td></tr></table></figure>
+
+<p>选择需要的功能到项目中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">? Check the features needed for your project:</span><br><span class="line"> ( ) Choose Vue version  选择vue版本不勾选默认vue2</span><br><span class="line"> (*) Babel</span><br><span class="line"> (*) TypeScript</span><br><span class="line"> ( ) Progressive Web App (PWA) Support</span><br><span class="line"> (*) Router</span><br><span class="line"> (*) Vuex</span><br><span class="line"> (*) CSS Pre-processors</span><br><span class="line">&gt;(*) Linter &#x2F; Formatter</span><br><span class="line"> ( ) Unit Testing</span><br><span class="line"> ( ) E2E Testing   </span><br></pre></td></tr></table></figure>
+
+<p>是否使用 class 风格，建议勾选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use class-style component syntax? (Y&#x2F;n) y  </span><br></pre></td></tr></table></figure>
+
+<p>手否使用ts只编译类型相关部分，babel编译常规js部分，建议勾选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? (Y&#x2F;n) y</span><br></pre></td></tr></table></figure>
+
+<p>是否使用history模式，这里建议no,history更美观但是兼容性比hash模式差一些</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use history mode for router? (Requires proper server setup for index fallback in production) (Y&#x2F;n) n </span><br></pre></td></tr></table></figure>
+
+<p>选择css预处理器，如果使用sass建议选择第一项，dart-sass性能更好,这个根据个人需要选择</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported by default): (Use arrow keys)</span><br><span class="line">&gt; Sass&#x2F;SCSS (with dart-sass)</span><br><span class="line">  Sass&#x2F;SCSS (with node-sass)</span><br><span class="line">  Less</span><br><span class="line">  Stylus  </span><br></pre></td></tr></table></figure>
+
+<p>选择代码校验规则,我这里选用Standard代码风格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Pick a linter &#x2F; formatter config:</span><br><span class="line">  ESLint with error prevention only</span><br><span class="line">  ESLint + Airbnb config</span><br><span class="line">&gt; ESLint + Standard config</span><br><span class="line">  ESLint + Prettier</span><br><span class="line">  TSLint (deprecated) </span><br></pre></td></tr></table></figure>
+
+<p>选择触发代码校验的时机,第一项是在保存代码时，第二项是自动修正和代码提交时，这里全选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> Pick additional lint features:</span><br><span class="line"> (*) Lint on save</span><br><span class="line">&gt;(*) Lint and fix on commit </span><br></pre></td></tr></table></figure>
+
+<p>babel,eslint,配置信息单独存放到自己的配置文件中，方便以后的修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Where do you prefer placing config for Babel, ESLint, etc.? (Use arrow keys)</span><br><span class="line">&gt; In dedicated config files</span><br><span class="line">  In package.json   </span><br></pre></td></tr></table></figure>
+
+<p>是否保存当前配置方便下次快速生成项目，这里不需要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Save this as a preset for future projects? (y&#x2F;N) n</span><br></pre></td></tr></table></figure>
+
+<p>接下来会开始安装依赖和创建项目</p>
+<h3 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h3><p>进入项目并启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化文件调整"><a href="#初始化文件调整" class="headerlink" title="初始化文件调整"></a>初始化文件调整</h2><h3 id="scr-app-vue"><a href="#scr-app-vue" class="headerlink" title="scr/app.vue"></a>scr/app.vue</h3><p>删除不必要的内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;router-view/&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=<span class="string">&quot;scss&quot;</span>&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="src-router-index-ts"><a href="#src-router-index-ts" class="headerlink" title="src/router/index.ts"></a>src/router/index.ts</h3><p>清空路由规则</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> VueRouter, &#123; RouteConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(VueRouter)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: <span class="built_in">Array</span>&lt;RouteConfig&gt; = [</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+
+<h3 id="src-views-src-components-src-assets"><a href="#src-views-src-components-src-assets" class="headerlink" title="src/views, src/components, src/assets"></a>src/views, src/components, src/assets</h3><p>删除目录下的文件</p>
+<h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><p>src/utils 工具模块</p>
+<p>src/styles 全局相关样式</p>
+<p>src/services 存储接口API函数</p>
+<h2 id="使用TS"><a href="#使用TS" class="headerlink" title="使用TS"></a>使用TS</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>如果项目在vuecli初始创建时没有选用Ts,可以使用 @vue/cli 安装 TypeScript 插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue add @vue&#x2F;typescript</span><br></pre></td></tr></table></figure>
+
+<h3 id="开始类型推断的用法"><a href="#开始类型推断的用法" class="headerlink" title="开始类型推断的用法"></a>开始类型推断的用法</h3><p>Options Api 不会提供类型提示，如果需要使用类型推断，需要使用 extend、component或者class 写法</p>
+<p>要想提供ts支持，需要在script标签添加lang=”ts”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script lang&#x3D;&quot;ts&quot;&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>要让 TypeScript 正确推断 Vue 组件选项中的类型，您需要使用 Vue.component 或 Vue.extend 定义组件：</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> Component = Vue.extend(&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 类型推断已启用</span></span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> Component = &#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 这里不会有类型推断，</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 因为 TypeScript 不能确认这是 Vue 组件的选项</span></span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果您在声明组件时更喜欢基于类的 API，则可以使用官方维护的 vue-class-component 装饰器：</p>
+</blockquote>
+<ul>
+<li>引入装饰器Component</li>
+<li>通过@Component包装导出的类</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">&#x27;vue-class-component&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="comment">// @Component 修饰符注明了此类为一个 Vue 组件</span></span></span><br><span class="line">    @Component(&#123;</span><br><span class="line"><span class="javascript">    <span class="comment">// 所有的组件选项都可以放在这里</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">    template: &#x27;<span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;onClick&quot;</span>&gt;</span>Click!<span class="tag">&lt;/<span class="name">button</span>&gt;</span>&#x27;</span></span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 初始数据可以直接声明为实例的 property</span></span></span><br><span class="line"><span class="javascript">    message: string = <span class="string">&#x27;Hello!&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="comment">// 组件方法也可以直接声明为实例的方法</span></span></span><br><span class="line"><span class="javascript">    onClick (): <span class="keyword">void</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.alert(<span class="built_in">this</span>.message)</span></span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用ESLINT"><a href="#使用ESLINT" class="headerlink" title="使用ESLINT"></a>使用ESLINT</h2><p>自定义规范</p>
+<p>.eslintrc.js中可以自定义规则</p>
+<p>我这里追加了规则</p>
+<img src="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/1.png" class="">
+
+<p><a target="_blank" rel="noopener" href="https://eslint.bootcss.com/docs/rules/">更多规则参照这里</a><br><a href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin">Ts相关规则参照这里</a><br><a target="_blank" rel="noopener" href="https://eslint.vuejs.org/rules/">Vue相关规则参照这里</a></p>
+<p>可以根据团队和个人喜好自行配置，修改.eslintrc.js需要重启服务，如果重启不生效手动删除node_modules/.cache再启动</p>
+<p>*有时候一些配置会与vscode默认的格式化格式不一致，此时需要修改vscode的配置，或者修改eslint配合</p>
+<p>比如这里我用的规则设置了tab缩进，但是当使用vscode的alt+shift+f自动格式化时，vscode会将缩进替换成空格</p>
+<p>此时可以打开设置，搜索indent，找到Vetur › Format › Options: Use Tabs项，选中</p>
+<img src="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/altf.png" class="">
+
+<h2 id="Element-UI-组件库"><a href="#Element-UI-组件库" class="headerlink" title="Element UI 组件库"></a>Element UI 组件库</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i element-ui -S</span><br></pre></td></tr></table></figure>
+
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>引入方式可以全部引入也可按需引入，这里我配置完整引入，按需引入方式参照<a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/quickstart">这里</a></p>
+<p>在 main.js 中写入以下内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;element-ui/lib/theme-chalk/index.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(ElementUI);</span><br></pre></td></tr></table></figure>
+
+<h2 id="style-样式"><a href="#style-样式" class="headerlink" title="style 样式"></a>style 样式</h2><h3 id="style文件夹"><a href="#style文件夹" class="headerlink" title="style文件夹"></a>style文件夹</h3><blockquote>
+<p>src/styles<br>├── index.scss # 全局样式（在入口模块被加载生效），引入其他样式文件（比如下方的样式文件以及element的样式等）并在main中引入<br>├── mixin.scss # 公共的 mixin 混入（可以把重复的样式封装为 mixin 混入到复用的地方）<br>├── reset.scss # 重置基础样式<br>└── variables.scss # 公共样式变量</p>
+</blockquote>
+<h3 id="全局样式变量"><a href="#全局样式变量" class="headerlink" title="全局样式变量"></a>全局样式变量</h3><p>比如我在 variables.scss中定义样式变量</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$primary-color</span>: <span class="number">#40586F</span>; </span><br><span class="line"><span class="variable">$success-color</span>: <span class="number">#51cf66</span>; </span><br><span class="line"><span class="variable">$warning-color</span>: <span class="number">#fcc419</span>; </span><br><span class="line"><span class="variable">$danger-color</span>: <span class="number">#ff6b6b</span>; </span><br><span class="line"><span class="variable">$info-color</span>: <span class="number">#868e96</span>; <span class="comment">// #22b8cf; </span></span><br><span class="line"><span class="variable">$body-bg</span>: <span class="number">#E9EEF3</span>; <span class="comment">// #f5f5f9; </span></span><br><span class="line"><span class="variable">$sidebar-bg</span>: <span class="number">#F8F9FB</span>; </span><br><span class="line"><span class="variable">$navbar-bg</span>: <span class="number">#F8F9FB</span>; </span><br><span class="line"><span class="variable">$font-family</span>: system-ui, -apple-system, <span class="string">&quot;Segoe UI&quot;</span>, Roboto, Helvetica, Arial, sans-serif;</span><br></pre></td></tr></table></figure>
+
+<p>创建 vue.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    css: &#123;</span><br><span class="line">        loaderOptions: &#123;</span><br><span class="line">            scss: &#123;</span><br><span class="line">                <span class="comment">// scss 加载是自动注入这行代码</span></span><br><span class="line">                prependData: <span class="string">&#x27;@import &quot;~@/styles/variables.scss&quot;;&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改vue.config.js需要重启项目</p>
+<p>之后再任意文件中就可以使用variables中的样式变量了</p>
+<p>比如我在App.vue中直接使用样式变量，而不需要引入变量所在的文件</p>
+<img src="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/scss.png" class="">
+
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><p>开发过程中用于代理后台接口，处理跨域问题</p>
+<p>通过配置vue.config.js来处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        proxy: &#123;</span><br><span class="line">            <span class="string">&#x27;/front&#x27;</span>: &#123;</span><br><span class="line">                target: <span class="string">&#x27;http://a.com&#x27;</span>,</span><br><span class="line">                <span class="comment">// ws: true, // 意思是转发websorket</span></span><br><span class="line">                changeOrigin: <span class="literal">true</span> <span class="comment">// 设置请求头中的 host 为 target，防止后端反向代理服务器无法 识别 </span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&#x27;/user&#x27;</span>: &#123;</span><br><span class="line">                target: <span class="string">&#x27;http://b.com&#x27;</span>,</span><br><span class="line">                changeOrigin: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="请求模块封装"><a href="#请求模块封装" class="headerlink" title="请求模块封装"></a>请求模块封装</h2><p>安装axios</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios -S</span><br></pre></td></tr></table></figure>
+
+<p>src/utils/request.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> request = axios.create(&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> request;</span><br></pre></td></tr></table></figure>
+
+<p>// 待补充</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><h3 id="创建文件目录"><a href="#创建文件目录" class="headerlink" title="创建文件目录"></a>创建文件目录</h3><p>在src/views中创建文件</p>
+<p>src/views/home/index.vue 主页<br>src/views/user/index.vue 用户管理<br>src/views/role/index.vue 角色管理<br>src/views/login/index.vue 登录界面<br>src/views/error-page/404.vue 404界面</p>
+<h3 id="配置路由规则"><a href="#配置路由规则" class="headerlink" title="配置路由规则"></a>配置路由规则</h3><p>src/router/index.ts</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes: <span class="built_in">Array</span>&lt;RouteConfig&gt; = [</span><br><span class="line">	&#123;</span><br><span class="line">		path: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">		<span class="comment">// 懒加载模块，单独打包，webpackChunkName 可以手动配置打包后的文件名字，方便调试</span></span><br><span class="line">		component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &#x27;home&#x27; */</span> <span class="string">&#x27;@/views/home/index.vue&#x27;</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		path: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;login&#x27;</span>,</span><br><span class="line">		component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &#x27;login&#x27; */</span> <span class="string">&#x27;@/views/login/index.vue&#x27;</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		path: <span class="string">&#x27;/role&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;role&#x27;</span>,</span><br><span class="line">		component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &#x27;role&#x27; */</span> <span class="string">&#x27;@/views/role/index.vue&#x27;</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		path: <span class="string">&#x27;/user&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">		component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &#x27;user&#x27; */</span> <span class="string">&#x27;@/views/user/index.vue&#x27;</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		path: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;404&#x27;</span>,</span><br><span class="line">		component: <span class="function">() =&gt;</span> <span class="keyword">import</span>((<span class="comment">/* webpackChunkName: &#x27;404&#x27; */</span> <span class="string">&#x27;@/views/error-page/404.vue&#x27;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h2 id="界面布局"><a href="#界面布局" class="headerlink" title="界面布局"></a>界面布局</h2>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/vue%E9%A1%B9%E7%9B%AE/">vue项目</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">微信开发者工具</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/10/27/vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">
+        <span class="next-text nav-default">vue3 响应式原理</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

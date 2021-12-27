@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="模块化的发展进程，esmodule的用法介绍"/>
+
+
+
+
+  <meta name="keywords" content="模块化," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/08/27/模块化/"/>
+
+
+<meta name="description" content="模块化的发展进程，esmodule的用法介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模块化">
+<meta property="og:url" content="https://github.com/alongithub/2020/08/27/%E6%A8%A1%E5%9D%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="模块化的发展进程，esmodule的用法介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-27T07:58:30.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.606Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="模块化">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 模块化 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%8F%91%E5%B1%95%E9%98%B6%E6%AE%B5"><span class="toc-text">模块化的发展阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#stage1"><span class="toc-text">stage1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stage2"><span class="toc-text">stage2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stage3"><span class="toc-text">stage3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#state4"><span class="toc-text">state4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stage5"><span class="toc-text">stage5</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES-Modules"><span class="toc-text">ES Modules</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Modules-%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA"><span class="toc-text">ES Modules 导入导出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Modules-%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E8%AF%AF%E5%8C%BA"><span class="toc-text">ES Modules 导入导出误区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Modults-%E5%AF%BC%E5%85%A5%E8%AF%AF%E5%8C%BA"><span class="toc-text">ES Modults 导入误区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Modules-%E5%AF%BC%E5%87%BA"><span class="toc-text">ES Modules 导出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Modules-%E6%B5%8F%E8%A7%88%E5%99%A8-Polyfill"><span class="toc-text">ES Modules 浏览器 Polyfill</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Module-Node-%E7%8E%AF%E5%A2%83%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="toc-text">ES Module Node 环境支持情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES-Module-Node-Babel"><span class="toc-text">ES Module Node Babel</span></a></li></ol></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          模块化
+        
+      </h1>
+
+      <time class="post-time">
+          8月 27 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="模块化的发展阶段"><a href="#模块化的发展阶段" class="headerlink" title="模块化的发展阶段"></a>模块化的发展阶段</h3><h4 id="stage1"><a href="#stage1" class="headerlink" title="stage1"></a>stage1</h4><p>最初的模块化依赖文件划分的约定来实现，这种方式存在一些问题</p>
+<ul>
+<li>污染全局作用域</li>
+<li>命名冲突</li>
+<li>无法管理模块依赖关系</li>
+</ul>
+<h4 id="stage2"><a href="#stage2" class="headerlink" title="stage2"></a>stage2</h4><p>命名空间方式，将第一阶段的每个模块包裹在一个全局对象里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var moduleA &#x3D; &#123;</span><br><span class="line">    name: &#39;along&#39;,</span><br><span class="line">    method1: function() &#123;</span><br><span class="line">        console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="stage3"><a href="#stage3" class="headerlink" title="stage3"></a>stage3</h4><p>IIFE  立即执行函数提供私有空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(function($) &#123;</span><br><span class="line">    var name &#x3D; &quot;along&quot;;</span><br><span class="line"></span><br><span class="line">    function method1() &#123;</span><br><span class="line">        console.log(name + &#39;method1&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function method2() &#123;</span><br><span class="line">        console.log(name + &#39;method2&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 对于要暴露给外部的成员变量或方法，通过挂载到window上来实现</span><br><span class="line">    window.moduleB &#x3D; &#123;</span><br><span class="line">        method1,</span><br><span class="line">        method2,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(JQuery) &#x2F;&#x2F; 通过传入参数作为模块的依赖声明</span><br></pre></td></tr></table></figure>
+
+<h4 id="state4"><a href="#state4" class="headerlink" title="state4"></a>state4</h4><p>模块化规范出现，node 的 CommonJS 规范</p>
+<ul>
+<li>一个文件是一个模块</li>
+<li>每个模块有单独的作用域</li>
+<li>通过<code>module.exports</code> 导出成员</li>
+<li>通过<code>require</code>函数载入模块</li>
+</ul>
+<p>CommonJS 是以同步方式加载模块，不适合浏览器端 ，浏览器早期使用<code>AMD(Asynchronous Module Definition)</code> 规范（异步模块定义规范）, 比如 <code>require.js</code> 库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; requirejs 定义模块</span><br><span class="line">&#x2F;&#x2F; 第一个参数是模块名称，第二个参数数组是依赖模块，第三个函数体的参数依次是依赖模块的导出成员</span><br><span class="line">define(&#39;module&#39;, [&#39;jquery&#39;, &#39;.&#x2F;module2&#39;], function($, module2) &#123;</span><br><span class="line">    &#x2F;&#x2F; 通过return 导出成员</span><br><span class="line">    return &#123;</span><br><span class="line">        start: function() &#123;</span><br><span class="line">            $(&#39;body&#39;).animate(&#123;margin: &#39;200px&#39;&#125;);</span><br><span class="line">            module2();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果一个模块不需要定义模块（不需要导出成员，可以只加载其他模块）</span><br><span class="line">require([&#39;.&#x2F;module1&#39;], function() &#123;</span><br><span class="line">    module1.start();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>AMD</code> 使用复杂（需要写稍多的代码）</li>
+<li>模块js文件请求频繁 </li>
+</ul>
+<p>于 <code>AMD</code> 同期，淘宝出现 <code>CMD(Commen Module Definition)</code>(通用模块定义规范) 规范的 <code>sea.js</code></p>
+<p><code>CMD</code>规范希望写出的代码能与<code>CommenJS</code>类似，从而减轻开发成本，不过后气<code>CMD</code>规范的方式被 <code>require.js</code>兼容了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; CMD 规范 类似CommonJS 规范</span><br><span class="line">define(function(require, exports, module) &#123;</span><br><span class="line">    var $ &#x3D; require(&#39;jquery&#39;);</span><br><span class="line"></span><br><span class="line">    module.exports &#x3D; function() &#123;</span><br><span class="line">        $(&#39;body&#39;).append(&#39;&lt;p&gt;module&lt;&#x2F;p&gt;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="stage5"><a href="#stage5" class="headerlink" title="stage5"></a>stage5</h4><p>模块化标准出现</p>
+<ul>
+<li>浏览器端 <code>ES Modules</code>  (ES6特性，因为存在兼容问题，)</li>
+<li>node <code>CommonJS</code>  </li>
+</ul>
+<h3 id="ES-Modules"><a href="#ES-Modules" class="headerlink" title="ES Modules"></a>ES Modules</h3><p>特性</p>
+<p>通过给<code>script</code>添加<code>type=&quot;module&quot;</code> 属性，就可以以ES Module 标准执行其中的JS代码</p>
+<ul>
+<li><code>ES Modules</code> 会自动采用严格模式， 忽略<code>&#39;use strice&#39;</code>   严格模式下this不能指向<code>window</code>  </li>
+<li><code>ES Modules</code>运行在单独的私有作用域中</li>
+<li><code>ES Modules</code>通过<code>CORS</code>方式请求外部JS模块 ，服务端必须支持<code>CORS</code>,不能以文件形式访问，只能用http server</li>
+<li><code>ES Modules</code>的<code>script</code>标签会延迟执行脚本， 相当于给 添加了 <code>defer</code> 属性 <script defer src=""></script></li>
+</ul>
+<h4 id="ES-Modules-导入导出"><a href="#ES-Modules-导入导出" class="headerlink" title="ES Modules 导入导出"></a>ES Modules 导入导出</h4><p>直接导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">export var name &#x3D; &#39;along&#39;;</span><br><span class="line">export functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;name, hello&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>底部统一导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const foo &#x3D; &#39;along&#39;;</span><br><span class="line">functiion hello () &#123;</span><br><span class="line">    console.log(&#39;along&#39;);</span><br><span class="line">&#125;</span><br><span class="line">export &#123;foo, hello&#125;; &#x2F;&#x2F; 底部统一导出</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;foo&#125; from &#39;.&#x2F;module.js&#39;</span><br><span class="line">console.log(foo)</span><br></pre></td></tr></table></figure>
+
+<p>底部统一导出时可以重命名， 并且在引入时也可以定义一个新的名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">const name &#x3D; &#39;along&#39;;</span><br><span class="line"></span><br><span class="line">export &#123;</span><br><span class="line">    name as alongname,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123;alongname&#125; from &#39;.&#x2F;module.js&#39;; &#x2F;&#x2F; 需要使用别名导入</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; import &#123;alongname as newname&#125; from &#39;.&#x2F;module.js&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>特殊用法，默认导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; .&#x2F;module.js</span><br><span class="line">var name &#x3D; &#39;along&#39;;</span><br><span class="line">export default name;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import a from &#39;.&#x2F;module.js&#39;;  &#x2F;&#x2F; 导入时可以根据需要重新定义引入变量名称</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="ES-Modules-导入导出误区"><a href="#ES-Modules-导入导出误区" class="headerlink" title="ES Modules 导入导出误区"></a>ES Modules 导入导出误区</h4><ul>
+<li><code>ES Modules</code>导入导出的时候要注意，在底部统一导出时(如 <code>export &#123;name, age&#125;</code>), 导出的并不是一个对象，这里的花括号只是一种 export 单独使用时的固定语</li>
+<li>在引入时(如<code>import &#123;name, age&#125; from &#39;./module.js&#39;</code>), 并不是对象的结构。</li>
+<li>如果需要导出对象，需要使用 <code>export default &#123;name, age&#125;</code>的方式</li>
+<li><code>ES Modules</code> 导出的对象成员导出的是引用地址</li>
+<li>通过 <code>ES Modules</code> 引入的成员是只读成员，不能重新赋值</li>
+</ul>
+<h4 id="ES-Modults-导入误区"><a href="#ES-Modults-导入误区" class="headerlink" title="ES Modults 导入误区"></a>ES Modults 导入误区</h4><ul>
+<li><code>import &#123;name&#125; from &#39;./module.js&#39;</code> <code>from</code> 后的模块路径不能省略后缀名</li>
+<li><code>import</code> 后的模块路径不能默认导入<code>index.js</code></li>
+<li>可以通过绝对路径或者全路径引入 比如 <code>&#39;/lib/tool.js&#39;</code>  或者 <code>&#39;http://localhost:3000/lib/tool.js&#39;</code></li>
+<li>不需要提取成员只需要执行模块时，可以导入空<code>import &#123;&#125; from &#39;./module.js&#39;</code>  或者写成 <code>import &#39;./module.js&#39;</code></li>
+<li>提取成员较多可以将所有导出成员通过<code>as</code>放入一个对象中<code>import * as mod from &#39;./module.js&#39;</code></li>
+<li><code>import</code>关键字只能出现在最顶层，不能将路径存放在变量中导入，如果想通过动态导入模块，可以使用<code>import(&#39;./module.js&#39;).then(function(module) &#123;&#125;)</code>方式</li>
+<li>同时提取默认成员和命名成员 <code>import title, &#123;name, age&#125; from &#39;./module.js&#39;</code> 或者 <code>import &#123;name, age, default as title&#125; from &#39;./module.js&#39;</code></li>
+</ul>
+<h4 id="ES-Modules-导出"><a href="#ES-Modules-导出" class="headerlink" title="ES Modules 导出"></a>ES Modules 导出</h4><ul>
+<li>导入时直接导出<code>export &#123;name, age&#125; from &#39;./module.js&#39;</code></li>
+</ul>
+<h4 id="ES-Modules-浏览器-Polyfill"><a href="#ES-Modules-浏览器-Polyfill" class="headerlink" title="ES Modules 浏览器 Polyfill"></a>ES Modules 浏览器 Polyfill</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// promise polyfill</span><br><span class="line">// nomodule 属性只会在不支持es module 的浏览器工作，如果不添加，es module 会分别被 es module polyfill 和 浏览器执行，导致在支持es module 的浏览器中， 下方的 foo 被打印两次</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/promise-polyfill@8.1.3/dist/polyfill.min.js&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="comment">// es module polyfill</span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/babel-browser-build.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nomodule</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/browse/browser-es-module-loader@0.4.1/dist/browser-es-module-loader.js&quot;</span> /&gt;</span></span></span></span><br><span class="line"></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">&#x27;./module.js&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(foo);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="ES-Module-Node-环境支持情况"><a href="#ES-Module-Node-环境支持情况" class="headerlink" title="ES Module Node 环境支持情况"></a>ES Module Node 环境支持情况</h4><p>node 版本大于 8.5</p>
+<p>目前仍处在实验阶段，node不建议在生产环境中使用</p>
+<h4 id="ES-Module-Node-Babel"><a href="#ES-Module-Node-Babel" class="headerlink" title="ES Module Node Babel"></a>ES Module Node Babel</h4>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">模块化</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/08/27/vue-router%E5%8E%9F%E7%90%86/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">vue-router原理</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/08/27/webpack/">
+        <span class="next-text nav-default">webpack</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

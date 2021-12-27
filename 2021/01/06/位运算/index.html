@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="计算机数据都是以二进制方式存储，二进制的运算效率往往是很高的"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2021/01/06/位运算/"/>
+
+
+<meta name="description" content="计算机数据都是以二进制方式存储，二进制的运算效率往往是很高的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算">
+<meta property="og:url" content="https://github.com/alongithub/2021/01/06/%E4%BD%8D%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="计算机数据都是以二进制方式存储，二进制的运算效率往往是很高的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-06T01:52:13.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.597Z">
+<meta property="article:author" content="along">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 位运算 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class="">
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          位运算
+        
+      </h1>
+
+      <time class="post-time">
+          1月 06 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>一、位运算<br>二进制：计算机中所有数据的存储和运算都是以二进制（补码）的形式进行的, 数字是四个字节，一个字节为8位，则一个数字是由32位二进制表示的<br>    a -&gt; 97, A -&gt; 65, ‘0’ -&gt; 48<br>举例：5 , -5<br>    原码：<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1000 0000  0000 0000  0000 0000  0000 0101<br>    反码：（将原码）符号位不变，数值位取反（0变1，1变0）<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1111 1111  1111 1111  1111 1111  1111 1010<br>    补码：负数等于反码+1,如果负数反码全是1, 则最后补码全是0, 正数与源码反码一样。<br>    5: 0000 0000  0000 0000  0000 0000  0000 0101<br>    -5:1111 1111  1111 1111  1111 1111  1111 1011<br>结论：正数的原码、反码、补码都是一样的<br>    0：0000 0000  0000 0000  0000 0000  0000 0000<br>    -0:1000 0000  0000 0000  0000 0000  0000 0000<br>位运算符：7个<br>    &amp;（按位与，and）：两个数字同为1，则为1，否则就是0<br>    |（按位或，or）：两个数字只要有一个是1，则结果为1<br>    ^（按位异或，xor）：两个数字不相同为1，相同为0<br>    ~（按位取反，not）：0变1，1变0<br>    &lt;&lt;（左移，shl）：a shl b，把二进制数a左移b位，在后面补0，相当于a乘以2的b次方，保留符号位<br>    &gt;&gt;（右移，shr）：把a右移b位（去掉末b位），相当于a除以2的b次方，高位补原符号位（0或1）， 保留符号位<br>    &gt;&gt;&gt;（无符号右移）：把a右移b位（去掉末b位），相当于a除以2的b次方，高位补0</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">5</span>, b = <span class="number">-5</span>, c = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a b c 的 补码分别为</span></span><br><span class="line"><span class="comment">// 5: 0000 0000 0000 0000 0000 0000 0000 0101</span></span><br><span class="line"><span class="comment">// -5:1000 0000 0000 0000 0000 0000 0000 0101</span></span><br><span class="line"><span class="comment">// 2  0000 0000 0000 0000 0000 0000 0000 0010</span></span><br><span class="line">a &amp; c  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">a | c <span class="comment">// 7</span></span><br><span class="line"></span><br><span class="line">a ^ c <span class="comment">// 7 </span></span><br><span class="line">   </span><br><span class="line">~a    <span class="comment">// -6  // 5 的补码全取反=&gt; 1111 1111 1111 1111 1111 1111 1111 1010 =&gt; 减去1算出反码 =&gt; 1111 1111 1111 1111 1111 1111 1111 1001 =&gt; 反码推算出源码 =&gt;  1000 0000 0000 0000 0000 0000 0000 0110 =&gt; -6</span></span><br><span class="line"></span><br><span class="line">~b    <span class="comment">// 4   //  -5 的补码1111 1111  1111 1111  1111 1111  1111 1011全取反 =&gt; 0000 0000 0000 0000 0000 0000 0000 0100 =&gt; 推导出源码 =&gt; 4</span></span><br><span class="line"></span><br><span class="line">a &lt;&lt; <span class="number">2</span> <span class="comment">// 20	// 0000 0000 0000 0000 0000 0000 0001 0100 </span></span><br><span class="line"></span><br><span class="line">b &gt;&gt; <span class="number">2</span> <span class="comment">// -2</span></span><br><span class="line"></span><br><span class="line">b &lt;&lt; <span class="number">2</span> <span class="comment">// -20</span></span><br><span class="line"></span><br><span class="line">b &gt;&gt;&gt; <span class="number">2</span> <span class="comment">// 1073741822</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>应用场景</p>
+<p>&amp; 按位与</p>
+<ul>
+<li>取模 a % b == a &amp; (b - 1) , 只能在b 为 2^n时使用</li>
+<li>奇偶数判断,正负数都可以<ul>
+<li>偶数 a &amp; 1 = 0;</li>
+<li>奇数 a &amp; 1 = 1;</li>
+</ul>
+</li>
+</ul>
+<p>^ 异或<br>    一个数字异或另一个数字两次等于概数本身</p>
+<ul>
+<li>两数字交换<ul>
+<li>a = 3, b = 4<ul>
+<li>a = a ^ b</li>
+<li>b = a ^ b</li>
+<li>a = a ^ b</li>
+<li>=&gt; a = 4, b = 3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>给定一个数组，这个数组中所有的数字都出现两次，只有一个数字出现一次，找出出现一次的数字<ul>
+<li>[2,3,4,3,2,5,5]<ul>
+<li>遍历数组中的数字，一直执行异或操作</li>
+<li>2 ^ 3 ^ 4 ^ 3 ^ 2 ^ 5 ^ 5 =&gt; 4 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/01/14/redux/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">redux</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/">
+        <span class="next-text nav-default">微信开发者工具</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

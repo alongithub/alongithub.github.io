@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="webpack继承react项目脚手架，集成ts，eslint规范制定"/>
+
+
+
+
+  <meta name="keywords" content="react,webpack,ts,eslint," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/09/23/webpack搭建react脚手架/"/>
+
+
+<meta name="description" content="webpack继承react项目脚手架，集成ts，eslint规范制定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack搭建react脚手架">
+<meta property="og:url" content="https://github.com/alongithub/2020/09/23/webpack%E6%90%AD%E5%BB%BAreact%E8%84%9A%E6%89%8B%E6%9E%B6/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="webpack继承react项目脚手架，集成ts，eslint规范制定">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-23T08:15:13.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.597Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="ts">
+<meta property="article:tag" content="eslint">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> webpack搭建react脚手架 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class="">
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          webpack搭建react脚手架
+        
+      </h1>
+
+      <time class="post-time">
+          9月 23 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><h4 id="1-安装webpack"><a href="#1-安装webpack" class="headerlink" title="1. 安装webpack"></a>1. 安装webpack</h4><p>初始化项目，初始化package.json</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+
+<p>安装webpack包，webpack</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli -D</span><br></pre></td></tr></table></figure>
+
+<p>创建文件  src/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;along&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>创建文件  webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果配置多页应用，需要这样配置</span></span><br><span class="line">    <span class="comment">// entry: &#123;</span></span><br><span class="line">    <span class="comment">//     index: &#x27;./src/index.js&#x27;,</span></span><br><span class="line">    <span class="comment">//     home: &#x27;./src/home.js&#x27;</span></span><br><span class="line">    <span class="comment">// &#125;,</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">// filename: &#x27;[name].[hash:8].js&#x27;,</span></span><br><span class="line">        <span class="comment">// 如果配置多页应用必须这样配置</span></span><br><span class="line">        filename: <span class="string">&#x27;index.[hash:8].js&#x27;</span>,</span><br><span class="line">        <span class="comment">// 打包文件路径 该路径为绝对路径</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;build&#x27;</span>),</span><br><span class="line">        <span class="comment">// 静态资源引用会统一加一个路径，比如加上cdn地址</span></span><br><span class="line">        <span class="comment">// publicPath: &#x27;http://www.baidu.com&#x27;,</span></span><br><span class="line">        publicPath: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 开发环境中使用devtool做源码映射</span></span><br><span class="line">    <span class="comment">// source-map  大而全 单独生成源码map文件, 标识凑无的列和行</span></span><br><span class="line">    <span class="comment">// eval-source-map 同上，但是产生单独的文件，将映射打包到打包后的js文件里</span></span><br><span class="line">    <span class="comment">// cheap-module-source-map  单独文件，不会映射列</span></span><br><span class="line">    <span class="comment">// cheap-module-eval-source-map 不产生文件，不映射列</span></span><br><span class="line">    devtool: <span class="string">&#x27;cheap-module-source-map&#x27;</span>,</span><br><span class="line">    watch: <span class="literal">true</span>, <span class="comment">// 监控代码变化实时打包,文件变化后自动打包</span></span><br><span class="line">    watchOptions: &#123;</span><br><span class="line">        <span class="comment">// 忽略监视node_modules中的文件</span></span><br><span class="line">        ignored: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        <span class="comment">// aggregateTimeout: 500,  // 文件变化时防抖，500ms内没有再次变化再执行打包</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>执行打包命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx webpack</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 /build/index.js 打包后的结果,为了以后执行命令方便将命令写入package.json中</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">    ...  </span><br><span class="line">    &quot;scripts&quot;: &#123;    </span><br><span class="line">        &quot;build&quot;: &quot;webpack&quot;,  </span><br><span class="line">    &#125;  </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后打包执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-webpack-dev-server"><a href="#2-webpack-dev-server" class="headerlink" title="2. webpack-dev-server"></a>2. webpack-dev-server</h4><p>webpack-dev-server 内部通过express实现静态资源服务，不会生成打包文件，而是在内存中打包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-dev-server -D</span><br></pre></td></tr></table></figure>
+
+<p>package.js添加命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">	...  </span><br><span class="line">	&quot;scripts&quot;: &#123;    </span><br><span class="line">		...    </span><br><span class="line">		&quot;dev&quot;: &quot;webpack-dev-server&quot;,  </span><br><span class="line">	&#125;  </span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>打开服务地址可以看到自动生成了一个项目的文件服务</p>
+<p>修改webpack-dev-server的配置，在webpack.config.js中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	devServer: &#123;</span><br><span class="line">        port: <span class="number">8006</span>,</span><br><span class="line">        progress: <span class="literal">true</span>, <span class="comment">// 打包进度</span></span><br><span class="line">        <span class="comment">// 静态服务文件夹,如果存在该文件夹，静态服务则会以此文件夹作为根路径</span></span><br><span class="line">        contentBase: <span class="string">&#x27;./build&#x27;</span>,</span><br><span class="line">        open: <span class="literal">true</span>, <span class="comment">// 打包完成后打开浏览器</span></span><br><span class="line">        <span class="comment">// 将错误信息输出到页面上显示</span></span><br><span class="line">        overlay: &#123;</span><br><span class="line">            warnings: <span class="literal">true</span>,</span><br><span class="line">            errors: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 跨域代理</span></span><br><span class="line">        proxy: &#123;</span><br><span class="line">            <span class="comment">// 将/api 开头的接口代理到目标地址，如果是所有请求可以填/</span></span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                target: <span class="string">&#x27;http://localhost:8089&#x27;</span>,</span><br><span class="line">                <span class="comment">// pathRewrite: &#123;</span></span><br><span class="line">                <span class="comment">//     &#x27;/api&#x27;: &#x27;&#x27;,</span></span><br><span class="line">                <span class="comment">// &#125;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>如果contentBase中指定的文件夹存在，则会看到指定文件夹的文件服务，如果不存在，会看到  Cannot GET /</p>
+<h4 id="3-区分环境"><a href="#3-区分环境" class="headerlink" title="3. 区分环境"></a>3. 区分环境</h4><p>实际打包时需要开发环境和生产环境，我们需要分别来配置两种环境</p>
+<p>借助  webpack-merge  合并配置文件</p>
+<p>借助  yargs-parser  获取脚本参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-merge yargs-parser -D</span><br></pre></td></tr></table></figure>
+
+<p>创建两个文件,将webpack.config.js中的配置拆分到生产和开发环境的配置文件中</p>
+<p>config/webpack.development.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    devtool: <span class="string">&#x27;cheap-module-source-map&#x27;</span>,</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">8006</span>,</span><br><span class="line">        progress: <span class="literal">true</span>, <span class="comment">// 打包进度</span></span><br><span class="line">        <span class="comment">// 静态服务文件夹,如果存在该文件夹，静态服务则会以此文件夹作为根路径</span></span><br><span class="line">        contentBase: <span class="string">&#x27;./build&#x27;</span>,</span><br><span class="line">        open: <span class="literal">true</span>, <span class="comment">// 打包完成后打开浏览器</span></span><br><span class="line">        <span class="comment">// 将错误信息输出到页面上显示</span></span><br><span class="line">        overlay: &#123;</span><br><span class="line">            warnings: <span class="literal">true</span>,</span><br><span class="line">            errors: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 跨域代理</span></span><br><span class="line">        proxy: &#123;</span><br><span class="line">            <span class="comment">// 将/api 开头的接口代理到目标地址，如果是所有请求可以填/</span></span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                target: <span class="string">&#x27;http://localhost:8089&#x27;</span>,</span><br><span class="line">                <span class="comment">// pathRewrite: &#123;</span></span><br><span class="line">                <span class="comment">//     &#x27;/api&#x27;: &#x27;&#x27;,</span></span><br><span class="line">                <span class="comment">// &#125;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>config/webpack.production.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    watch: <span class="literal">true</span>, <span class="comment">// 监控代码变化实时打包,文件变化后自动打包</span></span><br><span class="line">    watchOptions: &#123;</span><br><span class="line">        <span class="comment">// 忽略监视node_modules中的文件</span></span><br><span class="line">        ignored: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        <span class="comment">// aggregateTimeout: 500,  // 文件变化时防抖，500ms内没有再次变化再执行打包</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> argv = <span class="built_in">require</span>(<span class="string">&#x27;yargs-parser&#x27;</span>)(process.argv.slice(<span class="number">2</span>)); <span class="comment">// 获取参数</span></span><br><span class="line"><span class="keyword">const</span> &#123;merge&#125; = <span class="built_in">require</span>(<span class="string">&#x27;webpack-merge&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> _mode = argv.mode || <span class="string">&#x27;development&#x27;</span>; <span class="comment">// 获取当前模式</span></span><br><span class="line"><span class="keyword">const</span> _isEnvDevelopment = _mode === <span class="string">&#x27;development&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> _isEnvProduction = _mode === <span class="string">&#x27;production&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> _mergeConfig = <span class="built_in">require</span>(<span class="string">`./config/webpack.<span class="subst">$&#123;_mode&#125;</span>.js`</span>); <span class="comment">// 引入对应的文件</span></span><br><span class="line"><span class="keyword">const</span> baseConfig = &#123;</span><br><span class="line">    mode: _mode ,</span><br><span class="line">    entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&#x27;index.[hash:8].js&#x27;</span>,</span><br><span class="line">        <span class="comment">// 打包文件路径 该路径为绝对路径</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;build&#x27;</span>),</span><br><span class="line">        <span class="comment">// 静态资源引用会统一加一个路径，比如加上cdn地址</span></span><br><span class="line">        <span class="comment">// publicPath: &#x27;http://www.baidu.com&#x27;,</span></span><br><span class="line">        publicPath: _isEnvDevelopment ? <span class="string">&#x27;/&#x27;</span> : <span class="string">&#x27;/build/&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = merge(_mergeConfig, baseConfig);</span><br></pre></td></tr></table></figure>
+
+<p>修改package.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	&quot;scripts&quot;: &#123;</span><br><span class="line">       &quot;dev&quot;: &quot;webpack-dev-server --mode development&quot;,</span><br><span class="line">       &quot;build&quot;: &quot;webpack --mode production&quot;</span><br><span class="line">     &#125;,</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-html-webpack-plugin、clean-webpack-plugin、copy-webpack-plugin"><a href="#4-html-webpack-plugin、clean-webpack-plugin、copy-webpack-plugin" class="headerlink" title="4.html-webpack-plugin、clean-webpack-plugin、copy-webpack-plugin"></a>4.html-webpack-plugin、clean-webpack-plugin、copy-webpack-plugin</h4><p>借助 html-webpack-plugin 可以自动将打包后的js文件插入到模板html中，clean-webpack-plugin   可以每次打包前删除之前的打包目录, copy-webpack-plugin 可以指定文件每次打包时复制一份到打包目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install html-webpack-plugin clean-webpack-plugin copy-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js 引入 html-webpack-plugin</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin &#x3D; require(&#39;html-webpack-plugin&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js 中插入配置项</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;    </span><br><span class="line">    ...        </span><br><span class="line">	plugins: [</span><br><span class="line">        <span class="comment">// 如果是多页应用，应当new多个HtmlWebpackPlugin实例，并分别指定template、filename、chunks</span></span><br><span class="line">        new HtmlWebpackPlugin(&#123;</span><br><span class="line">            <span class="comment">// 模板html路径</span></span><br><span class="line">            template: &#x27;./public/index.html&#x27;,</span><br><span class="line">            filename: &#x27;index.html&#x27;, // 打包后的文件名称</span><br><span class="line">            minify: _isEnvProduction ? &#123; // 压缩html production 环境配置此项</span><br><span class="line">                removeAttributeQuotes: true, // 去除双引号 </span><br><span class="line">                collapseWhitespace: true, // 折叠空行</span><br><span class="line">                hash: true, // 插入js在？后加一个hash戳，防止缓存，当然也可以每次生成js时在文件名引入hash</span><br><span class="line">            &#125; : &#123;&#125;</span><br><span class="line">            <span class="comment">//chunks: [&#x27;home&#x27;], // 指定html模板要引入的js文件，名字与入口中的文件名对应，一般在打包多页应用时会用到，默认没有该配置会引入所有入口文件</span></span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>webpack.production.js  中引入  clean-webpack-plugin 和 copy-webpack-plugin</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;CleanWebpackPlugin&#125; = <span class="built_in">require</span>(<span class="string">&#x27;clean-webpack-plugin&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> CopyWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;copy-webpack-plugin&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">        <span class="comment">// 每次打包将项目下的readme.txt文件复制到打包文件下</span></span><br><span class="line">        <span class="keyword">new</span> CopyWebpackPlugin([&#123;</span><br><span class="line">            <span class="keyword">from</span>: <span class="string">&#x27;readme.txt&#x27;</span>, <span class="comment">// 把项目中的readme.txt每次打包复制到build文件下</span></span><br><span class="line">            to: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;]),</span><br><span class="line">    ]</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建html模板文件  public/index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>along-cli<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span>no javascript<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建readme.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个文件用于测试，copy-webpack-plugin</span><br></pre></td></tr></table></figure>
+
+<p>修改  src/index.js  内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>).innerHTML = <span class="string">&quot;along&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>可以看到弹出的界面中along字样</p>
+<h4 id="5-样式处理"><a href="#5-样式处理" class="headerlink" title="5.样式处理"></a>5.样式处理</h4>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/react/">react</a>
+		  
+			<a href="/tags/webpack/">webpack</a>
+		  
+			<a href="/tags/ts/">ts</a>
+		  
+			<a href="/tags/eslint/">eslint</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/09/27/%E6%90%AD%E5%BB%BAVue-SSR/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">搭建Vue SSR</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">
+        <span class="next-text nav-default">手写Promise</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

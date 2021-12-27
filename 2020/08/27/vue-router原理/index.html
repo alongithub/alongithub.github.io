@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="模拟实现一个vue-router"/>
+
+
+
+
+  <meta name="keywords" content="vue,vue-router," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/08/27/vue-router原理/"/>
+
+
+<meta name="description" content="模拟实现一个vue-router">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-router原理">
+<meta property="og:url" content="https://github.com/alongithub/2020/08/27/vue-router%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="模拟实现一个vue-router">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-27T07:59:23.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.593Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="vue-router">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> vue-router原理 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class="">
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vue-router原理
+        
+      </h1>
+
+      <time class="post-time">
+          8月 27 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="vue-router-原理"><a href="#vue-router-原理" class="headerlink" title="vue-router 原理"></a>vue-router 原理</h2><p>模拟实现一个<code>vue-router</code>,详见 <a href="https://github.com/alongithub/vue-router-source/blob/master/src/vuerouter/index.js">vuerouter/index.js</a></p>
+<p>借助vuecli 搭建一个vue-router项目，替换掉VueRouter部分为我们自定义的类，目前实现的功能</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> history 模式</li>
+<li><input checked="" disabled="" type="checkbox"> hash 模式</li>
+<li><input checked="" disabled="" type="checkbox"> router-view</li>
+<li><input checked="" disabled="" type="checkbox"> router-link</li>
+</ul>
+<h3 id="vue-router-结构"><a href="#vue-router-结构" class="headerlink" title="vue-router 结构"></a>vue-router 结构</h3><h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><table>
+<thead>
+<tr>
+<th>VueRouter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+ options <br/> + data <br/> + routeMap</td>
+</tr>
+<tr>
+<td>+ Constructor(Options):VueRouter <br/> _ install(Vue): void <br/> + init(): void <br/> + initEvent(): void <br/> + createRouteMap(): void <br/> + initComponents(Vue): void</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>options</code> 记录构造函数中的对象</p>
+</li>
+<li><p><code>data</code> 响应式对象</p>
+<ul>
+<li><code>current</code> 记录当前路由地址</li>
+</ul>
+</li>
+<li><p><code>routeMap</code> 记录路由和组件的对应关系 </p>
+</li>
+<li><p><code>install</code> 静态方法实现<code>vue</code>插件</p>
+</li>
+<li><p><code>initEvent</code> 监听浏览器地址变化</p>
+</li>
+<li><p><code>createRouteMap</code> 出事话<code>routeMap</code> 属性，把构造函数的路由规则转换成键值对存在routeMap中</p>
+</li>
+<li><p><code>initComponents</code> 创建<code>router-link</code>和<code>router-view</code>两个组件</p>
+</li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/vue/">vue</a>
+		  
+			<a href="/tags/vue-router/">vue-router</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">vue响应式原理</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/08/27/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+        <span class="next-text nav-default">模块化</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -37,21 +37,27 @@
 
 <meta name="description" content="js,es6面试题整理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript面试题">
+<meta property="og:title" content="javascript 基础梳理">
 <meta property="og:url" content="https://github.com/alongithub/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="ALONG">
 <meta property="og:description" content="js,es6面试题整理">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/prototype.png">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF.png">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/v8.png">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/old.png">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/raster.png">
+<meta property="og:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/raster2.png">
 <meta property="article:published_time" content="2020-08-27T06:51:18.000Z">
-<meta property="article:modified_time" content="2021-12-14T06:48:55.497Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.583Z">
 <meta property="article:author" content="along">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/prototype.png">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
-<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
 
 
 
@@ -72,7 +78,7 @@
 
 
 
-    <title> javascript面试题 - ALONG </title>
+    <title> javascript 基础梳理 - ALONG </title>
   <meta name="generator" content="Hexo 5.4.0"></head>
 
   <body>
@@ -81,7 +87,7 @@
         
         <div id="toc" class="toc-article">
           <div class="toc-title">目录</div>
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript"><span class="toc-text">javascript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#this-%E6%8C%87%E5%90%91"><span class="toc-text">this 指向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E9%A1%BA%E5%BA%8F%E5%86%99%E5%87%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%9C"><span class="toc-text">按顺序写出控制台打印结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-text">ES6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proxy"><span class="toc-text">Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Ees6%E7%9A%84proxy%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%8B%A6%E6%88%AA%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="toc-text">基于es6的proxy方法设计一个属性拦截读取操作</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript"><span class="toc-text">javascript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF"><span class="toc-text">原型链继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">词法作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">执行上下文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%A0%88%EF%BC%88%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%EF%BC%89"><span class="toc-text">执行上下文栈（函数调用栈）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9A%84%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="toc-text">全局上下文和函数上下文的变量对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%8C%E5%86%99%E5%87%BA%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%9C"><span class="toc-text">函数执行上下文，写出打印结果</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%8C%E5%86%99%E5%87%BA%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%9C2"><span class="toc-text">函数执行上下文，写出打印结果2</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="toc-text">作用域链</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this-%E6%8C%87%E5%90%91"><span class="toc-text">this 指向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E9%A1%BA%E5%BA%8F%E5%86%99%E5%87%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%9C"><span class="toc-text">按顺序写出控制台打印结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81"><span class="toc-text">防抖和节流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%8C%E5%B9%B6%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%8B%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">说一下防抖函数的应用场景，并简单说下实现方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-text">ES6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proxy"><span class="toc-text">Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Ees6%E7%9A%84proxy%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%8B%A6%E6%88%AA%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="toc-text">基于es6的proxy方法设计一个属性拦截读取操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-text">性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-GC"><span class="toc-text">垃圾回收 GC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8Bv8%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="toc-text">说一下v8的垃圾回收机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-text">浏览器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BB%8E%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%EF%BC%8C%E8%BF%99%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">浏览器从输入url到页面展示，这中间发生了什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B"><span class="toc-text">浏览器渲染流程</span></a></li></ol></li></ol>
         </div>
       
       <div class="main_wrapper">
@@ -128,7 +134,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          javascript面试题
+          javascript 基础梳理
         
       </h1>
 
@@ -141,14 +147,165 @@
 
     
             <div class="post-content">
-            <h2 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h2><h3 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h3><h4 id="按顺序写出控制台打印结果"><a href="#按顺序写出控制台打印结果" class="headerlink" title="按顺序写出控制台打印结果"></a>按顺序写出控制台打印结果</h4><p>（2020 碧桂园）</p>
+            <h2 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h2><h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><p>构造函数Person以及实例对象person在原型链上的关系，如图所示</p>
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/prototype.png" class="">
+
+<p>每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型”继承”属性，实例对象可通过__proto__访问到对象的原型，这个原型指向构造函数的prototype。</p>
+<p>每个原型都有一个 constructor 属性指向关联的构造函数</p>
+<p>当读取实例的属性时，如果找不到，就会查找与对象关联的原型中的属性，如果还查不到，就去找原型的原型，一直找到最顶层为止</p>
+<p>构造函数的constructor 指向 Function 构造器。</p>
+<p>Function的原型指向Function.prototype</p>
+<p>Function 的构造函数指向自己 Function.constructor === Function.<strong>proto</strong>.constructor === Function</p>
+<p>构造函数、对象、原型之间的关系参考</p>
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF.png" class="">
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangdaren/p/10759868.html">js实现类的继承</a></p>
+<h3 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h3><p>JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br><span class="line"><span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br><span class="line"><span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的</p>
+<h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><h4 id="执行上下文栈（函数调用栈）"><a href="#执行上下文栈（函数调用栈）" class="headerlink" title="执行上下文栈（函数调用栈）"></a>执行上下文栈（函数调用栈）</h4><p>JavaScript 引擎创建了执行上下文栈（Execution context stack，ECS）来管理执行上下文</p>
+<p>为了模拟执行上下文栈的行为，让我们定义执行上下文栈是一个数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [];</span><br></pre></td></tr></table></figure>
+
+<p>初始化的时候首先就会向执行上下文栈压入一个全局执行上下文，我们用 globalContext 表示它，并且只有当整个应用程序结束的时候，ECStack 才会被清空，所以程序结束之前， ECStack 最底部永远有个 globalContext：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>以下方两段代码为例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECStack.push(&lt;checkscope&gt; functionContext);</span></span><br><span class="line"><span class="comment">// ECStack.push(&lt;f&gt; functionContext);</span></span><br><span class="line"><span class="comment">// ECStack.pop();</span></span><br><span class="line"><span class="comment">// ECStack.pop();</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECStack.push(&lt;checkscope&gt; functionContext);</span></span><br><span class="line"><span class="comment">// ECStack.pop();</span></span><br><span class="line"><span class="comment">// ECStack.push(&lt;f&gt; functionContext);</span></span><br><span class="line"><span class="comment">// ECStack.pop();</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="全局上下文和函数上下文的变量对象"><a href="#全局上下文和函数上下文的变量对象" class="headerlink" title="全局上下文和函数上下文的变量对象"></a>全局上下文和函数上下文的变量对象</h4><p>程序初始化时引擎会在执行上下文栈创建全局上下文globalContext,函数调用时会创建函数上下文functionContext</p>
+<p>执行上下文包含三个部分</p>
+<ul>
+<li>变量对象（variable object, VO）</li>
+<li>作用域链（scope chain）</li>
+<li>this</li>
+</ul>
+<ul>
+<li>全局上下文变量对象就是全局对象</li>
+<li>函数上下文的变量对象<br>以下方函数代码为例<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> d = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">  b = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>函数创建时先初始化变量对象，只包含arguments<br>进入函数上下文时，再在变量对象上添加形参、函数声明、变量声明等</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">        length: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="literal">undefined</span>,</span><br><span class="line">    c: reference to <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    d: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在代码执行阶段，会再次修改变量对象的属性值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">        length: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="number">3</span>,</span><br><span class="line">    c: reference to <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    d: reference to FunctionExpression <span class="string">&quot;d&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考<a href="https://github.com/mqyqingfeng/Blog/issues/5">javascript深入之变量对象</a></p>
+<h5 id="函数执行上下文，写出打印结果"><a href="#函数执行上下文，写出打印结果" class="headerlink" title="函数执行上下文，写出打印结果"></a>函数执行上下文，写出打印结果</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(); <span class="comment">// ???</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line">bar(); <span class="comment">// ???</span></span><br></pre></td></tr></table></figure>
+<p>第一段会报错：Uncaught ReferenceError: a is not defined。</p>
+<p>第二段会打印：1。</p>
+<p>这是因为函数中的 “a” 并没有通过 var 关键字声明，所有不会被存放在 AO 中。</p>
+<p>第一段执行 console 的时候， AO 的值是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        length: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有 a 的值，然后就会到全局去找，全局也没有，所以会报错。</p>
+<p>当第二段执行 console 的时候，全局对象已经被赋予了 a 属性，这时候就可以从全局找到 a 的值，所以会打印 1。</p>
+<h5 id="函数执行上下文，写出打印结果2"><a href="#函数执行上下文，写出打印结果2" class="headerlink" title="函数执行上下文，写出打印结果2"></a>函数执行上下文，写出打印结果2</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(foo);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;foo&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>会打印函数，而不是 undefined 。</p>
+<p>这是因为在进入执行上下文时，首先会处理函数声明，其次会处理变量声明，如果如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性。</p>
+<p><code>function foo()</code> 与 <code>var foo = 1</code>顺序改变也一样</p>
+<h4 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h4><p>当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。</p>
+<blockquote>
+<p>使用Function构造器生成的函数，并不会在创建它们的上下文中创建闭包；它们一般在全局作用域中被创建。当运行这些函数的时候，它们只能访问自己的本地变量和全局变量，不能访问Function构造器被调用生成的上下文的作用域。这和使用带有函数表达式代码的 eval 不同。</p>
+</blockquote>
+<h3 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h3><h4 id="按顺序写出控制台打印结果"><a href="#按顺序写出控制台打印结果" class="headerlink" title="按顺序写出控制台打印结果"></a>按顺序写出控制台打印结果</h4><p>（2020 碧桂园）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> User = &#123;</span><br><span class="line">    count:<span class="number">1</span>,</span><br><span class="line">    action:&#123;</span><br><span class="line">        getCount:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.count</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getCount = User.action.getCount;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;result 1&quot;</span>,User.action.getCount())</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;result 2&quot;</span>,getCount())</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// result 2, undefined</span></span><br><span class="line"><span class="comment">// result 1, undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="防抖和节流"><a href="#防抖和节流" class="headerlink" title="防抖和节流"></a>防抖和节流</h3><p>防抖动是将多次执行变为最后一次执行，节流是将多次执行变成每隔一段时间执行。</p>
+<h4 id="说一下防抖函数的应用场景，并简单说下实现方式"><a href="#说一下防抖函数的应用场景，并简单说下实现方式" class="headerlink" title="说一下防抖函数的应用场景，并简单说下实现方式"></a>说一下防抖函数的应用场景，并简单说下实现方式</h4><p>（滴滴）</p>
+<p>防抖动是将多次执行变为最后一次执行，只在特定的时间内没有触发执行条件才执行一次代码<br>1、应用场景，输入框模糊搜索功能，点赞取消点赞等功能<br>2、实现方式，每次触发事件时设置一个延时器，并且取消之前的延时器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout = <span class="literal">null</span>; </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout); <span class="comment">// 每当触发的时候把前一个 setTimeout清除</span></span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    &#125;, <span class="number">500</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;搜索到相关内容&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inp = <span class="built_in">document</span>.getElementById(<span class="string">&quot;inp&quot;</span>);</span><br><span class="line">inp.addEventListener(<span class="string">&quot;input&quot;</span>, debounce(sayHi)); <span class="comment">// 防抖</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="基于es6的proxy方法设计一个属性拦截读取操作"><a href="#基于es6的proxy方法设计一个属性拦截读取操作" class="headerlink" title="基于es6的proxy方法设计一个属性拦截读取操作"></a>基于es6的proxy方法设计一个属性拦截读取操作</h4><p>要求实现去访问目标对象example中不存在的属性时，抛出错误：Property “$(property)” does not exist （2018 今日头条）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 案例代码</span></span><br><span class="line"><span class="keyword">const</span> man = &#123;</span><br><span class="line">    name:<span class="string">&#x27;jscoder&#x27;</span>,</span><br><span class="line">    age:<span class="number">22</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//补全代码</span></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(...)</span><br><span class="line">proxy.name   <span class="comment">// &quot;jscoder&quot;</span></span><br><span class="line">proxy.age     <span class="comment">// 22</span></span><br><span class="line">proxy.location   <span class="comment">// Property &quot;$(property)&quot; does not exist</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 答案</span></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(man, &#123;</span><br><span class="line">    get(target, property) &#123;</span><br><span class="line">        <span class="keyword">return</span> property <span class="keyword">in</span> target ? target[property] : <span class="built_in">console</span>.error(<span class="string">`Property &quot;<span class="subst">$&#123;property&#125;</span>&quot; does not exist`</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="垃圾回收-GC"><a href="#垃圾回收-GC" class="headerlink" title="垃圾回收 GC"></a>垃圾回收 GC</h3><h4 id="说一下v8的垃圾回收机制"><a href="#说一下v8的垃圾回收机制" class="headerlink" title="说一下v8的垃圾回收机制"></a>说一下v8的垃圾回收机制</h4><p>v8内存设有上先，采用分代回收的思想，内存分为新生代和老生代，小空间用于存储新生代对象（32M|16M),新生代存放存活时间较短的对象（如局部作用域变量）</p>
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/v8.png" class="">
+<ul>
+<li><p>新生代对象回收，新生代中用 Scavenge 算法来处理</p>
+<ul>
+<li>通过标记整理和复制算法实现</li>
+<li>新生代内存会等分为两个空间，使用状态空间称为From，空闲空间称为To空间，From空间用于存储活动对象。</li>
+<li>当对象区域快被写满时，就需要执行一次垃圾清理操作。对From空间执行标记，之后会把存活对象复制到To空间，并有序排列起来</li>
+<li>接下来两个空间角色互换，直接释放掉原来的From空间</li>
+</ul>
+</li>
+<li><p>一轮GC操作之后还存活的对象会晋升到老生代内存中，如果To空间使用率超过25%，新生代的对象也会晋升到老生代内存中(老生代对象回收，64位 1.4G 32 位 700M),老生代会存储 全局变量下的对象，一部分闭包中的数据</p>
+<ul>
+<li>老生代中采用 标记清除、标记整理、增量标记算法</li>
+<li>通过标记清除完成垃圾空间的回收</li>
+<li>采用标记整理进行空间优化，老生代不足以存储即将存储的对象，会触发标记整理操作</li>
+<li>采用增量标记进行效率优化，GC操作会阻塞程序的执行，增量标记将整个标记过程拆分开来，每一个片段与程序执行交替进行。最后阻塞程序执行清除操作</li>
+</ul>
+</li>
+</ul>
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/old.png" class="">
+
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><h3 id="浏览器从输入url到页面展示，这中间发生了什么"><a href="#浏览器从输入url到页面展示，这中间发生了什么" class="headerlink" title="浏览器从输入url到页面展示，这中间发生了什么"></a>浏览器从输入url到页面展示，这中间发生了什么</h3><p>1、用户输入内容，浏览器会判断用户输入是搜索内容还是url</p>
+<ul>
+<li>如果是关键字，浏览器根据搜索引擎，合成携带关键字的url</li>
+<li>如果是url，浏览器会拼接上协议，合成完整的url</li>
+<li>在这之前，浏览器会判断当前页的beforeunload事件，判断是否组织页面跳转</li>
+</ul>
+<p>2、通过url请求资源，浏览器进程通过（IPC）把url发送给网络进程，网络进程发起请求<br>首先网络进程会判断本地缓存是否缓存了该资源，如果有直接返回给浏览器进程，如果没有该资源，进入网络请求流程</p>
+<ul>
+<li>通过DNS解析获取IP地址，如果是https,还需要建立TLS连接</li>
+<li>通过IP与服务器建立TCP连接，建立连接后，浏览器会构建请求行请求头等信息，并把cookie相关信息添加到请求头中，然后发送给服务器</li>
+<li>服务器根据请求信息生成响应数据（响应行，响应头，响应题），并发送给网络进程</li>
+<li>网络进程拿到响应数据后，会判断响应行的响应状态，如果是301或302，说明服务器需要浏览器重定向到其他 URL。这时网络进程会从响应头的 Location 字段里面读取重定向的地址，然后再发起新的 HTTP 或者 HTTPS 请求，重新开始网络请求流程</li>
+<li>如果响应行状态是200，浏览器会判断响应头的Content-type,如果是下载类型数据，提交给浏览器的下载管理器，同时该 URL 请求的导航流程就此结束，如果是text/html,浏览器会继续执行导航流程，准备渲染进程</li>
+</ul>
+<p>3、浏览器将网络进程接收到的html数据提交给渲染进程</p>
+<ul>
+<li>首先当浏览器进程接收到网络进程的响应头数据之后，便向渲染进程发起“提交文档”的消息；</li>
+<li>渲染进程接收到“提交文档”的消息后，会和网络进程建立传输数据的“管道”；</li>
+<li>等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程；</li>
+<li>浏览器进程在收到“确认提交”的消息后，会更新浏览器界面状态，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新 Web 页面。</li>
+</ul>
+<p>4、进入渲染流程，展示页面内容</p>
+<h3 id="浏览器渲染流程"><a href="#浏览器渲染流程" class="headerlink" title="浏览器渲染流程"></a>浏览器渲染流程</h3><p>渲染流程就是讲javascript、html、css经过渲染模块的处理，最终输出为屏幕上的像素</p>
+<p>1、构建DOM树，渲染进程将 HTML 内容转换为能够读懂的 DOM 树结构</p>
+<p>2、样式计算（Recalculate Style）</p>
+<ul>
+<li>处理样式表内容为浏览器可理解的结构stylesheets</li>
+<li>标准化样式表中的属性值，比如blod，red，2em等属性值</li>
+<li>根据继承和层叠规则计算DOM节点的样式  </li>
+</ul>
+<p>3、布局阶段，计算出 DOM 树中可见元素的几何位置</p>
+<ul>
+<li>创建布局树（不包含head标签和display：none等不可见元素）</li>
+<li>布局计算，计算布局树节点的布局信息</li>
+</ul>
+<p>4、分层，为特定的节点生成专用的图层，并生成一棵对应的图层树（LayerTree）</p>
+<ul>
+<li>明确定位属性的元素、定义透明属性的元素、使用 CSS 滤镜的元素等，都拥有层叠上下文属性</li>
+<li>需要剪裁（clip）的地方也会被创建为图层</li>
+</ul>
+<p>5、图层绘制（Paint）为每个图层生成绘制指令列表，图层的绘制拆分成很多小的绘制指令，然后再把这些指令按照顺序组成一个待绘制列表</p>
+<p>6、图块与栅格化（raster）<br>主线程将图层绘制列表提交给渲染进程合成线程，合成线程会将图层划分为图块。并按照视口附近的图块来优先生成位图（栅格化）</p>
+<ul>
+<li>栅格化的过程在渲染进程维护的栅格化线程池中进行</li>
+<li>栅格化线程池中的线程通常借助GPU生成位图（快速栅格化）</li>
+</ul>
+<p>7、合成和显示</p>
+<ul>
+<li>图块光栅化之后，合成线程生成DrawQuad命令，通知浏览器将页面绘制到内存中，生成页面，并展示到屏幕上</li>
+</ul>
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/raster.png" class="">
+<img src="/2020/08/27/javascript%E9%9D%A2%E8%AF%95%E9%A2%98/raster2.png" class="">
+
             </div>
           
 
@@ -169,9 +326,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2021/12/14/gitlab%E6%90%AD%E5%BB%BA/">
+      <a class="prev" href="/2020/08/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">gitlab搭建</span>
+        <span class="prev-text nav-default">自动化构建</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
     

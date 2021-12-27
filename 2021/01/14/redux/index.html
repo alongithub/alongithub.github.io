@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="redux 的基本使用和一些常用库，另外包含了redux createStore、enhancer、applyMiddleware、bindActionCreators、combineReducers等函数实现原理"/>
+
+
+
+
+  <meta name="keywords" content="redux," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2021/01/14/redux/"/>
+
+
+<meta name="description" content="redux 的基本使用和一些常用库，另外包含了redux createStore、enhancer、applyMiddleware、bindActionCreators、combineReducers等函数实现原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux">
+<meta property="og:url" content="https://github.com/alongithub/2021/01/14/redux/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="redux 的基本使用和一些常用库，另外包含了redux createStore、enhancer、applyMiddleware、bindActionCreators、combineReducers等函数实现原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-14T07:16:30.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.592Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="redux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> redux - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redux"><span class="toc-text">redux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bindActionCreators%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%9B%E5%BB%BAmapDispatchToProps-%E5%87%BD%E6%95%B0"><span class="toc-text">bindActionCreators更优雅地创建mapDispatchToProps 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redux-%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">redux 定义中间件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redux-saga"><span class="toc-text">redux-saga</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redux-actions"><span class="toc-text">redux-actions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redux-actions-%E7%BB%93%E5%90%88-redux-saga%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">redux-actions 结合 redux-saga使用示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redux-%E5%8E%9F%E7%90%86"><span class="toc-text">redux 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#createStore"><span class="toc-text">createStore</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#enhancer"><span class="toc-text">enhancer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#applyMiddleware"><span class="toc-text">applyMiddleware</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bindActionCreators"><span class="toc-text">bindActionCreators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#combineReducers"><span class="toc-text">combineReducers</span></a></li></ol></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          redux
+        
+      </h1>
+
+      <time class="post-time">
+          1月 14 2021
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h3><h4 id="bindActionCreators更优雅地创建mapDispatchToProps-函数"><a href="#bindActionCreators更优雅地创建mapDispatchToProps-函数" class="headerlink" title="bindActionCreators更优雅地创建mapDispatchToProps 函数"></a>bindActionCreators更优雅地创建mapDispatchToProps 函数</h4><p>编写好 <code>actionCreator </code>文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">export const onAdd &#x3D; (num) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        type: ADDNUM,</span><br><span class="line">        num,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export const onDelete &#x3D; (num) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        type: DELETENUM,</span><br><span class="line">        num,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>引入 <code>bindActionCreators</code>和 <code>actionCreator.js</code>中的所有方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123;bindActionCreators&#125; from &#39;redux&#39;;</span><br><span class="line">import * as actionCreators from &#39;.&#x2F;redux&#x2F;action&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>bindActiionCreators</code> 生成<code>mapDispatchToProps</code>的返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const mapDispatchToProps &#x3D; dispatch &#x3D;&gt; bindActionCreators(actionCreators, dispatch);</span><br><span class="line"></span><br><span class="line">export default connect(null, mapDispatchToProps)(Conmponent); </span><br></pre></td></tr></table></figure>
+
+<p>这样就可以直接在组建<code>Component</code>中使用<code>actionCreator.js</code>中定义的同名方法啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function (&#123;onAdd, onDelete&#125;) &#123;</span><br><span class="line">	return ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="redux-定义中间件"><a href="#redux-定义中间件" class="headerlink" title="redux 定义中间件"></a>redux 定义中间件</h4><p>1、定义一个中间件需要创建一个函数,满足下面的格式，其中最外层store可以去到<strong>getState</strong> 、<strong>dispatch</strong>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default store &#x3D;&gt; next &#x3D;&gt; action &#x3D;&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我定义一个打印日志的中间件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export default store &#x3D;&gt; next &#x3D;&gt; action &#x3D;&gt; &#123;</span><br><span class="line">	console.log(action);</span><br><span class="line">	next(action); &#x2F;&#x2F; 传递给下一个中间件或者reducer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、注册中间件,通过<code>applyMiddleware</code>注册中间件,多个中间件可以依次传入，中间件执行顺序与注册顺序相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123;createStore, applyMiddleware&#125; from &#39;redux&#39;;</span><br><span class="line">import logMiddleWare from &#39;.&#x2F;middlewares&#x2F;logMiddleWare&#39;;</span><br><span class="line"></span><br><span class="line">export default createStore(reducer, applyMiddleware(</span><br><span class="line">	logMiddleWare &#x2F;&#x2F; 如果有多个中间件 middleware1, middleware2, ...</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+
+<p>如果项目中使用了<strong>redux-devtools-extension</strong>，可以这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123;composeWithDevTools&#125; from &#39;redux-devtools-extension&#39;; &#x2F;&#x2F; 用于开发环境浏览器插件调试</span><br><span class="line">export default createStore(reducer, composeWithDevTools(applyMiddleware(logMiddleWare)));</span><br></pre></td></tr></table></figure>
+
+<p>3、定义一个处理异步的中间件(redux-thunk 机制)</p>
+<p>上述代码中的<strong>actionCreators.js</strong>编写的<strong>action</strong>都是返回一个对象，包含了<strong>action</strong>的类型和数据，如果要编写一个异步的<strong>action</strong>怎么办呢</p>
+<p>我们可以编写一个中间件，在接收<strong>actionCreator</strong>的返回值是判断返回值<strong>action</strong>得类型，如果是普通的携带<strong>type</strong>的对象，就直接放行。如果类型是一个函数，我们就认为他是一个异步动作，执行这个函数并将<strong>dispatch</strong>函数传递给它，将执行权交给这个异步函数，由他来决定派发下一个<strong>actionCreator</strong>的时机</p>
+<p>我们在<strong>actionCreators.js</strong>中编写一个异步的<strong>actionCreator</strong>,它返回一个函数，并且在这个函数中异步的调用了其他的<strong>actionCreator</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">export const onAdd &#x3D; (num) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        type: ADDNUM,</span><br><span class="line">        num,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 异步函数返回一个函数，派发了其他的actionCreator</span><br><span class="line">export const onAdd_async &#x3D; (num) &#x3D;&gt; &#123;</span><br><span class="line">    return (dispatch) &#x3D;&gt; &#123;</span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">           dispatch(</span><br><span class="line">               onAdd(num)</span><br><span class="line">           ) </span><br><span class="line">        &#125;, 5000)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来定义一个中间件，用来处理异步的<strong>action</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export default store &#x3D;&gt; next &#x3D;&gt; action &#x3D;&gt; &#123;</span><br><span class="line">	if (typeof action &#x3D;&#x3D;&#x3D; &#39;function&#39;) &#123;</span><br><span class="line">        action(store.dispatch);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 正常的情况（action是一个对象）直接放行</span><br><span class="line">	next(action); &#x2F;&#x2F; 传递给下一个中间件或者reducer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后在<strong>creatStore</strong>时注册这个异步中间件就可以了</p>
+<h4 id="redux-saga"><a href="#redux-saga" class="headerlink" title="redux-saga"></a>redux-saga</h4><p><strong>redux-saga</strong>允许我们将异步<strong>actionCreator</strong>单独抽离出来，方便我们统一维护</p>
+<p>1、编写<strong>saga</strong>抽离的函数文件 ,<strong>post.saga.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;takeEvery, put&#125; <span class="keyword">from</span> <span class="string">&#x27;redux-saga/effects&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">async_add</span> (<span class="params">action</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> result = <span class="keyword">yield</span> axios.get(<span class="string">&#x27;/api/add&#x27;</span>, &#123;<span class="attr">num</span>:action.num&#125;);</span><br><span class="line">   	<span class="keyword">if</span> (result.code === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">yield</span> put(add_num_success(num:action.num)); <span class="comment">// put相当于dispatch，通过put执行普通的action给reducer</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// saga要求默认导出generator函数</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> funciton* postSaga() &#123;</span><br><span class="line">	<span class="keyword">yield</span> takeEvery(ASYNC_ADDNUM, async_add)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、安装引入启用并注册 <strong>redux-saga</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import createSagaMiddleware from &#39;redux-saga&#39;;</span><br><span class="line">import postSaga form &#39;.&#x2F;store&#x2F;saga&#x2F;post.saga.js&#39;; &#x2F;&#x2F; 引入编写的saga文件</span><br><span class="line"></span><br><span class="line">const sagaMiddleware &#x3D; createSagaMiddleware();</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">export default createStore(reducer, applyMiddleware(sagaMiddleware))</span><br><span class="line"></span><br><span class="line">sagaMiddleware.run(postSaga); &#x2F;&#x2F; 启用saga</span><br></pre></td></tr></table></figure>
+
+<p>3、拆分saga文件</p>
+<p>实际工作中我们需要把异步拆分到多个<strong>saga</strong>文件中，便于维护。因此这里再编写一个<strong>saga</strong>文件<strong>logout.saga.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123;takeEvery, put, delay&#125; from &#39;redux-saga&#x2F;effects&#39;;</span><br><span class="line"></span><br><span class="line">function* async_logout () &#123;</span><br><span class="line">	yield delay(2000); </span><br><span class="line">	yield put(logout());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; saga要求默认导出generator函数</span><br><span class="line">export default funciton* logoutSaga() &#123;</span><br><span class="line">	yield takeEvery(LOGOUT, async_logout)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在一个统一的入口<strong>saga</strong>文件<strong>root.saga.js</strong>中合并并导出<strong>saga</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123;all&#125; from &#39;redux-saga&#x2F;effects&#39;;</span><br><span class="line"></span><br><span class="line">import postSaga from &#39;.&#x2F;post.saga.js&#39;;</span><br><span class="line">import logoutSaga from &#39;.&#x2F;logout.saga.js&#39;;</span><br><span class="line"></span><br><span class="line">export default function* rootSaga() &#123;</span><br><span class="line">	yield all([</span><br><span class="line">		postSaga(),</span><br><span class="line">		logoutSaga()</span><br><span class="line">	])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来再注册<strong>saga</strong>时只需要注册<strong>rootSaga</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import rootSaga form &#39;.&#x2F;store&#x2F;saga&#x2F;root.saga.js&#39;;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">sagaMiddleware.run(rootSaga); &#x2F;&#x2F; 启用saga</span><br></pre></td></tr></table></figure>
+
+<h4 id="redux-actions"><a href="#redux-actions" class="headerlink" title="redux-actions"></a>redux-actions</h4><p><strong>redux</strong> 流程存在大量样板代码，比如<strong>actionType</strong>的抽离,<strong>redux-actions</strong>可以帮助我们简化代码</p>
+<p>1、创建<strong>actionCreator</strong>函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;createAction&#125; from &#39;redux-actions&#39;;</span><br><span class="line"></span><br><span class="line">export const onAdd &#x3D; createAction(&#39;add num&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>2、创建<strong>reducer</strong>函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123;handleActions as createReducer&#125; from &#39;redux-actions&#39;;</span><br><span class="line">import &#123;onAdd&#125; from &#39;.&#x2F;actionCreator.js&#39;;</span><br><span class="line"></span><br><span class="line">const initState &#x3D; &#123;num: 0&#125;</span><br><span class="line"></span><br><span class="line">const handleAdd &#x3D;&gt; (state, action) &#x3D;&gt; (&#123;</span><br><span class="line">	&#x2F;&#x2F; 组件传递的参数，会添加到action.payload中</span><br><span class="line">    num: state.num + action.payload</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default createReducer(&#123;</span><br><span class="line">	[onAdd]: handleAdd</span><br><span class="line">&#125;, initState);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3、在组件中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Add(&#123;onAdd&#125;) &#123;</span><br><span class="line">	return &lt;div&gt;</span><br><span class="line">		&lt;button onClick&#x3D;&#123;() &#x3D;&gt; onAdd(5)&#125;&gt;添加&lt;&#x2F;button&gt;</span><br><span class="line">	&lt;&#x2F;div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="redux-actions-结合-redux-saga使用示例"><a href="#redux-actions-结合-redux-saga使用示例" class="headerlink" title="redux-actions 结合 redux-saga使用示例"></a>redux-actions 结合 redux-saga使用示例</h4><p>为了防止你看到这里感到混乱，不如来一个案例，看看<strong>actions</strong> 和 <strong>saga</strong> 如何配合<strong>redux</strong>完成工作流</p>
+<p>现在我们要实现一个获取商品列表并展示的功能，我们来定义一下文件结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">src&#x2F;products&#x2F;          </span><br><span class="line">---- redux&#x2F;</span><br><span class="line">---- ---- saga&#x2F;</span><br><span class="line">---- ---- actionCreator&#x2F;</span><br><span class="line">---- ---- reducer&#x2F;</span><br><span class="line">---- index.js</span><br><span class="line">root.saga.js</span><br><span class="line">store.js</span><br><span class="line">index.js</span><br></pre></td></tr></table></figure>
+
+<p>1、首先我们来编写<strong>actionsCreator/actionsCreator.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123;createAction&#125; from &#39;redux-actions&#39;;</span><br><span class="line"></span><br><span class="line">export const loadProducts &#x3D; createAction(&#39;load products from server&#39;);</span><br><span class="line">export const setProducts &#x3D; createAction(&#39;set local Products&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>2、接下来创建<strong>reducer</strong>和<strong>saga</strong>，我们需要把普通的<strong>actionCreator</strong>和异步<strong>actionCreator</strong>分别交给<strong>reducer/index.js</strong> 和 <strong>saga/index.js</strong>下的文件来处理</p>
+<p><strong>setProducts</strong> 是设置本地的<strong>store</strong>中的数据，因此在<strong>reducer/index.js</strong>中处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123;handleActions as createReducer&#125; from &#39;redux-actions&#39;;</span><br><span class="line">import &#123;setProducts&#125; from &#39;..&#x2F;actionCreator&#x2F;actionsCreator.js&#39;;</span><br><span class="line"></span><br><span class="line">const initState &#x3D; []</span><br><span class="line"></span><br><span class="line">const handleSetProducts &#x3D;&gt; (state, action) &#x3D;&gt; action.payload; &#x2F;&#x2F; payload中存储了actionCreator被调用时的传参</span><br><span class="line"></span><br><span class="line">export default createReducer(&#123;</span><br><span class="line">	[setProducts]: handleSetProducts</span><br><span class="line">&#125;, initState);</span><br></pre></td></tr></table></figure>
+
+<p><strong>saga</strong>中处理异步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &#123;takeEvery, put&#125; from &#39;redux-saga&#x2F;effects&#39;;</span><br><span class="line">import &#123;setProducts, loadProducts&#125; from &#39;..&#x2F;actionCreator&#x2F;actionsCreator.js&#39;;</span><br><span class="line"></span><br><span class="line">function* async_loadProduct () &#123;</span><br><span class="line">	const result &#x3D; yield axios.get(&#39;&#x2F;getProduct&#39;); &#x2F;&#x2F; 返回 商品数组 </span><br><span class="line">	yield put(setProducts(result.data));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; saga要求默认导出generator函数</span><br><span class="line">export default funciton* productSaga() &#123;</span><br><span class="line">	yield takeEvery(loadProducts, async_loadProduct)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、在<strong>root.saga.js</strong>中集中引入<strong>saga</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123;all&#125; from &#39;redux-saga&#x2F;effects&#39;;</span><br><span class="line">import productSaga from &#39;.&#x2F;products&#x2F;redux&#x2F;saga&#39;; &#x2F;&#x2F; 引入商品的异步action saga</span><br><span class="line"></span><br><span class="line">export default function* rootSaga() &#123;</span><br><span class="line">	yield all([</span><br><span class="line">		productSaga(),</span><br><span class="line">	])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、<strong>store.js</strong>中注册<strong>store</strong>,启用<strong>saga</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import &#123;createStore, combineReducers, applyMiddleware&#125; from &#39;redux&#39;;</span><br><span class="line">import createSagaMiddleware from &#39;redux-saga&#39;;</span><br><span class="line">import rootSaga form &#39;.&#x2F;root.saga.js&#39;;</span><br><span class="line">import productReducer from &#39;.&#x2F;src&#x2F;products&#x2F;redux&#x2F;reducer&#39;;</span><br><span class="line"></span><br><span class="line">const sagaMiddleware &#x3D; createSagaMiddleware();</span><br><span class="line"></span><br><span class="line">const reducer &#x3D; combineReducers(&#123;</span><br><span class="line">	products: productReducer</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">export default createStore(reducer, applyMiddleware(sagaMiddleware))</span><br><span class="line"></span><br><span class="line">sagaMiddleware.run(rootSaga); &#x2F;&#x2F; 启用saga</span><br></pre></td></tr></table></figure>
+
+<p>5、<strong>react</strong>入口文件中<strong>index.js</strong>引入<strong>store</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import React from &#39;react&#39;;</span><br><span class="line">import ReactDom from &#39;react-dom&#39;;</span><br><span class="line">import &#123;Provider&#125; from &#39;react-redux&#39;;</span><br><span class="line">import store from &#39;.&#x2F;store.js&#39;;</span><br><span class="line">import App from &#39;.&#x2F;&#39;; &#x2F;&#x2F; 这里引入你的的app入口</span><br><span class="line"></span><br><span class="line">ReactDom.render(</span><br><span class="line">    &lt;Provider store&#x3D;&#123;store&#125;&gt;</span><br><span class="line">    	&lt;App&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;Provider&gt;,</span><br><span class="line">    document.getElementById(&#39;root&#39;),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>6、商品模块的组件<strong>products/index.js</strong>中触发<strong>actionCreator</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123;useEffect&#125; from &#39;react&#39;;</span><br><span class="line">import &#123;bindActionCreators&#125; from &#39;redux&#39;;</span><br><span class="line">import * as actionCreators from &#39;.&#x2F;redux&#x2F;actionCreator&#x2F;actionCreator&#39;;</span><br><span class="line"></span><br><span class="line">const Product &#x3D; (&#123;loadProducts, products&#125;) &#x3D;&gt; &#123;</span><br><span class="line">	useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">		loadProducts(); &#x2F;&#x2F; 组件加载时获取商品列表</span><br><span class="line">	&#125;, [])</span><br><span class="line"></span><br><span class="line">	return products.map(l &#x3D;&gt; ...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapStateToProps &#x3D; state &#x3D;&gt; (&#123;</span><br><span class="line">	products: state.product</span><br><span class="line">&#125;)</span><br><span class="line">const mapDispatchToProps &#x3D; dispatch &#x3D;&gt; bindActionCreators(actionCreators, dispatch);</span><br><span class="line">export default connect(mapStateToProps, mapDispatchToProps)(Product); </span><br></pre></td></tr></table></figure>
+
+<p>ok！！ 这样这个商品组件就能成功的运行了</p>
+<h4 id="redux-原理"><a href="#redux-原理" class="headerlink" title="redux 原理"></a>redux 原理</h4><h5 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h5><p><strong>redux</strong>的原理其实就是一个观察者模式，创建好<strong>store</strong>之后通过<strong>subscribe</strong>注册观察者，我们先来实现一下<strong>createStroe</strong>的主要逻辑</p>
+<p><strong>createStore</strong>可以接收三个参数，分别是<strong>reducer</strong>，<strong>preloadState</strong>，<strong>enhancer</strong>，<strong>preloadState</strong>代表默认的<strong>store</strong>数据，通常我们不使用他，<strong>enhancer</strong>代表功能拓展。第二个参数可以省略直接传第三个参数</p>
+<p><strong>createStore</strong>的返回值需要有三个函数，<strong>getState</strong>， <strong>dispatch</strong>， 以及<strong>subscribe</strong></p>
+<p>先不考虑<strong>enhancer</strong>这个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">function createStore(reducer, preloadState) &#123;</span><br><span class="line">    &#x2F;&#x2F; 检查参数类型</span><br><span class="line">    if (typeof reducer !&#x3D;&#x3D; &#39;function&#39;) throw new Error(&#39;reducer must be function&#39;)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 内部维护一个state</span><br><span class="line">    let currentState &#x3D; preloadState;</span><br><span class="line">    </span><br><span class="line">    function getState() &#123;</span><br><span class="line">        return currentState;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 保存所有的观察者，当state变化执行所有的观察者</span><br><span class="line">    let listeners &#x3D; [];</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 修改数据并通知所有观察者</span><br><span class="line">    function dispatch(action) &#123;</span><br><span class="line">        &#x2F;&#x2F; 判断action是否是&#123;&#125;对象，排除数组，null等</span><br><span class="line">        if(!isPlainObject(action)) &#123;</span><br><span class="line">            throw new Error(&#39;action.__proto__ mast be Object.proptoType&#39;)</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 判断是否有type</span><br><span class="line">        if (typeof action.type &#x3D;&#x3D;&#x3D; &#39;undefined&#39;) throw new Error(&#39;action对象中必须要有type属性&#39;)</span><br><span class="line">        currentState &#x3D; reducer(currentState, action);</span><br><span class="line">        listeners.forEach(l &#x3D;&gt; &#123;</span><br><span class="line">            l();</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 添加观察者</span><br><span class="line">    function discribe(listener) &#123;</span><br><span class="line">        listeners.push(listener);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return &#123;</span><br><span class="line">        getState,</span><br><span class="line">        dispatch,</span><br><span class="line">        subscribe</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 辅助方法，由于判断入参是否是一个 &#123;&#125;类型的对象，用于排除基本数据类型，以及数组、Fuction以及其他对象类型。</span><br><span class="line">function isPlainObject (obj) &#123;</span><br><span class="line">    if (typeof obj !&#x3D;&#x3D; &#39;object&#39; || obj &#x3D;&#x3D;&#x3D; null) return false;</span><br><span class="line">    var proto &#x3D; obj;</span><br><span class="line">    &#x2F;&#x2F; 就是判断入参的原型链是不是直接指向Object的原型</span><br><span class="line">    while(Object.getPrototypeOf(proto) !&#x3D;&#x3D; null) &#123;</span><br><span class="line">        proto &#x3D; Object.getPrototypeOf(proto);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return Object.getPrototypeOf(obj) &#x3D;&#x3D;&#x3D; proto</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="enhancer"><a href="#enhancer" class="headerlink" title="enhancer"></a>enhancer</h5><p>接下来我们来实现下<strong>enhancer</strong>参数，<strong>enhancer</strong>在英文中是增强的意思，<strong>redux</strong>允许用户传入这个参数来创建增强的<strong>store</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function createStore(reducer, preloadState, enhancer) &#123;</span><br><span class="line">    &#x2F;&#x2F; 检查reducer类型</span><br><span class="line">    ...</span><br><span class="line">    let currentState &#x3D; preloadState;</span><br><span class="line">    let listeners &#x3D; [];</span><br><span class="line">    &#x2F;* ***enhancer 部分实现*** *&#x2F;</span><br><span class="line">    &#x2F;&#x2F; 检查enhancer的参数类型</span><br><span class="line">	if (typeof enhancer !&#x3D;&#x3D; &#39;undefined&#39;) &#123;</span><br><span class="line">        if (typeof enhancer !&#x3D;&#x3D; &#39;function&#39;) throw new Error(&#39;enhancer munst be function&#39;);</span><br><span class="line">        &#x2F;&#x2F; 执行enhancer并传递给createStore, enhancer执行后需要返回一个函数，接收reducer，preloadState</span><br><span class="line">        return enhancer(createStore)(reducer, preloadState)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;* *** *&#x2F;</span><br><span class="line">    function getState() &#123;...&#125;</span><br><span class="line">    function dispatch(action) &#123;...&#125;</span><br><span class="line">    function discribe(listener) &#123;...&#125;</span><br><span class="line">    </span><br><span class="line">     return &#123;</span><br><span class="line">        getState,</span><br><span class="line">        dispatch,</span><br><span class="line">        subscribe</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们传入了合法的<strong>enhancer</strong>时，<strong>createStore</strong>方法会将控制权完全交给<strong>enhancer</strong>，由<strong>enhancer</strong>来调用自己创建增强的<strong>store</strong></p>
+<p><strong>enhancer</strong>接收<strong>createStore</strong>,并返回一个新的函数，接收<strong>reducer</strong>，<strong>preloadState</strong>，最终返回一个增强的<strong>store</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 我们来定义一个enhancer函数，实现类似redux-thunk的处理异步的功能</span><br><span class="line">function enhancer(createStore) &#123;</span><br><span class="line">    return function (reducer, preloadState) &#123;</span><br><span class="line">        &#x2F;&#x2F; enhancer 来调用createStore创建一个常规的store</span><br><span class="line">        var store &#x3D; createStore(reducer, preloadState);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 增强原有的dispatch</span><br><span class="line">        var dispatch &#x3D; store.dispatch;</span><br><span class="line">        function _dispatch (action) &#123;</span><br><span class="line">            &#x2F;&#x2F; 这里就可以实现具体的增强功能了，我们在这里模拟一个类似redux-thunk的功能</span><br><span class="line">            if(typeof aciton &#x3D;&#x3D;&#x3D; &#39;function&#39;) &#123;</span><br><span class="line">                return action(dispatch);</span><br><span class="line">            &#125;</span><br><span class="line">            dispatch(dispatch);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return &#123;</span><br><span class="line">            ...store,</span><br><span class="line">            dispatch: _dispatch</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样我们在调用<strong>createStore</strong>时传入定义的<strong>enhancer</strong>函数就可以实现类型<strong>redux-thunk</strong>的功能了</p>
+<h5 id="applyMiddleware"><a href="#applyMiddleware" class="headerlink" title="applyMiddleware"></a>applyMiddleware</h5><p>了解了<strong>enhancer</strong>的原理，我们来看下<strong>applyMiddleware</strong>这个增强器是怎么实现中间件的注册的</p>
+<p>通过刚刚我们自定义<strong>enhancer</strong>函数我们了解到，<strong>enhancer</strong>需要接收一个参数<strong>createStroe</strong>，并返回一个接收<strong>reducer</strong>和<strong>preloadState</strong>的函数，最终返回一个增强的<strong>store</strong></p>
+<p>先来看下我们在使用<strong>redux</strong>的<strong>applyMiddleware</strong>时是怎么作为参数传递给<strong>createStroe</strong>的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default createStore(Reducer, applyMiddleware(logMiddleWare));</span><br></pre></td></tr></table></figure>
+
+<p><strong>applyMiddleware</strong>函数在作为<strong>createStore</strong>的参数时，传入的是<strong>applyMiddleware</strong>的调用，并在他调用时传入了若干中间件，因此，<strong>applyMiddleware</strong>需要在执行后返回一个真正的<strong>enhancer</strong>函数</p>
+<p>知道了这一点，再看下之前我们写的自定义中间件的格式，<strong>applyMiddleware</strong>函数的参数需要满足三层函数的格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function logger(store) &#123;</span><br><span class="line">	return function(next) &#123;</span><br><span class="line">		return function(action) &#123;</span><br><span class="line">			</span><br><span class="line">			...中间件的内容</span><br><span class="line">			next(action); &#x2F;&#x2F; 执行下一个中间件</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，<strong>applyMiddleware</strong>在增强<strong>dispatch</strong>函数时，需要依次执行中间件，并依次传递<strong>store</strong>、<strong>next</strong>、<strong>action</strong>这几个参数，<strong>store</strong>是<strong>createStroe</strong>创建的store，<strong>action</strong>是<strong>actionCreator</strong>的返回值，那么<strong>next</strong>是什么呢。</p>
+<p>当还存在下一个中间件时，<strong>next</strong>就是下一个中间件。当不存在下一个中间件时，<strong>next</strong>就是<strong>store</strong>的<strong>dispatch</strong>函数</p>
+<p>ok,来实现下<strong>applyMiddleware</strong>的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">function applyMiddleware(...middlewares) &#123;</span><br><span class="line">	return function(createStore) &#123;</span><br><span class="line">        return function (reducer, preloadState) &#123;</span><br><span class="line">            var store &#x3D; createStore(reducer, preloadState);</span><br><span class="line">			const middlewareApi &#x3D; &#123;</span><br><span class="line">                getState: store.getState,</span><br><span class="line">                dispatch: store.dispatch</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">           	&#x2F;&#x2F; 先将中间件执行一遍，依次拿到第二层函数</span><br><span class="line">            const chain &#x3D; middlewares.map(middleware &#x3D;&gt; middleware(store))</span><br><span class="line">            </span><br><span class="line">            var dispatch &#x3D; store.dispatch;</span><br><span class="line">            &#x2F;&#x2F; 将chain中的函数的返回值（第三层函数）依次作为上一个函数（第二层函数）的参数执行,最后一个中间件传递dispatch函数</span><br><span class="line">            vr next &#x3D; compose(...chain)(dispatch);</span><br><span class="line"></span><br><span class="line">            return &#123;</span><br><span class="line">                ...store,</span><br><span class="line">                dispatch: next</span><br><span class="line">            &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function compose() &#123;</span><br><span class="line">    var funcs &#x3D; [...arguments];</span><br><span class="line">    return function (dispatch) &#123;</span><br><span class="line">        let next &#x3D; dispatch;</span><br><span class="line">        for (let i &#x3D; funcs.length - 1; i &gt;&#x3D; 0 ; i --) &#123;</span><br><span class="line">            next &#x3D; funcs[i](next);</span><br><span class="line">        &#125;</span><br><span class="line">        return next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<strong>applyMiddleware</strong>的实现中，首先依次执行了所有中间件，并将所有的第二层函数保存到数组中。接下来，我们需要逆序执行第二层函数，将第二层函数返回的第三层函数作为上一个函数的参数<strong>next</strong>。</p>
+<p>最终会返回第一个中间件的第三层参数。当这个函数被执行时，会依次执行后续中间件的第三层函数，并在最后一个中间件的第三层函数中执行<strong>dispatch</strong>函数。当然，你可以在任意一个中间件中阻止中间件向后执行，并<strong>dispatch</strong>新的<strong>action</strong>（我们上边自定中间件模拟的<strong>redux-thunk</strong>就是这么做的）</p>
+<h5 id="bindActionCreators"><a href="#bindActionCreators" class="headerlink" title="bindActionCreators"></a>bindActionCreators</h5><p><strong>bindActionCreators</strong> 函数可以帮我们方便地结合<strong>connect</strong>给组件添加 用于派发<strong>action</strong>的函数</p>
+<p>先来再看一下这个函数的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123;bindActionCreators&#125; from &#39;redux&#39;;</span><br><span class="line">import * as actionCreators from &#39;.&#x2F;redux&#x2F;action&#39;;</span><br><span class="line"></span><br><span class="line">const mapDispatchToProps &#x3D; dispatch &#x3D;&gt; bindActionCreators(actionCreators, dispatch);</span><br><span class="line"></span><br><span class="line">export default connect(null, mapDispatchToProps)(Conmponent); </span><br></pre></td></tr></table></figure>
+
+<p><strong>bindActionCreators</strong> 通过接收一个包含所有<strong>actionCreator</strong>的对象和<strong>dispatch</strong>函数，返回一个函数接收<strong>dispatch</strong>，并返回包含派发<strong>action</strong>函数的对象,这样说有点难理解，来看下边的转换关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">actionCreators &#x3D; &#123;</span><br><span class="line">	onAdd: (arg) &#x3D;&gt; &#123;&#125;,</span><br><span class="line">	onDelete: (arg) &#x3D;&gt; &#123;&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">----------------- 最终返回 &#x3D;&#x3D;&#x3D;&gt; ---------------------</span><br><span class="line"></span><br><span class="line">(dispatch) &#x3D;&gt; (&#123;</span><br><span class="line">	onAdd: (arg) &#x3D;&gt; &#123;</span><br><span class="line">		dispatch( actionCreators.onAdd(arg) )</span><br><span class="line">	&#125;,</span><br><span class="line">	onDelete: (arg) &#x3D;&gt; &#123;</span><br><span class="line">		dispatch( actionCreators.onDelete(arg) )</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>看到这里基本就知道原理了，我们来实现以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function bindActionCreators (actionCreators, dispatch) &#123;</span><br><span class="line">	var mapDispatchToProps &#x3D; &#123;&#125;;</span><br><span class="line">    for (let key in actionCreators) &#123;</span><br><span class="line">        mapDispatchToProps[key] &#x3D; (...args) &#x3D;&gt; &#123;</span><br><span class="line">            dispatch(actionCreators[key](...args));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    return mapDispatchToProps;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="combineReducers"><a href="#combineReducers" class="headerlink" title="combineReducers"></a>combineReducers</h5><p><strong>combineReducers</strong>允许我们将一个个小的<strong>reduer</strong>组合成一个<strong>reducer</strong>，下面我们看下这个函数的调用以及我们所期待的返回结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const reducer &#x3D; combinReducers(&#123;</span><br><span class="line">	product: (state, action) &#x3D;&gt; &#123; ... &#125;,</span><br><span class="line">	...</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">----------------- 最终返回一个reducer函数 &#x3D;&#x3D;&#x3D;&#x3D;&gt; ---------------------</span><br><span class="line"></span><br><span class="line">(state, action) &#x3D;&gt; &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出， <strong>combineReducers</strong> 最终需要返回一个新的 <strong>reducer</strong>函数，这个函数需要接收<strong>action</strong>并返回一个新的合并的<strong>store</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const combineReducers &#x3D; (reducers) &#x3D;&gt; &#123;</span><br><span class="line">	&#x2F;&#x2F; 检查reducers下每个字段值得类型，必须都是函数</span><br><span class="line">	const reducerKeys &#x3D; Object.keys(reducers);</span><br><span class="line">	for (let key of reducerKeys) &#123;</span><br><span class="line">		if (typeof reducers[key] !&#x3D;&#x3D; &#39;function&#39;) throw new Error(&#39;reducer must be a function&#39;);</span><br><span class="line"> 	&#125;</span><br><span class="line">	&#x2F;&#x2F; 依次调用reducer，并将每个reducer的返回值返回到新的state中对应的部分</span><br><span class="line">	return function (state, action) &#123;</span><br><span class="line">		const nextState &#x3D; &#123;&#125;;</span><br><span class="line">		</span><br><span class="line">		for (let key of reducerKeys) &#123;</span><br><span class="line">			const reducer &#x3D; reducers[key];</span><br><span class="line">            const oldState &#x3D; state[key];</span><br><span class="line">            nextState[key] &#x3D; reducer(oldState, action);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		return nextState;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>combineReducers</strong>的原理就是当执行一个<strong>action</strong>时，依次执行每个小的<strong>reducer</strong>，并将所有结果合并到一个大的<strong>state</strong>对象中</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/redux/">redux</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/01/20/react-hooks/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">react-hooks</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/01/06/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        <span class="next-text nav-default">位运算</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

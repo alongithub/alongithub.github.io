@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅"/>
+
+
+
+
+  <meta name="keywords" content="备忘," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ALONG" >
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://github.com/alongithub/2020/09/04/备忘/"/>
+
+
+<meta name="description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="备忘">
+<meta property="og:url" content="https://github.com/alongithub/2020/09/04/%E5%A4%87%E5%BF%98/index.html">
+<meta property="og:site_name" content="ALONG">
+<meta property="og:description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-04T00:51:17.000Z">
+<meta property="article:modified_time" content="2021-12-27T01:47:33.599Z">
+<meta property="article:author" content="along">
+<meta property="article:tag" content="备忘">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 备忘 - ALONG </title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div id="page"  class=" hastoc ">
+      
+        
+        <div id="toc" class="toc-article">
+          <div class="toc-title">目录</div>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#eslint-%E5%85%B3%E9%97%AD%E6%A0%A1%E9%AA%8C"><span class="toc-text">eslint 关闭校验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E6%AE%B5%E8%90%BD%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭段落校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%BD%93%E5%89%8D%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭当前行校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E4%B8%8B%E4%B8%80%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭下一行校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%AF%B9%E8%BF%99%E5%8D%95%E4%B8%80%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭对这单一文件的校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%91%BD%E4%BB%A4"><span class="toc-text">git 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="toc-text">查看分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E5%88%86%E6%94%AF"><span class="toc-text">切换到分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-text">新建分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF%E5%B9%B6%E5%88%87%E6%8D%A2"><span class="toc-text">新建分支并切换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centOS-%E9%83%A8%E7%BD%B2"><span class="toc-text">centOS 部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-text">后台运行程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看所有后台进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看后台进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bnode%E7%9B%B8%E5%85%B3%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看node相关进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9B%E7%A8%8B"><span class="toc-text">删除进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-text">复制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-text">移动文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-text">创建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2"><span class="toc-text">用户切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bip"><span class="toc-text">查看ip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-text">查看关闭防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-text">查看端口占用情况</span></a></li></ol></li></ol>
+        </div>
+      
+      <div class="main_wrapper">
+        <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ALONG</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+        </header>
+        <div id="content">
+          
+          
+    <div id="primary">
+        
+  <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          备忘
+        
+      </h1>
+
+      <time class="post-time">
+          9月 04 2020
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="eslint-关闭校验"><a href="#eslint-关闭校验" class="headerlink" title="eslint 关闭校验"></a>eslint 关闭校验</h3><h4 id="关闭段落校验"><a href="#关闭段落校验" class="headerlink" title="关闭段落校验"></a>关闭段落校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br><span class="line">    代码块</span><br><span class="line">&#x2F;* eslint-enable *&#x2F;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="关闭当前行校验"><a href="#关闭当前行校验" class="headerlink" title="关闭当前行校验"></a>关闭当前行校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一行代码 &#x2F;&#x2F; eslint-disable-line</span><br></pre></td></tr></table></figure>
+<h4 id="关闭下一行校验"><a href="#关闭下一行校验" class="headerlink" title="关闭下一行校验"></a>关闭下一行校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; eslint-disable-next-line</span><br><span class="line">下一行的代码</span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭对这单一文件的校验"><a href="#关闭对这单一文件的校验" class="headerlink" title="关闭对这单一文件的校验"></a>关闭对这单一文件的校验</h4><p>在文件头部加上注释,eslint在校验的时候会跳过后续的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br></pre></td></tr></table></figure>
+<h3 id="git-命令"><a href="#git-命令" class="headerlink" title="git 命令"></a>git 命令</h3><h4 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
+<h4 id="切换到分支"><a href="#切换到分支" class="headerlink" title="切换到分支"></a>切换到分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkout 分支名称 </span><br></pre></td></tr></table></figure>
+
+<h4 id="新建分支"><a href="#新建分支" class="headerlink" title="新建分支"></a>新建分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支 </span><br></pre></td></tr></table></figure>
+
+<h4 id="新建分支并切换"><a href="#新建分支并切换" class="headerlink" title="新建分支并切换"></a>新建分支并切换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b 分支 </span><br></pre></td></tr></table></figure>
+
+<h3 id="centOS-部署"><a href="#centOS-部署" class="headerlink" title="centOS 部署"></a>centOS 部署</h3><h4 id="后台运行程序"><a href="#后台运行程序" class="headerlink" title="后台运行程序"></a>后台运行程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup (启动服务命令node build&#x2F;server.js) &amp;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看所有后台进程"><a href="#查看所有后台进程" class="headerlink" title="查看所有后台进程"></a>查看所有后台进程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jobs</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看后台进程"><a href="#查看后台进程" class="headerlink" title="查看后台进程"></a>查看后台进程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看node相关进程"><a href="#查看node相关进程" class="headerlink" title="查看node相关进程"></a>查看node相关进程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep node</span><br><span class="line"># 或者</span><br><span class="line">ps -ef|grep node</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除进程"><a href="#删除进程" class="headerlink" title="删除进程"></a>删除进程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 (进程id)</span><br></pre></td></tr></table></figure>
+
+<h4 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp 源文件 目标路径</span><br></pre></td></tr></table></figure>
+
+<h4 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv 源 目标</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -i 源      &#x2F;&#x2F; -i 删除前询问</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch 文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户切换"><a href="#用户切换" class="headerlink" title="用户切换"></a>用户切换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su 用户名</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看ip"><a href="#查看ip" class="headerlink" title="查看ip"></a>查看ip</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看关闭防火墙"><a href="#查看关闭防火墙" class="headerlink" title="查看关闭防火墙"></a>查看关闭防火墙</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall -amd --state    查看防火墙状态</span><br><span class="line">systemctl stop firewalld.service   停止</span><br><span class="line">systemctl disable firewalld.service  禁止开机启动</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看端口占用情况"><a href="#查看端口占用情况" class="headerlink" title="查看端口占用情况"></a>查看端口占用情况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp|grep 端口号</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+      
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/%E5%A4%87%E5%BF%98/">备忘</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">手写Promise</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E6%BA%90%E7%A0%81/">
+        <span class="next-text nav-default">vue响应式源码</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+        </div>
+
+        <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2020 -
+    
+    2021
+    <span class="footer-author">along.</span>
+    
+</span>
+
+        </footer>
+
+        <div class="back-to-top" id="back-to-top">
+          <i class="iconfont icon-up"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
