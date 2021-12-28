@@ -702,6 +702,15 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装过程</title>
+    <url>/2021/01/21/npm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>以安装gulp-imagemin为例</p>
+<p>请求一个接口 <a href="https://registry.npmjs.com/gulp">https://registry.npmjs.com/gulp</a> 你的镜像地址 + 项目名</p>
+<p>这个接口会返回json数据</p>
+<p>下载某个npm模块后，回家压倒node_modules中，检查木块的package.json 的 scripts ，是否有 install 和 postinstall， 这两个会自动执行</p>
+]]></content>
+  </entry>
+  <entry>
     <title>react-hooks</title>
     <url>/2021/01/20/react-hooks/</url>
     <content><![CDATA[<h3 id="react-hooks"><a href="#react-hooks" class="headerlink" title="react hooks"></a>react hooks</h3><h4 id="userState"><a href="#userState" class="headerlink" title="userState"></a>userState</h4><p><strong>useState</strong> 在使用声明时可以传一个函数，这个函数可以用于动态的给 <strong>useState</strong> 附初始值，而函数中的代码又只会执行一次。</p>
@@ -801,15 +810,6 @@
       <tags>
         <tag>hooks</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>npm安装过程</title>
-    <url>/2021/01/21/npm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p>以安装gulp-imagemin为例</p>
-<p>请求一个接口 <a href="https://registry.npmjs.com/gulp">https://registry.npmjs.com/gulp</a> 你的镜像地址 + 项目名</p>
-<p>这个接口会返回json数据</p>
-<p>下载某个npm模块后，回家压倒node_modules中，检查木块的package.json 的 scripts ，是否有 install 和 postinstall， 这两个会自动执行</p>
-]]></content>
   </entry>
   <entry>
     <title>react 性能优化</title>
