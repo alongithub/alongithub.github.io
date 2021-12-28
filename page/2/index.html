@@ -1,515 +1,510 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
   <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+      ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+  
+  
+    
+<script src="/js/local-search.js"></script>
 
 
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/">微信开发者工具</a>
+      </h2>
+      <p class="article-date">2020年11月19日</p>
+      
+      <div class="article-summary">
+        
+          微信开发者工具是基于NW实现的，开发工具中所有功能、按钮、模块都是用web实现的，我们可以通过打开隐藏调试工具找到每个部分的代码
+在开发工具控制台，使用命令1openInspect()
+
+打开chromw devtool
 
 
+点击Apps -&gt; inspect
+此时就打开了隐藏的调试工 ...
+        
+      </div>
+      <a class="more" href="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/11/11/centOs-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">centOs 服务器部署</a>
+      </h2>
+      <p class="article-date">2020年11月11日</p>
+      
+        
+  <a href="/tags#centOS" >
+    <span class="tag-code">centOS</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          安装node安装 nvm安装nvm，执行一下命另下载安装nvm并注册到bash，可以在命令行使用
+1wget -qO- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0.35.3&#x2F;ins ...
+        
+      </div>
+      <a class="more" href="/2020/11/11/centOs-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">vue全家桶+ts+eslint项目搭建</a>
+      </h2>
+      <p class="article-date">2020年10月29日</p>
+      
+        
+  <a href="/tags#vue项目" >
+    <span class="tag-code">vue项目</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          初始化安装脚手架工具安装@vue-cli
+我这里用的是@vue-cli v4.5.8
+1npm install @vue-cli -g
 
 
+初始化项目执行
+1vue create boss
 
 
+选择一个预设，这里选第三个手动配置选项
+1234? Please pick a preset:   ...
+        
+      </div>
+      <a class="more" href="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/10/27/vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">vue3 响应式原理</a>
+      </h2>
+      <p class="article-date">2020年10月27日</p>
+      
+        
+  <a href="/tags#vue" >
+    <span class="tag-code">vue</span>
+  </a>
+
+  <a href="/tags#vue源码" >
+    <span class="tag-code">vue源码</span>
+  </a>
+
+  <a href="/tags#vue3" >
+    <span class="tag-code">vue3</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          辅助函数123456789const isObject = val =&gt; val !== null &amp;&amp; typeof val === &#x27;object&#x27;;// 用于判断目标是否是对象，是对象进行代理const convert = target =&g ...
+        
+      </div>
+      <a class="more" href="/2020/10/27/vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/">原型链继承</a>
+      </h2>
+      <p class="article-date">2020年10月23日</p>
+      
+        
+  <a href="/tags#原型链" >
+    <span class="tag-code">原型链</span>
+  </a>
+
+  <a href="/tags#继承" >
+    <span class="tag-code">继承</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          什么是原型
+
+每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型”继承”属性，实例对象可通过__proto__访问到对象的原型，这个原型指向构造函数的prototype。
+每个原型都有一个 constructor ...
+        
+      </div>
+      <a class="more" href="/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/09/29/Gridsome-%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E7%94%9F%E6%88%90/">静态网页生成[gridsome]</a>
+      </h2>
+      <p class="article-date">2020年9月29日</p>
+      
+        
+  <a href="/tags#Gridsome" >
+    <span class="tag-code">Gridsome</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          静态网站什么是静态网站
+静态网站是使用一系列模板数据及配置生成静态html文件及相关资源的工具
+这个功能也叫作预渲染
+生成的网站不需要类似PHP这样的服务器
+只需要放在web server或者cdn上就可以
+
+静态网站的优点
+不需要专业服务器，服务器成本低，只需要能托管静态文件的空间
+响应快 ...
+        
+      </div>
+      <a class="more" href="/2020/09/29/Gridsome-%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E7%94%9F%E6%88%90/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/09/27/%E6%90%AD%E5%BB%BAVue-SSR/">搭建Vue SSR</a>
+      </h2>
+      <p class="article-date">2020年9月27日</p>
+      
+        
+  <a href="/tags#Vue ssr" >
+    <span class="tag-code">Vue ssr</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          搭建VUE SSR环境依赖安装初始化项目npm init
+安装依赖
+1npm install vue vue-server-renderer
+
+服务端生成html文本创建文件server.js
+1234567891011121314151617const Vue &#x3D; require ...
+        
+      </div>
+      <a class="more" href="/2020/09/27/%E6%90%AD%E5%BB%BAVue-SSR/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/09/23/webpack%E6%90%AD%E5%BB%BAreact%E8%84%9A%E6%89%8B%E6%9E%B6/">webpack搭建react脚手架</a>
+      </h2>
+      <p class="article-date">2020年9月23日</p>
+      
+        
+  <a href="/tags#react" >
+    <span class="tag-code">react</span>
+  </a>
+
+  <a href="/tags#webpack" >
+    <span class="tag-code">webpack</span>
+  </a>
+
+  <a href="/tags#ts" >
+    <span class="tag-code">ts</span>
+  </a>
+
+  <a href="/tags#eslint" >
+    <span class="tag-code">eslint</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          基础配置1. 安装webpack初始化项目，初始化package.json
+1npm init -y
+
+安装webpack包，webpack
+1npm install webpack webpack-cli -D
+
+创建文件  src/index.js
+1console.log(&#x27; ...
+        
+      </div>
+      <a class="more" href="/2020/09/23/webpack%E6%90%AD%E5%BB%BAreact%E8%84%9A%E6%89%8B%E6%9E%B6/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/09/23/%E6%89%8B%E5%86%99promise/">手写Promise</a>
+      </h2>
+      <p class="article-date">2020年9月23日</p>
+      
+        
+  <a href="/tags#Promise" >
+    <span class="tag-code">Promise</span>
+  </a>
+
+  <a href="/tags#Promise源码" >
+    <span class="tag-code">Promise源码</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777 ...
+        
+      </div>
+      <a class="more" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2020/09/04/%E5%A4%87%E5%BF%98/">备忘</a>
+      </h2>
+      <p class="article-date">2020年9月4日</p>
+      
+        
+  <a href="/tags#备忘" >
+    <span class="tag-code">备忘</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          eslint 关闭校验关闭段落校验123&#x2F;* eslint-disable *&#x2F;    代码块&#x2F;* eslint-enable *&#x2F;
 
 
-  <link rel="alternate" href="/default" title="ALONG" >
+关闭当前行校验1一行代码 &#x2F;&#x2F; eslint-disable-line
+关闭下一行校验12&# ...
+        
+      </div>
+      <a class="more" href="/2020/09/04/%E5%A4%87%E5%BF%98/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/3/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
 
 
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
 
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://github.com/alongithub/page/2/"/>
-
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="ALONG">
-<meta property="og:url" content="https://github.com/alongithub/page/2/index.html">
-<meta property="og:site_name" content="ALONG">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="along">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
-
-
-
-
-
-<script type="text/javascript">
-  var themeConfig = {
-    fancybox: {
-      enable: false
-    },
-  };
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
 </script>
 
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
 
-
-
-  
-
-
-
-    <title> ALONG - </title>
-  <meta name="generator" content="Hexo 5.4.0"></head>
-
-  <body>
-    <div id="page"  class="">
-      
-      <div class="main_wrapper">
-        <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">ALONG</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                
-            </ul>
-        
-  </nav>
-</div>
-
-        </header>
-        <div id="content">
-          
-          
-    <div id="primary" class="home">
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/11/19/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7/">微信开发者工具</a>
-        
-      </h1>
-
-      <time class="post-time">
-          11月 19 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              微信开发者工具是基于NW实现的，所有功能、按钮、模块都是用web实现的，可以通过隐藏命令打开微信开发工具编译器的控制台
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/11/11/centOs-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">centOs 服务器部署</a>
-        
-      </h1>
-
-      <time class="post-time">
-          11月 11 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/29/vue%E5%85%A8%E5%AE%B6%E6%A1%B6-ts-eslint%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">vue全家桶+ts+eslint项目搭建</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 29 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              vue + vuex + vue-router + TypeScript + ESLint + Git + sass + 身份认证 + 权限系统
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/27/vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">vue3 响应式原理</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 27 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              vue3 响应式实现，vue3.0新增的composition api，可以帮助开发者更好的组织和提取复用组件中同一业务逻辑的代码，涉及到了reactive、effect、ref、toRefs、computed等函数...
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/10/23/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/">原型链继承</a>
-        
-      </h1>
-
-      <time class="post-time">
-          10月 23 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              详解构造函数、原型、对象之间的关系，并讲解通过js实现类的继承
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/29/Gridsome-%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E7%94%9F%E6%88%90/">静态网页生成[gridsome]</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 29 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              静态站点生成是服务端渲染提前获取数据并预渲染对应的界面，用户拿到服务端预渲染页面后，接下来的交互完全基于客户端的SPA应用，从而使用户体验达到极致
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/27/%E6%90%AD%E5%BB%BAVue-SSR/">搭建Vue SSR</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 27 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              搭建一个vue的ssr应用案例，并实现浏览器和服务端的同构，数据持久化
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/23/webpack%E6%90%AD%E5%BB%BAreact%E8%84%9A%E6%89%8B%E6%9E%B6/">webpack搭建react脚手架</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 23 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              webpack继承react项目脚手架，集成ts，eslint规范制定
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">手写Promise</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 23 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              实现了Promise构造器，then方法链式调用，同一个Promise对象多个then方法，resolve、all静态方法。finaly、catch方法及链式调用
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-            
-  <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2020/09/04/%E5%A4%87%E5%BF%98/">备忘</a>
-        
-      </h1>
-
-      <time class="post-time">
-          9月 04 2020
-      </time>
-    </header>
-
-
-
-    
-        <div class="post-excerpt post-content">
-            
-            
-              
-            
-
-            
-              平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅
-        </div>
-            
-          
-
-    
-  </article>
-
-        
-        
-  <nav class="pagination">
-    
-      <a class="prev" href="/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    
-    
-      <a class="next" href="/page/3/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
-    </div>
-    <div id="secondary">
-    
-
-    
-
-    
-    <section id="tags" class="widget-area widget_tags">
-        <h3 class="widget-title">Tags</h3>
-        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gridsome/" rel="tag">Gridsome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/notes/" rel="tag">notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" rel="tag">异步编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centOS/" rel="tag">centOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/" rel="tag">centos</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab/" rel="tag">gitlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mobx/" rel="tag">mobx</a><span class="tag-list-count">1</span></li></ul>
-    </section>
-
-
-</div>
-
-
-        </div>
-
-        <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2020 -
-    
-    2021
-    <span class="footer-author">along.</span>
-    
-</span>
-
-        </footer>
-
-        <div class="back-to-top" id="back-to-top">
-          <i class="iconfont icon-up"></i>
-        </div>
-      </div>
-      
-    </div>
-    
-
-
-    
-
-
-
-
-  
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
-  
-
-  
-
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
 
   </body>
 </html>

@@ -1,139 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
   <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+      react-hooks | ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
 
-
-
-  <meta name="description" content="react hooks 常见用法，自定义hooks方式，以及useState、useEffect、useReducer实现原理"/>
-
-
-
-
-  <meta name="keywords" content="hooks," />
-
-
-
-
-
-  <link rel="alternate" href="/default" title="ALONG" >
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://github.com/alongithub/2021/01/20/react-hooks/"/>
-
-
-<meta name="description" content="react hooks 常见用法，自定义hooks方式，以及useState、useEffect、useReducer实现原理">
-<meta property="og:type" content="article">
-<meta property="og:title" content="react-hooks">
-<meta property="og:url" content="https://github.com/alongithub/2021/01/20/react-hooks/index.html">
-<meta property="og:site_name" content="ALONG">
-<meta property="og:description" content="react hooks 常见用法，自定义hooks方式，以及useState、useEffect、useReducer实现原理">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-20T07:19:47.000Z">
-<meta property="article:modified_time" content="2021-12-27T01:47:33.590Z">
-<meta property="article:author" content="along">
-<meta property="article:tag" content="hooks">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
-
-
-
-
-
-<script type="text/javascript">
-  var themeConfig = {
-    fancybox: {
-      enable: false
-    },
-  };
-</script>
-
-
-
-
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
   
 
 
+  
+  
+    
+<script src="/js/local-search.js"></script>
 
-    <title> react-hooks - ALONG </title>
-  <meta name="generator" content="Hexo 5.4.0"></head>
 
-  <body>
-    <div id="page"  class="">
-      
-      <div class="main_wrapper">
-        <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">ALONG</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                
-            </ul>
-        
-  </nav>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
-
-        </header>
-        <div id="content">
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
           
+            <a href="/" class="item-link">Home</a>
           
-    <div id="primary">
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
         
-  <article class="post">
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
     
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          react-hooks
-        
-      </h1>
-
-      <time class="post-time">
-          1月 20 2021
-      </time>
-    </header>
-
-
-
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
     
-            <div class="post-content">
-            <h3 id="react-hooks"><a href="#react-hooks" class="headerlink" title="react hooks"></a>react hooks</h3><h4 id="userState"><a href="#userState" class="headerlink" title="userState"></a>userState</h4><p><strong>useState</strong> 在使用声明时可以传一个函数，这个函数可以用于动态的给 <strong>useState</strong> 附初始值，而函数中的代码又只会执行一次。</p>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>react-hooks</h2>
+  <p class="post-date">2021-01-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="react-hooks"><a href="#react-hooks" class="headerlink" title="react hooks"></a>react hooks</h3><h4 id="userState"><a href="#userState" class="headerlink" title="userState"></a>userState</h4><p><strong>useState</strong> 在使用声明时可以传一个函数，这个函数可以用于动态的给 <strong>useState</strong> 附初始值，而函数中的代码又只会执行一次。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过这种方式也可以动态的附初始值，但是函数组件在每次调用的时候都会计算一次初始值，这无疑是浪费性能的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Demo</span> (<span class="params">props</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> num = props.num * <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">const</span> [count, setCount] = useState(num);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过useState附初始值动态设置初始数值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Demo</span> (<span class="params">props</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> [count, setCount] = useState(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> props.num * <span class="number">100</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="设置状态值得函数使用细节"><a href="#设置状态值得函数使用细节" class="headerlink" title="设置状态值得函数使用细节"></a>设置状态值得函数使用细节</h5><p><strong>useState</strong>结构的第二的参数是设置值的函数，这个函数可以接受值，也可以接收一个函数。如上面的 <strong>setCount</strong> 在调用时可以传入一个函数，这个函数接收一个形参 ，代表当前值，函数返回要更改的值</p>
@@ -226,89 +270,215 @@
 <h4 id="useReducer-1"><a href="#useReducer-1" class="headerlink" title="useReducer"></a>useReducer</h4><p><strong>useReducer</strong> 原理非常简单，它实际上是 <strong>useState</strong> 和 <strong>redux</strong> 设计思想的结合</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function useReducer(reducer, initialState) &#123;</span><br><span class="line">	const [state, setState] &#x3D; useState(initialState); &#x2F;&#x2F; 内部使用 useState 保存状态</span><br><span class="line">	const dispatch &#x3D; (action) &#x3D;&gt; &#123;</span><br><span class="line">		setState(reducer(state, action));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return [state, dispatch];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function App() &#123;</span><br><span class="line">	function reducer(state, action) &#123;</span><br><span class="line">		switch(action.type) &#123;</span><br><span class="line">			case &#39;incre&#39;: return state + 1;</span><br><span class="line">			case &#39;decre&#39;: return state - 1; </span><br><span class="line">			default: return state;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	const [num, dispatch] &#x3D; useReducer(reducer, 0);</span><br><span class="line"></span><br><span class="line">	return &lt;&gt;</span><br><span class="line">		&lt;button onClick&#x3D;&#123;() &#x3D;&gt; &#123;dispatch(&#123;type: &#39;incre&#39;&#125;)&#125;&#125;&gt;&#123;num&#125;&lt;&#x2F;button&gt;</span><br><span class="line">	&lt;&#x2F;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-            </div>
-          
-
+</section>
+    <!-- Tags START -->
     
-      <footer class="post-footer">
-      
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/hooks/">hooks</a>
-		  
-		</div>
-		
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#hooks" >
+    <span class="tag-code">hooks</span>
+  </a>
 
-        
-        
-  <nav class="post-nav">
+      </div>
     
-      <a class="prev" href="/2021/01/20/react-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">react 性能优化</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/01/14/mobx/">
+        <span class="nav-arrow">← </span>
+        
+          mobx
+        
       </a>
     
     
-      <a class="next" href="/2021/01/14/mobx/">
-        <span class="next-text nav-default">mobx</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
+      <a class="nav-right" href="/2021/01/20/react-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
         
-  <div class="comments" id="comments">
+          react 性能优化
+        
+        <span class="nav-arrow"> →</span>
+      </a>
     
   </div>
 
-
-      </footer>
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo=""
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
     
   </article>
-
-    </div>
-
-        </div>
-
-        <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2020 -
-    
-    2021
-    <span class="footer-author">along.</span>
-    
-</span>
-
-        </footer>
-
-        <div class="back-to-top" id="back-to-top">
-          <i class="iconfont icon-up"></i>
-        </div>
-      </div>
-      
-    </div>
-    
-
-
-    
-
-
-
-
+  <!-- Article END -->
+  <!-- Catalog START -->
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#react-hooks"><span class="toc-nav-text">react hooks</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#userState"><span class="toc-nav-text">userState</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8A%B6%E6%80%81%E5%80%BC%E5%BE%97%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8%E7%BB%86%E8%8A%82"><span class="toc-nav-text">设置状态值得函数使用细节</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useReducer"><span class="toc-nav-text">useReducer</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useContext"><span class="toc-nav-text">useContext</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useEffect-%E5%A4%84%E7%90%86%E5%89%AF%E4%BD%9C%E7%94%A8"><span class="toc-nav-text">useEffect 处理副作用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#useEffect-%E7%9B%B8%E6%AF%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-nav-text">useEffect 相比生命周期函数的优点</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#useEffect-%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-nav-text">useEffect 第二个参数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#useEffect-%E5%A4%84%E7%90%86%E5%BC%82%E6%AD%A5"><span class="toc-nav-text">useEffect 处理异步</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useMemo"><span class="toc-nav-text">useMemo</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#React-memo"><span class="toc-nav-text">React.memo</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useCallback"><span class="toc-nav-text">useCallback()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useRef"><span class="toc-nav-text">useRef()</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#useRef-%E7%94%A8%E4%BA%8E%E8%8E%B7%E5%8F%96-DOM-%E5%AF%B9%E8%B1%A1"><span class="toc-nav-text">useRef 用于获取 DOM 对象</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%94%A8%E4%BA%8E%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-nav-text">用于保存数据</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="toc-nav-text">自定义 Hook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#React-router-dom-%E6%8F%90%E4%BE%9B%E7%9A%84%E8%B7%AF%E7%94%B1%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-nav-text">React-router-dom 提供的路由钩子函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#react-hooks-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-nav-text">react hooks 实现原理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useState"><span class="toc-nav-text">useState</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useEffect"><span class="toc-nav-text">useEffect</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#useReducer-1"><span class="toc-nav-text">useReducer</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
   
+  <!-- Catalog END -->
+</main>
 
-  
+<script>
+  (function () {
+    var url = 'https://github.com/alongithub/2021/01/20/react-hooks/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
 
   </body>
 </html>

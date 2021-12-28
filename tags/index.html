@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Tags | ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Tags</h2>
+  <p class="post-date">Tag Retrieval</p>
+</div>
+<main class="app-body">
+  <div id="tag-cloud">
+    
+      <a class="tag0" data-name="tag-Gridsome">Gridsome</a>
+    
+      <a class="tag3" data-name="tag-notes">notes</a>
+    
+      <a class="tag3" data-name="tag-javascript">javascript</a>
+    
+      <a class="tag1" data-name="tag-异步编程">异步编程</a>
+    
+      <a class="tag1" data-name="tag-centOS">centOS</a>
+    
+      <a class="tag2" data-name="tag-centos">centos</a>
+    
+      <a class="tag1" data-name="tag-虚拟机">虚拟机</a>
+    
+      <a class="tag3" data-name="tag-gitlab">gitlab</a>
+    
+      <a class="tag1" data-name="tag-面试题">面试题</a>
+    
+      <a class="tag2" data-name="tag-mobx">mobx</a>
+    
+      <a class="tag1" data-name="tag-hooks">hooks</a>
+    
+      <a class="tag1" data-name="tag-react">react</a>
+    
+      <a class="tag2" data-name="tag-性能优化">性能优化</a>
+    
+      <a class="tag0" data-name="tag-vue">vue</a>
+    
+      <a class="tag0" data-name="tag-vue-router">vue-router</a>
+    
+      <a class="tag1" data-name="tag-vue源码">vue源码</a>
+    
+      <a class="tag2" data-name="tag-vue3">vue3</a>
+    
+      <a class="tag0" data-name="tag-vue项目">vue项目</a>
+    
+      <a class="tag1" data-name="tag-webpack">webpack</a>
+    
+      <a class="tag2" data-name="tag-ts">ts</a>
+    
+      <a class="tag2" data-name="tag-eslint">eslint</a>
+    
+      <a class="tag0" data-name="tag-原型链">原型链</a>
+    
+      <a class="tag1" data-name="tag-继承">继承</a>
+    
+      <a class="tag1" data-name="tag-备忘">备忘</a>
+    
+      <a class="tag1" data-name="tag-Promise">Promise</a>
+    
+      <a class="tag1" data-name="tag-Promise源码">Promise源码</a>
+    
+      <a class="tag1" data-name="tag-模块化">模块化</a>
+    
+      <a class="tag0" data-name="tag-脚手架">脚手架</a>
+    
+      <a class="tag0" data-name="tag-虚拟dom">虚拟dom</a>
+    
+      <a class="tag2" data-name="tag-es6">es6</a>
+    
+      <a class="tag1" data-name="tag-redux">redux</a>
+    
+      <a class="tag2" data-name="tag-vue3.0">vue3.0</a>
+    
+      <a class="tag3" data-name="tag-composition Api">composition Api</a>
+    
+      <a class="tag3" data-name="tag-JSX">JSX</a>
+    
+      <a class="tag1" data-name="tag-Vue ssr">Vue ssr</a>
+    
+      <a class="tag0" data-name="tag-自动化">自动化</a>
+    
+  </div>
+  
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-Gridsome">Gridsome</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/29/Gridsome-静态网页生成/">静态网页生成[gridsome]</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-notes">notes</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/JS异步编程/">JS异步编程</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/ES6/">ES6</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-javascript">javascript</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/JS异步编程/">JS异步编程</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/javascript面试题/">javascript 基础梳理</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/ES6/">ES6</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-异步编程">异步编程</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/JS异步编程/">JS异步编程</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-centOS">centOS</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/11/11/centOs-服务器部署/">centOs 服务器部署</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-centos">centos</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/12/14/centos虚拟机安装/">centos虚拟机安装</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/12/14/gitlab搭建/">gitlab搭建</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-虚拟机">虚拟机</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/12/14/centos虚拟机安装/">centos虚拟机安装</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-gitlab">gitlab</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/12/14/gitlab搭建/">gitlab搭建</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-面试题">面试题</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/javascript面试题/">javascript 基础梳理</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-mobx">mobx</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/01/14/mobx/">mobx</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-hooks">hooks</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/01/20/react-hooks/">react-hooks</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-react">react</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/01/20/react-性能优化/">react 性能优化</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/webpack搭建react脚手架/">webpack搭建react脚手架</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-性能优化">性能优化</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/01/20/react-性能优化/">react 性能优化</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue">vue</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/vue-router原理/">vue-router原理</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/27/vue3-响应式原理/">vue3 响应式原理</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/vue响应式原理/">vue响应式原理</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/虚拟dom/">vue虚拟dom</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/vue响应式源码/">vue响应式源码</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue-router">vue-router</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/vue-router原理/">vue-router原理</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue源码">vue源码</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/27/vue3-响应式原理/">vue3 响应式原理</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/vue响应式源码/">vue响应式源码</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue3">vue3</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/27/vue3-响应式原理/">vue3 响应式原理</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue项目">vue项目</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/29/vue全家桶-ts-eslint项目搭建/">vue全家桶+ts+eslint项目搭建</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-webpack">webpack</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/webpack/">webpack</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/webpack搭建react脚手架/">webpack搭建react脚手架</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-ts">ts</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/webpack搭建react脚手架/">webpack搭建react脚手架</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-eslint">eslint</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/webpack搭建react脚手架/">webpack搭建react脚手架</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-原型链">原型链</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/23/原型链继承/">原型链继承</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-继承">继承</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/10/23/原型链继承/">原型链继承</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-备忘">备忘</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/04/备忘/">备忘</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-Promise">Promise</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/手写promise/">手写Promise</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-Promise源码">Promise源码</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/23/手写promise/">手写Promise</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-模块化">模块化</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/模块化/">模块化</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-脚手架">脚手架</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/脚手架工具/">脚手架工具</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-虚拟dom">虚拟dom</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/虚拟dom/">vue虚拟dom</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-es6">es6</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/26/ES6/">ES6</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-redux">redux</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/01/14/redux/">redux</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-vue3.0">vue3.0</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/06/12/vue3-0语法/">vue3语法</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-composition Api">composition Api</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/06/12/vue3-0语法/">vue3语法</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-JSX">JSX</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2021/06/12/vue3-0语法/">vue3语法</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-Vue ssr">Vue ssr</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/09/27/搭建Vue-SSR/">搭建Vue SSR</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-自动化">自动化</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/08/27/自动化构建/">自动化构建</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+</main>
+
+<script>
+  (function () {
+    var url = 'https://github.com/alongithub/tags/index.html'
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+    var tag = location.hash.replace('#', '')
+    if (tag) {
+      var tagId = "#tag-" + tag;
+      $("html, body").animate({
+        scrollTop: $(tagId).offset().top 
+      }, 400)
+    }
+  })();
+</script>
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

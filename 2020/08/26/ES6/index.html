@@ -1,150 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
   <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+      ES6 | ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
 
-
-
-  <meta name="description" content="ECMAScript在每年的6月份都会正式发布一次标准，ES6 就是2015年发布的标准，不过通常会用ES6来泛指 ES2015 以及以后的版本，这篇文章整理了 ES6 的一些新的特性，以后有新的标准发布都会持续更新进去"/>
-
-
-
-
-  <meta name="keywords" content="notes,javascript,es6," />
-
-
-
-
-
-  <link rel="alternate" href="/default" title="ALONG" >
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://github.com/alongithub/2020/08/26/ES6/"/>
-
-
-<meta name="description" content="ECMAScript在每年的6月份都会正式发布一次标准，ES6 就是2015年发布的标准，不过通常会用ES6来泛指 ES2015 以及以后的版本，这篇文章整理了 ES6 的一些新的特性，以后有新的标准发布都会持续更新进去">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ES6">
-<meta property="og:url" content="https://github.com/alongithub/2020/08/26/ES6/index.html">
-<meta property="og:site_name" content="ALONG">
-<meta property="og:description" content="ECMAScript在每年的6月份都会正式发布一次标准，ES6 就是2015年发布的标准，不过通常会用ES6来泛指 ES2015 以及以后的版本，这篇文章整理了 ES6 的一些新的特性，以后有新的标准发布都会持续更新进去">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/2020/08/26/ES6/clipboard.png">
-<meta property="og:image" content="https://github.com/2020/08/26/ES6/iterator.png">
-<meta property="article:published_time" content="2020-08-26T03:49:51.000Z">
-<meta property="article:modified_time" content="2021-12-27T01:47:33.577Z">
-<meta property="article:author" content="along">
-<meta property="article:tag" content="notes">
-<meta property="article:tag" content="javascript">
-<meta property="article:tag" content="es6">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/2020/08/26/ES6/clipboard.png">
-
-
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
-
-
-
-
-
-<script type="text/javascript">
-  var themeConfig = {
-    fancybox: {
-      enable: false
-    },
-  };
-</script>
-
-
-
-
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
   
 
 
+  
+  
+    
+<script src="/js/local-search.js"></script>
 
-    <title> ES6 - ALONG </title>
-  <meta name="generator" content="Hexo 5.4.0"></head>
 
-  <body>
-    <div id="page"  class=" hastoc ">
-      
-        
-        <div id="toc" class="toc-article">
-          <div class="toc-title">目录</div>
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES2015"><span class="toc-text">ES2015</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9Flet%E3%80%81const"><span class="toc-text">块级作用域let、const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">块级作用域的应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#let-var-const-%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">let,var,const 三者的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%EF%BC%88Destructuring%EF%BC%89"><span class="toc-text">解构（Destructuring）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84"><span class="toc-text">对象的解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84"><span class="toc-text">数组的解构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2-Template-literals"><span class="toc-text">模板字符串 (Template literals)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%93%E5%B1%95%E6%96%B9%E6%B3%95"><span class="toc-text">字符串拓展方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#includes%E3%80%81startsWith%E3%80%81endsWith"><span class="toc-text">includes、startsWith、endsWith</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%88Default-parameters%EF%BC%89"><span class="toc-text">参数默认值（Default parameters）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%A9%E4%BD%99%E5%8F%82%E6%95%B0"><span class="toc-text">剩余参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%95%E5%BC%80%E6%95%B0%E7%BB%84-Spread"><span class="toc-text">展开数组 Spread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%EF%BC%88Arrow-functions%EF%BC%89"><span class="toc-text">箭头函数（Arrow functions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F%E5%A2%9E%E5%BC%BA%EF%BC%88Enhanced-object-literals%EF%BC%89"><span class="toc-text">对象字面量增强（Enhanced object literals）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95"><span class="toc-text">对象扩展方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#object-assign"><span class="toc-text">object.assign</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Object-is"><span class="toc-text">Object.is()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proxy-%E4%BB%A3%E7%90%86"><span class="toc-text">Proxy 代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-%E4%B8%8E-Object-defineProperty-%E6%AF%94%E8%BE%83"><span class="toc-text">Proxy 与 Object.defineProperty 比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%9F%E5%8A%A9Proxy%E7%9B%91%E8%A7%86%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-text">借助Proxy监视数组操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-%E4%BB%A5%E9%9D%9E%E4%BE%B5%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F%E7%9B%91%E7%AE%A1%E5%AF%B9%E8%B1%A1%E8%AF%BB%E5%86%99"><span class="toc-text">Proxy 以非侵入的方式监管对象读写</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reflect"><span class="toc-text">Reflect</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1%E7%9A%84API"><span class="toc-text">统一操作对象的API</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classes-%E7%B1%BB"><span class="toc-text">Classes 类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-text">静态成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">static关键字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF-extends"><span class="toc-text">继承 extends</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">Set数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E6%98%A0%E5%B0%84%E4%B8%A4%E4%B8%AA%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">Map 数据结构，映射两个任意类型数据之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symbol-%E7%AC%AC%E4%B8%83%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%8C-esmascript-2017-%E7%AC%AC%E5%85%AB%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BBigInt"><span class="toc-text">Symbol  第七个数据类型，(esmascript 2017 第八个数据类型BigInt)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for-of-%E5%BE%AA%E7%8E%AF%EF%BC%8C"><span class="toc-text">for of 循环，</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F-%E8%AE%A9%E7%94%A8%E6%88%B7%E9%80%9A%E8%BF%87%E7%89%B9%E5%AE%9A%E7%9A%84%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE%E5%AE%B9%E5%99%A8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%82"><span class="toc-text">迭代器模式 让用户通过特定的接口访问容器的数据，不需要了解容器内部的数据结构。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generator"><span class="toc-text">生成器 Generator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E5%BA%94%E7%94%A8"><span class="toc-text">生成器应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES2016"><span class="toc-text">ES2016</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95includs"><span class="toc-text">数组方法includs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">指数运算符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES2017"><span class="toc-text">ES2017</span></a></li></ol>
-        </div>
-      
-      <div class="main_wrapper">
-        <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">ALONG</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                
-            </ul>
-        
-  </nav>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
-
-        </header>
-        <div id="content">
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
           
+            <a href="/" class="item-link">Home</a>
           
-    <div id="primary">
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
         
-  <article class="post">
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
     
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          ES6
-        
-      </h1>
-
-      <time class="post-time">
-          8月 26 2020
-      </time>
-    </header>
-
-
-
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
     
-            <div class="post-content">
-            <h2 id="ES2015"><a href="#ES2015" class="headerlink" title="ES2015"></a>ES2015</h2><h3 id="块级作用域let、const"><a href="#块级作用域let、const" class="headerlink" title="块级作用域let、const"></a>块级作用域let、const</h3><p>使用let和const定义的值都会产生块级作用域，这两种方式声明的变量只能在所声明的代码块中被访问。<br>const声明的变量是只读的，不可以修改内存地址</p>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>ES6</h2>
+  <p class="post-date">2020-08-26</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="ES2015"><a href="#ES2015" class="headerlink" title="ES2015"></a>ES2015</h2><h3 id="块级作用域let、const"><a href="#块级作用域let、const" class="headerlink" title="块级作用域let、const"></a>块级作用域let、const</h3><p>使用let和const定义的值都会产生块级作用域，这两种方式声明的变量只能在所声明的代码块中被访问。<br>const声明的变量是只读的，不可以修改内存地址</p>
 <h4 id="块级作用域的应用场景"><a href="#块级作用域的应用场景" class="headerlink" title="块级作用域的应用场景"></a>块级作用域的应用场景</h4><p>循环计数</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 块级作用域应用于双重循环的计数器</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0,1,2  0,1,2  0,1,2</span></span><br><span class="line"><span class="comment">// 两层循环的i不会互相影响，实际开发中这样使用不便于理解维护</span></span><br></pre></td></tr></table></figure>
 
@@ -279,87 +312,216 @@
 <h3 id="指数运算符"><a href="#指数运算符" class="headerlink" title="指数运算符"></a>指数运算符</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"><span class="comment">// 1024</span></span><br><span class="line"><span class="number">2</span> ** <span class="number">10</span>;</span><br><span class="line"><span class="comment">// 1024</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="ES2017"><a href="#ES2017" class="headerlink" title="ES2017"></a>ES2017</h2><p>Object.values 返回对象的值数组<br>Object.entries 返回对象键值对数组<br>Object.getOwnPropertyDescriptors 获取属性描述符，可以通过拷贝属性描述符拷贝getter、setter<br>padEnd 、 padStart  使用指定字符串填充字符串使其达到目标长度<br>参数列表尾逗号， 便于代码修改时参数扩充<br>Async/Await  Promise语法糖</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;along&#x27;</span>,</span><br><span class="line">    age: <span class="string">&#x27;24&#x27;</span>,</span><br><span class="line">    [<span class="built_in">Symbol</span>()]: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.values(person);</span><br><span class="line"><span class="comment">// [ &#x27;along&#x27;, &#x27;24&#x27; ]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.entries(person)</span><br><span class="line"><span class="comment">// [ [ &#x27;name&#x27;, &#x27;along&#x27; ], [ &#x27;age&#x27;, &#x27;24&#x27; ] ]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.entries([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line"><span class="comment">// [ [ &#x27;0&#x27;, 1 ], [ &#x27;1&#x27;, 2 ], [ &#x27;2&#x27;, 3 ] ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> description = <span class="built_in">Object</span>.getOwnPropertyDescriptors(person);</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   name: &#123;</span></span><br><span class="line"><span class="comment">//     value: &#x27;along&#x27;,</span></span><br><span class="line"><span class="comment">//     writable: true,</span></span><br><span class="line"><span class="comment">//     enumerable: true,</span></span><br><span class="line"><span class="comment">//     configurable: true</span></span><br><span class="line"><span class="comment">//   &#125;,</span></span><br><span class="line"><span class="comment">//   age: &#123; value: &#x27;24&#x27;, writable: true, enumerable: true, configurable: true &#125;,</span></span><br><span class="line"><span class="comment">//   [Symbol()]: &#123; value: 123, writable: true, enumerable: true, configurable: true &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 填充字符串</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> <span class="built_in">Object</span>.entries(person)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;key.padEnd(<span class="number">16</span>, <span class="string">&#x27;-&#x27;</span>)&#125;</span>|<span class="subst">$&#123;value.padStart(<span class="number">10</span>, <span class="string">&#x27;-&#x27;</span>)&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// name------------|-----along</span></span><br><span class="line"><span class="comment">// age-------------|--------24</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数列表尾逗号</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    name,</span></span></span><br><span class="line"><span class="function"><span class="params">    age,</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-            </div>
-          
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;along&#x27;</span>,</span><br><span class="line">    age: <span class="string">&#x27;24&#x27;</span>,</span><br><span class="line">    [<span class="built_in">Symbol</span>()]: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.values(person);</span><br><span class="line"><span class="comment">// [ &#x27;along&#x27;, &#x27;24&#x27; ]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.entries(person)</span><br><span class="line"><span class="comment">// [ [ &#x27;name&#x27;, &#x27;along&#x27; ], [ &#x27;age&#x27;, &#x27;24&#x27; ] ]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.entries([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line"><span class="comment">// [ [ &#x27;0&#x27;, 1 ], [ &#x27;1&#x27;, 2 ], [ &#x27;2&#x27;, 3 ] ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> description = <span class="built_in">Object</span>.getOwnPropertyDescriptors(person);</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   name: &#123;</span></span><br><span class="line"><span class="comment">//     value: &#x27;along&#x27;,</span></span><br><span class="line"><span class="comment">//     writable: true,</span></span><br><span class="line"><span class="comment">//     enumerable: true,</span></span><br><span class="line"><span class="comment">//     configurable: true</span></span><br><span class="line"><span class="comment">//   &#125;,</span></span><br><span class="line"><span class="comment">//   age: &#123; value: &#x27;24&#x27;, writable: true, enumerable: true, configurable: true &#125;,</span></span><br><span class="line"><span class="comment">//   [Symbol()]: &#123; value: 123, writable: true, enumerable: true, configurable: true &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 填充字符串</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> <span class="built_in">Object</span>.entries(person)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;key.padEnd(<span class="number">16</span>, <span class="string">&#x27;-&#x27;</span>)&#125;</span>|<span class="subst">$&#123;value.padStart(<span class="number">10</span>, <span class="string">&#x27;-&#x27;</span>)&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// name------------|-----along</span></span><br><span class="line"><span class="comment">// age-------------|--------24</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数列表尾逗号</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    name,</span></span></span><br><span class="line"><span class="function"><span class="params">    age,</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
     
-      <footer class="post-footer">
-      
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/notes/">notes</a>
-		  
-			<a href="/tags/javascript/">javascript</a>
-		  
-			<a href="/tags/es6/">es6</a>
-		  
-		</div>
-		
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#notes" >
+    <span class="tag-code">notes</span>
+  </a>
 
-        
-        
-  <nav class="post-nav">
+  <a href="/tags#javascript" >
+    <span class="tag-code">javascript</span>
+  </a>
+
+  <a href="/tags#es6" >
+    <span class="tag-code">es6</span>
+  </a>
+
+      </div>
     
-      <a class="prev" href="/2020/08/26/React%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">React 源码解读</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+    
+      <a class="nav-right" href="/2020/08/26/React%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/">
+        
+          React 源码解读
+        
+        <span class="nav-arrow"> →</span>
       </a>
-    
-    
-  </nav>
-
-        
-  <div class="comments" id="comments">
     
   </div>
 
-
-      </footer>
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo=""
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
     
   </article>
-
-    </div>
-
-        </div>
-
-        <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2020 -
-    
-    2021
-    <span class="footer-author">along.</span>
-    
-</span>
-
-        </footer>
-
-        <div class="back-to-top" id="back-to-top">
-          <i class="iconfont icon-up"></i>
-        </div>
-      </div>
-      
-    </div>
-    
-
-
-    
-
-
-
-
+  <!-- Article END -->
+  <!-- Catalog START -->
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ES2015"><span class="toc-nav-text">ES2015</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9Flet%E3%80%81const"><span class="toc-nav-text">块级作用域let、const</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-nav-text">块级作用域的应用场景</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#let-var-const-%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-nav-text">let,var,const 三者的区别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%A7%A3%E6%9E%84%EF%BC%88Destructuring%EF%BC%89"><span class="toc-nav-text">解构（Destructuring）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84"><span class="toc-nav-text">对象的解构</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84"><span class="toc-nav-text">数组的解构</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2-Template-literals"><span class="toc-nav-text">模板字符串 (Template literals)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%93%E5%B1%95%E6%96%B9%E6%B3%95"><span class="toc-nav-text">字符串拓展方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#includes%E3%80%81startsWith%E3%80%81endsWith"><span class="toc-nav-text">includes、startsWith、endsWith</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%88Default-parameters%EF%BC%89"><span class="toc-nav-text">参数默认值（Default parameters）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%89%A9%E4%BD%99%E5%8F%82%E6%95%B0"><span class="toc-nav-text">剩余参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E6%95%B0%E7%BB%84-Spread"><span class="toc-nav-text">展开数组 Spread</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%EF%BC%88Arrow-functions%EF%BC%89"><span class="toc-nav-text">箭头函数（Arrow functions）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F%E5%A2%9E%E5%BC%BA%EF%BC%88Enhanced-object-literals%EF%BC%89"><span class="toc-nav-text">对象字面量增强（Enhanced object literals）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95"><span class="toc-nav-text">对象扩展方法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#object-assign"><span class="toc-nav-text">object.assign</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Object-is"><span class="toc-nav-text">Object.is()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Proxy-%E4%BB%A3%E7%90%86"><span class="toc-nav-text">Proxy 代理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Proxy-%E4%B8%8E-Object-defineProperty-%E6%AF%94%E8%BE%83"><span class="toc-nav-text">Proxy 与 Object.defineProperty 比较</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%80%9F%E5%8A%A9Proxy%E7%9B%91%E8%A7%86%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-nav-text">借助Proxy监视数组操作</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Proxy-%E4%BB%A5%E9%9D%9E%E4%BE%B5%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F%E7%9B%91%E7%AE%A1%E5%AF%B9%E8%B1%A1%E8%AF%BB%E5%86%99"><span class="toc-nav-text">Proxy 以非侵入的方式监管对象读写</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Reflect"><span class="toc-nav-text">Reflect</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%BB%9F%E4%B8%80%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1%E7%9A%84API"><span class="toc-nav-text">统一操作对象的API</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Classes-%E7%B1%BB"><span class="toc-nav-text">Classes 类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-nav-text">静态成员</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-nav-text">static关键字</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%BB%A7%E6%89%BF-extends"><span class="toc-nav-text">继承 extends</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Set%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-nav-text">Set数据结构</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Map-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E6%98%A0%E5%B0%84%E4%B8%A4%E4%B8%AA%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-nav-text">Map 数据结构，映射两个任意类型数据之间的关系</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Symbol-%E7%AC%AC%E4%B8%83%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%8C-esmascript-2017-%E7%AC%AC%E5%85%AB%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BBigInt"><span class="toc-nav-text">Symbol  第七个数据类型，(esmascript 2017 第八个数据类型BigInt)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#for-of-%E5%BE%AA%E7%8E%AF%EF%BC%8C"><span class="toc-nav-text">for of 循环，</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F-%E8%AE%A9%E7%94%A8%E6%88%B7%E9%80%9A%E8%BF%87%E7%89%B9%E5%AE%9A%E7%9A%84%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE%E5%AE%B9%E5%99%A8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%82"><span class="toc-nav-text">迭代器模式 让用户通过特定的接口访问容器的数据，不需要了解容器内部的数据结构。</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generator"><span class="toc-nav-text">生成器 Generator</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E5%BA%94%E7%94%A8"><span class="toc-nav-text">生成器应用</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ES2016"><span class="toc-nav-text">ES2016</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95includs"><span class="toc-nav-text">数组方法includs</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%87%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-nav-text">指数运算符</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ES2017"><span class="toc-nav-text">ES2017</span></a></li></ol>
+    
+  </div>
+</aside>
   
+  <!-- Catalog END -->
+</main>
 
-  
+<script>
+  (function () {
+    var url = 'https://github.com/alongithub/2020/08/26/ES6/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
 
   </body>
 </html>

@@ -1,145 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
   <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+      备忘 | ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
 
-
-
-  <meta name="description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅"/>
-
-
-
-
-  <meta name="keywords" content="备忘," />
-
-
-
-
-
-  <link rel="alternate" href="/default" title="ALONG" >
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
-
-
-
-<link rel="canonical" href="https://github.com/alongithub/2020/09/04/备忘/"/>
-
-
-<meta name="description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅">
-<meta property="og:type" content="article">
-<meta property="og:title" content="备忘">
-<meta property="og:url" content="https://github.com/alongithub/2020/09/04/%E5%A4%87%E5%BF%98/index.html">
-<meta property="og:site_name" content="ALONG">
-<meta property="og:description" content="平时我经常使用却又总忘记的一些命令或代码备忘录，之前都写在便利签上，在这里也记录下方便随时查阅">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-04T00:51:17.000Z">
-<meta property="article:modified_time" content="2021-12-27T01:47:33.599Z">
-<meta property="article:author" content="along">
-<meta property="article:tag" content="备忘">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
-
-
-
-
-
-<script type="text/javascript">
-  var themeConfig = {
-    fancybox: {
-      enable: false
-    },
-  };
-</script>
-
-
-
-
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
   
 
 
+  
+  
+    
+<script src="/js/local-search.js"></script>
 
-    <title> 备忘 - ALONG </title>
-  <meta name="generator" content="Hexo 5.4.0"></head>
 
-  <body>
-    <div id="page"  class=" hastoc ">
-      
-        
-        <div id="toc" class="toc-article">
-          <div class="toc-title">目录</div>
-          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#eslint-%E5%85%B3%E9%97%AD%E6%A0%A1%E9%AA%8C"><span class="toc-text">eslint 关闭校验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E6%AE%B5%E8%90%BD%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭段落校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%BD%93%E5%89%8D%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭当前行校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E4%B8%8B%E4%B8%80%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭下一行校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%AF%B9%E8%BF%99%E5%8D%95%E4%B8%80%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%A1%E9%AA%8C"><span class="toc-text">关闭对这单一文件的校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%91%BD%E4%BB%A4"><span class="toc-text">git 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="toc-text">查看分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E5%88%86%E6%94%AF"><span class="toc-text">切换到分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-text">新建分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF%E5%B9%B6%E5%88%87%E6%8D%A2"><span class="toc-text">新建分支并切换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centOS-%E9%83%A8%E7%BD%B2"><span class="toc-text">centOS 部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-text">后台运行程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看所有后台进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看后台进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bnode%E7%9B%B8%E5%85%B3%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看node相关进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9B%E7%A8%8B"><span class="toc-text">删除进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-text">复制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-text">移动文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-text">创建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2"><span class="toc-text">用户切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bip"><span class="toc-text">查看ip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-text">查看关闭防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-text">查看端口占用情况</span></a></li></ol></li></ol>
-        </div>
-      
-      <div class="main_wrapper">
-        <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">ALONG</a>
-    </h1>
-
-    <nav id="nav-top">
-        
-            <ul id="menu-top" class="nav-top-items">
-                
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
-                
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
-                
-            </ul>
-        
-  </nav>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
-
-        </header>
-        <div id="content">
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
           
+            <a href="/" class="item-link">Home</a>
           
-    <div id="primary">
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
         
-  <article class="post">
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
     
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          备忘
-        
-      </h1>
-
-      <time class="post-time">
-          9月 04 2020
-      </time>
-    </header>
-
-
-
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
     
-            <div class="post-content">
-            <h3 id="eslint-关闭校验"><a href="#eslint-关闭校验" class="headerlink" title="eslint 关闭校验"></a>eslint 关闭校验</h3><h4 id="关闭段落校验"><a href="#关闭段落校验" class="headerlink" title="关闭段落校验"></a>关闭段落校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br><span class="line">    代码块</span><br><span class="line">&#x2F;* eslint-enable *&#x2F;</span><br></pre></td></tr></table></figure>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>备忘</h2>
+  <p class="post-date">2020-09-04</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="eslint-关闭校验"><a href="#eslint-关闭校验" class="headerlink" title="eslint 关闭校验"></a>eslint 关闭校验</h3><h4 id="关闭段落校验"><a href="#关闭段落校验" class="headerlink" title="关闭段落校验"></a>关闭段落校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* eslint-disable *&#x2F;</span><br><span class="line">    代码块</span><br><span class="line">&#x2F;* eslint-enable *&#x2F;</span><br></pre></td></tr></table></figure>
 
 
 <h4 id="关闭当前行校验"><a href="#关闭当前行校验" class="headerlink" title="关闭当前行校验"></a>关闭当前行校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一行代码 &#x2F;&#x2F; eslint-disable-line</span><br></pre></td></tr></table></figure>
@@ -179,89 +217,215 @@
 
 <h4 id="查看关闭防火墙"><a href="#查看关闭防火墙" class="headerlink" title="查看关闭防火墙"></a>查看关闭防火墙</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall -amd --state    查看防火墙状态</span><br><span class="line">systemctl stop firewalld.service   停止</span><br><span class="line">systemctl disable firewalld.service  禁止开机启动</span><br></pre></td></tr></table></figure>
 
-<h4 id="查看端口占用情况"><a href="#查看端口占用情况" class="headerlink" title="查看端口占用情况"></a>查看端口占用情况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp|grep 端口号</span><br></pre></td></tr></table></figure>
-            </div>
-          
-
+<h4 id="查看端口占用情况"><a href="#查看端口占用情况" class="headerlink" title="查看端口占用情况"></a>查看端口占用情况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp|grep 端口号</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
     
-      <footer class="post-footer">
-      
-		
-		<div class="post-tags">
-		  
-			<a href="/tags/%E5%A4%87%E5%BF%98/">备忘</a>
-		  
-		</div>
-		
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#备忘" >
+    <span class="tag-code">备忘</span>
+  </a>
 
-        
-        
-  <nav class="post-nav">
+      </div>
     
-      <a class="prev" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">手写Promise</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E6%BA%90%E7%A0%81/">
+        <span class="nav-arrow">← </span>
+        
+          vue响应式源码
+        
       </a>
     
     
-      <a class="next" href="/2020/08/27/vue%E5%93%8D%E5%BA%94%E5%BC%8F%E6%BA%90%E7%A0%81/">
-        <span class="next-text nav-default">vue响应式源码</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
+      <a class="nav-right" href="/2020/09/23/%E6%89%8B%E5%86%99promise/">
         
-  <div class="comments" id="comments">
+          手写Promise
+        
+        <span class="nav-arrow"> →</span>
+      </a>
     
   </div>
 
-
-      </footer>
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo=""
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
     
   </article>
-
-    </div>
-
-        </div>
-
-        <footer id="colophon"><span class="copyright-year">
-    
-        &copy;
-    
-        2020 -
-    
-    2021
-    <span class="footer-author">along.</span>
-    
-</span>
-
-        </footer>
-
-        <div class="back-to-top" id="back-to-top">
-          <i class="iconfont icon-up"></i>
-        </div>
-      </div>
-      
-    </div>
-    
-
-
-    
-
-
-
-
+  <!-- Article END -->
+  <!-- Catalog START -->
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#eslint-%E5%85%B3%E9%97%AD%E6%A0%A1%E9%AA%8C"><span class="toc-nav-text">eslint 关闭校验</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%AD%E6%AE%B5%E8%90%BD%E6%A0%A1%E9%AA%8C"><span class="toc-nav-text">关闭段落校验</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%AD%E5%BD%93%E5%89%8D%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-nav-text">关闭当前行校验</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%AD%E4%B8%8B%E4%B8%80%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-nav-text">关闭下一行校验</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%AD%E5%AF%B9%E8%BF%99%E5%8D%95%E4%B8%80%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%A1%E9%AA%8C"><span class="toc-nav-text">关闭对这单一文件的校验</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#git-%E5%91%BD%E4%BB%A4"><span class="toc-nav-text">git 命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="toc-nav-text">查看分支</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E5%88%86%E6%94%AF"><span class="toc-nav-text">切换到分支</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-nav-text">新建分支</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF%E5%B9%B6%E5%88%87%E6%8D%A2"><span class="toc-nav-text">新建分支并切换</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#centOS-%E9%83%A8%E7%BD%B2"><span class="toc-nav-text">centOS 部署</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-nav-text">后台运行程序</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-nav-text">查看所有后台进程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-nav-text">查看后台进程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8Bnode%E7%9B%B8%E5%85%B3%E8%BF%9B%E7%A8%8B"><span class="toc-nav-text">查看node相关进程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9B%E7%A8%8B"><span class="toc-nav-text">删除进程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-nav-text">复制文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-nav-text">移动文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-nav-text">删除文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-nav-text">创建文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2"><span class="toc-nav-text">用户切换</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8Bip"><span class="toc-nav-text">查看ip</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-nav-text">查看关闭防火墙</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-nav-text">查看端口占用情况</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
   
+  <!-- Catalog END -->
+</main>
 
-  
+<script>
+  (function () {
+    var url = 'https://github.com/alongithub/2020/09/04/备忘/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
 
-    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
 
   </body>
 </html>
