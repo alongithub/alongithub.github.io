@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="along&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      npm发布cli | ALONG
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>ALONG</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>npm发布cli</h2>
+  <p class="post-date">2021-12-31</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>编写发布一个简易的cli并发布到npm，类似vue-cli、create-react-app可以快速搭建项目，整体的实现思路就是通过交互命令拉取git上的脚手架</p>
+<h3 id="git上传搭建好的项目"><a href="#git上传搭建好的项目" class="headerlink" title="git上传搭建好的项目"></a>git上传搭建好的项目</h3><p>我发布了两个脚手架地址为<br>    es6<br>    <a href="https://github.com/alongithub/along-react-app.git">https://github.com/alongithub/along-react-app.git</a><br>    typescript<br>    <a href="https://github.com/alongithub/along-react-ts.git">https://github.com/alongithub/along-react-ts.git</a></p>
+<h3 id="cli项目"><a href="#cli项目" class="headerlink" title="cli项目"></a>cli项目</h3><p>npm init -y<br>package.json    文件中添加</p>
+<p>“bin”: {<br>    “alongcli”: “bin/alongcli”<br> },<br>安装需要的依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install figlet @darkobits&#x2F;lolcatjs commander inquirer shelljs download-git-repo ora --save-dev</span><br></pre></td></tr></table></figure>
+<p>创建文件   bin/alongcli    (一个没有后缀名的文件)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; figlet \ printer 用于增加输出文字效果</span><br><span class="line">const figlet &#x3D; require(&#39;figlet&#39;); &#x2F;&#x2F; asc码</span><br><span class="line">const Printer &#x3D; require(&#39;@darkobits&#x2F;lolcatjs&#39;); &#x2F;&#x2F; 文字色渐</span><br><span class="line">&#x2F;&#x2F; 用于区分用户输入命令参数信息</span><br><span class="line">const program &#x3D; require(&#39;commander&#39;);</span><br><span class="line">&#x2F;&#x2F; 用于用户的询问交互，比如语言的选择，项目名输入等</span><br><span class="line">const inquirer &#x3D; require(&#39;inquirer&#39;);</span><br><span class="line">const shell &#x3D; require(&#39;shelljs&#39;); &#x2F;&#x2F; 用于执行shell命令</span><br><span class="line">&#x2F;&#x2F; 用于拉取git项目</span><br><span class="line">const downloadgit &#x3D; require(&#39;download-git-repo&#39;);</span><br><span class="line">const ora &#x3D; require(&#39;ora&#39;); &#x2F;&#x2F; loading 效果包</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; alongcli -v 查看版本</span><br><span class="line">const version &#x3D; &#39;1.0.1&#39;;</span><br><span class="line">program.version(Printer.default.fromString(version), &quot;-v,--version&quot;);</span><br><span class="line">program.parse(process.argv);</span><br><span class="line"></span><br><span class="line">const bindHandler &#x3D; &#123;</span><br><span class="line">  init(params) &#123;</span><br><span class="line">    inquirer.prompt([</span><br><span class="line">      &#123;</span><br><span class="line">        type: &#39;text&#39;,</span><br><span class="line">        name: &#39;projectname&#39;,</span><br><span class="line">        message: &#39;请输入要创建的项目名&#39;,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        type: &#39;list&#39;,</span><br><span class="line">        name: &#39;jstype&#39;,</span><br><span class="line">        message: &#39;选择脚手架&#39;,</span><br><span class="line">        choices: [</span><br><span class="line">          &#39;√ along-react-app ES6&#39;, &#39;√ along-react-ts TypeScript&#39;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">    ]).then(answer &#x3D;&gt; &#123;</span><br><span class="line">      const _dirname &#x3D; answer.projectname;</span><br><span class="line">      if (_dirname) &#123;</span><br><span class="line">        const spinner &#x3D; ora(&#39;正在创建项目&#39;);</span><br><span class="line">        spinner.start();</span><br><span class="line">        const _path &#x3D; shell.pwd().stdout;</span><br><span class="line">        console.log(_path);</span><br><span class="line">        const _projectPath &#x3D; &#96;$&#123;_path&#125;&#x2F;$&#123;_dirname&#125;&#96;;</span><br><span class="line">        console.log(_projectPath);</span><br><span class="line">        shell.cd(_path);</span><br><span class="line">        shell.rm(&#39;-rf&#39;, _projectPath);</span><br><span class="line">        shell.mkdir(_dirname);</span><br><span class="line">        const templateUrl &#x3D; answer.jstype &#x3D;&#x3D;&#x3D; &#39;√ along-react-app ES6&#39; ? &#39;direct:https:&#x2F;&#x2F;github.com&#x2F;alongithub&#x2F;along-react-app.git&#39; : &#39;direct:https:&#x2F;&#x2F;github.com&#x2F;alongithub&#x2F;along-react-ts.git&#39;;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; const templateUrl &#x3D; &#39;direct:https:&#x2F;&#x2F;github.com&#x2F;alongithub&#x2F;along-react-app.git&#39;;</span><br><span class="line"></span><br><span class="line">        downloadgit(templateUrl, _projectPath,  &#123;clone: true&#125;, (err) &#x3D;&gt; &#123;</span><br><span class="line">          spinner.stop();</span><br><span class="line">          if (err) &#123;</span><br><span class="line">            console.log(chalk.red(&#39;error:&#39;));</span><br><span class="line">            &#x2F;&#x2F; console.log(err);</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">            const txt &#x3D; figlet.textSync(&#39;along-cli\nV 1.0.1&#39;);</span><br><span class="line">            console.log(Printer.default.fromString(txt));</span><br><span class="line">            shell.sed(&quot;-i&quot;, &quot;along-react-app&quot;,_dirname,_projectPath+&quot;&#x2F;package.json&quot;);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">program.usage(&quot;&lt;cmd&gt; [env]&quot;)</span><br><span class="line">    .arguments(&#39;&lt;cmd&gt; [env]&#39;)</span><br><span class="line">    .action(function (cmd, otherParams) &#123;</span><br><span class="line">        &#x2F;&#x2F; 输出用户输入的内容 cmd 是用户输入的第一个参数 otherParams 是第二个参数</span><br><span class="line">        const handler &#x3D; bindHandler[cmd];</span><br><span class="line">        if (handler) &#123;</span><br><span class="line">            handler(otherParams);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(chalk.yellow(&#39;暂未实现&#39;) + chalk.red(cmd) + chalk.blue(&#39;...&#39;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">program.parse(process.argv);</span><br></pre></td></tr></table></figure>
+
+<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><pre><code>    npm注册账号
+
+    在cli项目中</code></pre>
+<p>npm login<br>npm publis</p>
+<p>发布成功后邮箱会收到邮件，我现在发布的脚手架叫alongcli ，可以在npm搜索并查看使用方法。</p>
+<p>全局安装<br>npm install alongcli -g<br>创建项目<br>alongcli init<br>// 或者<br>along-cli init</p>
+<p>启动项目<br>npm run dev<br>// 或者<br>npm run build<br>node server.js<br>        访问地址</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8006/along/demo">http://localhost:8006/along/demo</a></p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/12/22/jenkins%E5%AE%89%E8%A3%85/">
+        <span class="nav-arrow">← </span>
+        
+          jenkins安装
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo=""
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#git%E4%B8%8A%E4%BC%A0%E6%90%AD%E5%BB%BA%E5%A5%BD%E7%9A%84%E9%A1%B9%E7%9B%AE"><span class="toc-nav-text">git上传搭建好的项目</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cli%E9%A1%B9%E7%9B%AE"><span class="toc-nav-text">cli项目</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%91%E5%B8%83"><span class="toc-nav-text">发布</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://github.com/alongithub/2021/12/31/npm发布cli/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    Copyright&copy; 2019-2021 along
+    <br>
+    <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2020044791号-1</a>
+    <!-- <br>
+    Theme by <a href="https://github.com/alongithub">alongithub</a>
+     -->
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
